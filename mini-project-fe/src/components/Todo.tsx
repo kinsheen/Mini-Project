@@ -1,7 +1,7 @@
 const Todo = () => {
   return (
-    <div className="flex flex-col">
-      <h3 className="font-semibold">Todo Lists</h3>
+    <div className="">
+      <h3 className="">Todo Lists</h3>
     </div>
   )
 }

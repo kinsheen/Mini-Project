@@ -1,7 +1,7 @@
 const Priority = () => {
   return (
     <div className="">
-      <h3 className="font-semibold">Top Priority</h3>
+      <h3 className="">Top Priority</h3>
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import Achievement from "../components/Achievement"
 import Calendar from "../components/Calendar"
-import CreateTodo from "../components/Create:Todo"
+import CreateTodo from "../components/CreateTodo"
 import Priority from "../components/Priority"
 import Todo from "../components/Todo"
 
