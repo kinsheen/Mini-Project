@@ -1,14 +1,14 @@
-import React from "react";
 import Header from "../header/Header"
-import Priority from "../components/Priority"
-import CreateTodo from "../components/CreateTodo"
-import MyCalendar from "../components/Calendar"
-import Achievement from "../components/Achievement"
-import Todo from "../components/Todo"
+import Priority from "../pages/Priority"
+import CreateTodo from "../pages/CreateTodo"
+import MyCalendar from "../pages/Calendar"
+import Achievement from "../pages/Achievement"
+import Todo from "../pages/Todo"
+import { Link } from "react-router-dom"
 
 export const LandingPage = () => {
   return (
-    <div>
+    <main>
       <Header />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 m-5">
         <div className="border-1 p-2 border-solid ">
@@ -24,12 +24,16 @@ export const LandingPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 m-5">
         <div className="border-1 p-2 border-solid ">
-          <Achievement />
+          <Link to="/todo">
+            <Todo />
+          </Link>
         </div>
         <div className="border-1 p-2 border-solid ">
-          <Todo />
+          <Link to="/achievement">
+            <Achievement />
+          </Link>
         </div>
       </div>
-    </div>
+    </main>
   )
-};
+}
