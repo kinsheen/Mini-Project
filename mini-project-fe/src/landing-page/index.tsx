@@ -23,7 +23,7 @@ export const LandingPage = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 m-5">
-        <div className="border-1 p-2 border-solid ">
+        <div className="border-1 p-2 border-solid overflow-hidden">
           <Link to="/todo">
             <Todo />
           </Link>
