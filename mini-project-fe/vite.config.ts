@@ -1,16 +1,8 @@
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss()],
-  css: {
-    preprocessorOptions: {
-      less: {
-        modifyVars: {
-          "primary-color": "#0F4C5C",
-          "heading-color": "#f00",
-        },
-        javascriptEnabled: true,
-      },
-    },
-  },
+  plugins: [react(), tailwindcss()],
 });

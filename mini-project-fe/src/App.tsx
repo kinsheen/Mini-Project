@@ -1,10 +1,10 @@
 import "./App.css";
-import NavigationBar from "./navigation";
+import Header from "./header/Header";
 
 function App() {
   return (
     <>
-      <NavigationBar></NavigationBar>
+      <Header></Header>
     </>
   );
 }
