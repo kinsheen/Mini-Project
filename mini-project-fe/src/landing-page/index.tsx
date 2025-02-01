@@ -3,8 +3,7 @@ import Priority from "../pages/Priority";
 import CreateTodo from "../pages/CreateTodo";
 import MyCalendar from "../pages/Calendar";
 import Achievement from "../pages/Achievement";
-import Todo from "../pages/Todo";
-import { Link } from "react-router-dom";
+import Todo from "../pages/Todo"
 
 export const LandingPage = () => {
   return (
@@ -24,16 +23,12 @@ export const LandingPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 m-5">
         <div className="border-1 p-2 border-solid overflow-hidden">
-          <Link to="/todo">
-            <Todo />
-          </Link>
+          <Todo />
         </div>
         <div className="border-1 p-2 border-solid ">
-          <Link to="/achievement">
-            <Achievement />
-          </Link>
+          <Achievement />
         </div>
       </div>
     </main>
-  );
+  )
 };
