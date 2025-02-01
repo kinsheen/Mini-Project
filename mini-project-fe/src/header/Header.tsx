@@ -3,7 +3,7 @@
 export default function Header() {
   return (
     <div>
-      <header className="p-5 bg-[url('assets/blue.jpg')]">
+      <header className="p-5 bg-[url('assets/blue.jpg')] bg-center bg-cover">
         <nav aria-label="Global" className="flex p-5 justify-center">
           <div className="flex text-white text-center text-[75px] font-caveat font-bold">
             You can do it
