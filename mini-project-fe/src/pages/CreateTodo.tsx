@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Modal from "../services/modal";
+import Modal from "../components/modal";
 import { postCreateToDo } from "../api/context";
+import { IoArrowForwardCircle } from "react-icons/io5";
 import Swal from "sweetalert2";
 
 const CreateTodo = () => {
@@ -81,34 +82,20 @@ const CreateTodo = () => {
           </h3>
         </div>
         <div className="bg-secondary w-full h-38">
-          <div className="flex row items-center gap-2 px-3">
+          <div className="flex row items-center gap-2 p-3">
             <div className="bg-primary w-3 h-3 rounded-full" />
             <div className="py-1">
-              <span className="font-crimson">Create New</span>
+              <span className="font-crimson text-primary">Create New</span>
             </div>
           </div>
-          <div className="px-6 flex flex-col gap-2 items-center">
+          <div className="px-6 flex items-center justify-center">
             <button
-              className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary hover:text-white transition duration-200"
+              className="flex flex-row gap-2 bg-white text-primary p-3 w-65 rounded hover:bg-primary hover:text-white transition duration-200"
               onClick={openModal}
             >
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-              </div>
-              <div className="font-crimson">Create New Day</div>
+              <IoArrowForwardCircle className="text-2xl" />
+
+              <div className="font-crimson">Add To Do</div>
             </button>
 
             <Modal
@@ -117,7 +104,7 @@ const CreateTodo = () => {
               onSubmit={handleSubmit}
             />
 
-            <button className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary  hover:text-white transition duration-200">
+            {/* <button className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary  hover:text-white transition duration-200">
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +122,7 @@ const CreateTodo = () => {
                 </svg>
               </div>
               <div className="font-crimson">Create New Month</div>
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
