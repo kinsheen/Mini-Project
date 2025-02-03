@@ -18,7 +18,7 @@ const axiosInstance = axios.create({
 
 // Define a function to make a global API call
 export const callApi = async <T,>(
-  method: "get" | "post" | "put",
+  method: "get" | "post" | "put" | "delete",
   endpoint: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any
@@ -29,7 +29,11 @@ export const callApi = async <T,>(
       url: endpoint,
       data: { ...data },
     });
-    if (response.status == 200 || response.status == 201) {
+    if (
+      response.status == 200 ||
+      response.status == 201 ||
+      response.status == 204
+    ) {
       return response.data;
     } else {
       throw new Error("Error: " + response.statusText);
