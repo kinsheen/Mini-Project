@@ -43,6 +43,8 @@ const CreateTodo = () => {
           icon: "success",
           draggable: true,
           confirmButtonColor: "#0f4c5c", // Customize button color
+        }).then(() => {
+          window.location.reload();
         });
       } else {
         // Handle the case where response does not contain expected data
