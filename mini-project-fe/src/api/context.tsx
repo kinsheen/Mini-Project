@@ -38,3 +38,17 @@ export const deleteTodo = async (id: string) => {
   console.log("deleteTodo Response:", response);
   return response;
 };
+
+export const addAchievement = async (description: string) => {
+  const response = await callApi("post", "/api/achievements", {
+    description,
+  })
+  console.log("addAchievement Response:", response)
+  return response
+}
+
+export const getAchievements = async () => {
+  const response = await callApi("get", "/api/achievements", {})
+  console.log("getAchievements Response:", response)
+  return response
+}
