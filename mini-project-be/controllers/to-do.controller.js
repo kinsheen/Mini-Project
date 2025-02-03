@@ -82,7 +82,7 @@ const deleteToDo = async (req, res) => {
             return res.status(404).json({ message: 'To-Do not found' })
         }
 
-        res.status(204).json()
+        res.status(204).json( { message: 'To-Do deleted successfully' } )
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
