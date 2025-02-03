@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const productRoute = require("./routes/product.route");
 const toDoRoute = require("./routes/to-do.route");
+const achievementRoute = require("./routes/achievement.route");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 //routes
 app.use("/api/products", productRoute);
 app.use("/api/to-do", toDoRoute);
+app.use("/api/achievements", achievementRoute);
 
 const port = 3000;
 
