@@ -44,10 +44,10 @@ const Todo = () => {
           <FaList className="mt-1 mx-1" />
           <h3 className=""> TO DO</h3>
         </div>
-        <div className="flex w-30 bg-[#0F4C5C] rounded-md p-2">
+        {/* <div className="flex w-30 bg-[#0F4C5C] rounded-md p-2">
           <FaPlus className="mt-1 mx-1" />
           <h3 className="">CREATE</h3>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex  flex-row flex-nowrap gap-2 overflow-auto">
@@ -61,7 +61,7 @@ const Todo = () => {
                     <span className="mr-2">•</span>
                     <div className="flex flex-1">
                       <div className="flex-1">{task.description}</div>
-                      <div className="w-5 flex-none relative group">
+                      {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -72,7 +72,7 @@ const Todo = () => {
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Delete
                         </span>
-                      </div>
+                      </div> */}
                       {getCurrentDay() == "Monday" ? addToPriority() : null}
                     </div>
                   </li>
@@ -92,7 +92,7 @@ const Todo = () => {
                     <span className="mr-2">•</span>
                     <div className="flex flex-1">
                       <div className="flex-1">{task.description}</div>
-                      <div className="w-5 flex-none relative group">
+                      {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -103,7 +103,7 @@ const Todo = () => {
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Delete
                         </span>
-                      </div>
+                      </div> */}
                       {getCurrentDay() == "Tuesday" ? addToPriority() : null}
                     </div>
                   </li>
@@ -123,7 +123,7 @@ const Todo = () => {
                     <span className="mr-2">•</span>
                     <div className="flex flex-1">
                       <div className="flex-1">{task.description}</div>
-                      <div className="w-5 flex-none relative group">
+                      {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -134,7 +134,7 @@ const Todo = () => {
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Delete
                         </span>
-                      </div>
+                      </div> */}
                       {getCurrentDay() == "Wednesday" ? addToPriority() : null}
                     </div>
                   </li>
@@ -154,7 +154,7 @@ const Todo = () => {
                     <span className="mr-2">•</span>
                     <div className="flex flex-1">
                       <div className="flex-1">{task.description}</div>
-                      <div className="w-5 flex-none relative group">
+                      {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -165,7 +165,7 @@ const Todo = () => {
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Delete
                         </span>
-                      </div>
+                      </div> */}
                       {getCurrentDay() == "Thursday" ? addToPriority() : null}
                     </div>
                   </li>
@@ -185,7 +185,7 @@ const Todo = () => {
                     <span className="mr-2">•</span>
                     <div className="flex flex-1">
                       <div className="flex-1">{task.description}</div>
-                      <div className="w-5 flex-none relative group">
+                      {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -196,7 +196,7 @@ const Todo = () => {
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Delete
                         </span>
-                      </div>
+                      </div> */}
                       {getCurrentDay() == "Friday" ? addToPriority() : null}
                     </div>
                   </li>

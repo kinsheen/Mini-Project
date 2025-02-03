@@ -56,7 +56,7 @@ const Achievement = () => {
                 <span className="mr-2">•</span>
                 <div className="flex flex-1">
                   <div className="flex-1">{task.description}</div>
-                  <div className="w-5 flex-none relative group">
+                  {/* <div className="w-5 flex-none relative group">
                     <FaEdit className="cursor-pointer" />
                     <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                       Edit
@@ -67,7 +67,7 @@ const Achievement = () => {
                     <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                       Delete
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </li>
             </ul>
