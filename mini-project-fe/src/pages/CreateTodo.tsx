@@ -70,7 +70,7 @@ const CreateTodo = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col gap-2 w-110">
+      <div className="flex flex-col gap-2 w-full">
         <div className="flex row-auto gap-2">
           <div>
             <h3 className=" bg-primary text-white py-8 px-5 font-inter text-6xl">
