@@ -1,4 +1,72 @@
+import { useState } from "react";
+import Modal from "../services/modal";
+import { postCreateToDo } from "../api/context";
+import Swal from "sweetalert2";
+
 const CreateTodo = () => {
+  //   const handelAddTodo = () = {
+
+  // // const response = await postCreateToDo(day, task, status, priority);
+  //   }
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [submittedData, setSubmittedData] = useState<{
+    day: string;
+    task: string;
+  } | null>(null);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+  const handleSubmit = async (day: string, task: string) => {
+    try {
+      const date = new Date(day);
+
+      // Get the day of the week as a string
+      const options: Intl.DateTimeFormatOptions = { weekday: "long" };
+      const dayOfWeek = date.toLocaleDateString("en-US", options);
+
+      console.log("Submitted Data:", { dayOfWeek, task });
+
+      const response = await postCreateToDo(
+        dayOfWeek,
+        task,
+        "In Progress",
+        false
+      );
+
+      // Assuming the response contains the created data directly
+      if (response) {
+        setSubmittedData({ day, task });
+        console.log("To-do created successfully:", response);
+        Swal.fire({
+          title: "Successfully Added a Task!",
+          icon: "success",
+          draggable: true,
+          confirmButtonColor: "#0f4c5c", // Customize button color
+        });
+      } else {
+        // Handle the case where response does not contain expected data
+        console.error("Failed to create to-do: No data returned");
+        Swal.fire({
+          title: "Failed Adding a Task!",
+          icon: "error", // Changed from "failure" to "error"
+          draggable: true,
+          confirmButtonColor: "#0f4c5c",
+        });
+      }
+    } catch (error) {
+      // Handle any errors during the API call
+      console.error("Error occurred while creating to-do:", error);
+      Swal.fire({
+        title: "Failed Adding a Task!",
+        icon: "error", // Changed from "failure" to "error"
+        draggable: true,
+        confirmButtonColor: "#0f4c5c",
+      });
+    }
+  };
+
+  console.log("Submitted Data:", submittedData);
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col gap-2 w-110">
@@ -20,7 +88,10 @@ const CreateTodo = () => {
             </div>
           </div>
           <div className="px-6 flex flex-col gap-2 items-center">
-            <button className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary  hover:text-white transition duration-200">
+            <button
+              className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary hover:text-white transition duration-200"
+              onClick={openModal}
+            >
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -39,6 +110,12 @@ const CreateTodo = () => {
               </div>
               <div className="font-crimson">Create New Day</div>
             </button>
+
+            <Modal
+              isOpen={isModalOpen}
+              onClose={closeModal}
+              onSubmit={handleSubmit}
+            />
 
             <button className="flex flex-row gap-2 bg-white text-black p-3 w-65 rounded hover:bg-primary  hover:text-white transition duration-200">
               <div>
