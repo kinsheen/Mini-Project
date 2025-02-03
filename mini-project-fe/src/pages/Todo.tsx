@@ -1,16 +1,29 @@
 import { FaPlus, FaList, FaTrashCan } from "react-icons/fa6"
 import { FaEdit } from "react-icons/fa"
+import { useEffect, useState } from "react"
+import { toDoResponseArray } from "../interfaces/types"
+import { getTodoPriorityList } from "../api/context"
 
 const Todo = () => {
-  const tasks = [
-    { id: 1, title: "Task 1", description: "Description 1" },
-    { id: 2, title: "Task 2", description: "Description 2" },
-    { id: 3, title: "Task 3", description: "Description 3" },
-    { id: 4, title: "Task 4", description: "Description 4" },
-    { id: 5, title: "Task 5", description: "Description 5" },
-    { id: 6, title: "Task 6", description: "Description 6" },
-    { id: 7, title: "Task 7", description: "Description 7" },
-  ]
+  const [todos, setTodos] = useState<toDoResponseArray | undefined>([])
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getTodoPriorityList()
+        setTodos(response)
+      } catch (error) {
+        console.log("first error", error)
+        setError("An error occurred")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const getCurrentDay = () => {
     const days = [
@@ -54,14 +67,16 @@ const Todo = () => {
         <div className="min-w-85 basis-1/5">
           <h5>Monday</h5>
           <div className="bg-[#0F4C5C] h-100">
-            {tasks.map((task) => {
-              return (
-                <ul className="list-disc list-inside p-2">
-                  <li className="text-white flex items-start">
-                    <span className="mr-2">•</span>
-                    <div className="flex flex-1">
-                      <div className="flex-1">{task.description}</div>
-                      {/* <div className="w-5 flex-none relative group">
+            {todos
+              ?.filter((todo) => todo.day === "Monday")
+              .map((item) => {
+                return (
+                  <ul className="list-disc list-inside p-2">
+                    <li className="text-white flex items-start">
+                      <span className="mr-2">•</span>
+                      <div className="flex flex-1">
+                        <div className="flex-1">{item.task}</div>
+                        {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -73,26 +88,28 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                      {getCurrentDay() == "Monday" ? addToPriority() : null}
-                    </div>
-                  </li>
-                </ul>
-              )
-            })}
+                        {getCurrentDay() == "Monday" ? addToPriority() : null}
+                      </div>
+                    </li>
+                  </ul>
+                )
+              })}
           </div>
         </div>
 
         <div className="min-w-85 basis-1/5">
           <h5>Tuesday</h5>
           <div className="bg-[#0F4C5C] h-100">
-            {tasks.map((task) => {
-              return (
-                <ul className="list-disc list-inside p-2">
-                  <li className="text-white flex items-start">
-                    <span className="mr-2">•</span>
-                    <div className="flex flex-1">
-                      <div className="flex-1">{task.description}</div>
-                      {/* <div className="w-5 flex-none relative group">
+            {todos
+              ?.filter((todo) => todo.day === "Tuesday")
+              .map((item) => {
+                return (
+                  <ul className="list-disc list-inside p-2">
+                    <li className="text-white flex items-start">
+                      <span className="mr-2">•</span>
+                      <div className="flex flex-1">
+                        <div className="flex-1">{item.task}</div>
+                        {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -104,26 +121,28 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                      {getCurrentDay() == "Tuesday" ? addToPriority() : null}
-                    </div>
-                  </li>
-                </ul>
-              )
-            })}
+                        {getCurrentDay() == "Tuesday" ? addToPriority() : null}
+                      </div>
+                    </li>
+                  </ul>
+                )
+              })}
           </div>
         </div>
 
         <div className="min-w-85 basis-1/5">
           <h5>Wednesday</h5>
           <div className="bg-[#0F4C5C] h-100">
-            {tasks.map((task) => {
-              return (
-                <ul className="list-disc list-inside p-2">
-                  <li className="text-white flex items-start">
-                    <span className="mr-2">•</span>
-                    <div className="flex flex-1">
-                      <div className="flex-1">{task.description}</div>
-                      {/* <div className="w-5 flex-none relative group">
+            {todos
+              ?.filter((todo) => todo.day === "Wednesday")
+              .map((item) => {
+                return (
+                  <ul className="list-disc list-inside p-2">
+                    <li className="text-white flex items-start">
+                      <span className="mr-2">•</span>
+                      <div className="flex flex-1">
+                        <div className="flex-1">{item.task}</div>
+                        {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -135,26 +154,30 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                      {getCurrentDay() == "Wednesday" ? addToPriority() : null}
-                    </div>
-                  </li>
-                </ul>
-              )
-            })}
+                        {getCurrentDay() == "Wednesday"
+                          ? addToPriority()
+                          : null}
+                      </div>
+                    </li>
+                  </ul>
+                )
+              })}
           </div>
         </div>
 
         <div className="min-w-85 basis-1/5">
           <h5>Thursday</h5>
           <div className="bg-[#0F4C5C] h-100">
-            {tasks.map((task) => {
-              return (
-                <ul className="list-disc list-inside p-2">
-                  <li className="text-white flex items-start">
-                    <span className="mr-2">•</span>
-                    <div className="flex flex-1">
-                      <div className="flex-1">{task.description}</div>
-                      {/* <div className="w-5 flex-none relative group">
+            {todos
+              ?.filter((todo) => todo.day === "Thursday")
+              .map((item) => {
+                return (
+                  <ul className="list-disc list-inside p-2">
+                    <li className="text-white flex items-start">
+                      <span className="mr-2">•</span>
+                      <div className="flex flex-1">
+                        <div className="flex-1">{item.task}</div>
+                        {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -166,26 +189,28 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                      {getCurrentDay() == "Thursday" ? addToPriority() : null}
-                    </div>
-                  </li>
-                </ul>
-              )
-            })}
+                        {getCurrentDay() == "Thursday" ? addToPriority() : null}
+                      </div>
+                    </li>
+                  </ul>
+                )
+              })}
           </div>
         </div>
 
         <div className="min-w-85 basis-1/5">
           <h5>Friday</h5>
           <div className="bg-[#0F4C5C] h-100">
-            {tasks.map((task) => {
-              return (
-                <ul className="list-disc list-inside p-2">
-                  <li className="text-white flex items-start">
-                    <span className="mr-2">•</span>
-                    <div className="flex flex-1">
-                      <div className="flex-1">{task.description}</div>
-                      {/* <div className="w-5 flex-none relative group">
+            {todos
+              ?.filter((todo) => todo.day === "Friday")
+              .map((item) => {
+                return (
+                  <ul className="list-disc list-inside p-2">
+                    <li className="text-white flex items-start">
+                      <span className="mr-2">•</span>
+                      <div className="flex flex-1">
+                        <div className="flex-1">{item.task}</div>
+                        {/* <div className="w-5 flex-none relative group">
                         <FaEdit className="cursor-pointer" />
                         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
                           Edit
@@ -197,12 +222,12 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                      {getCurrentDay() == "Friday" ? addToPriority() : null}
-                    </div>
-                  </li>
-                </ul>
-              )
-            })}
+                        {getCurrentDay() == "Friday" ? addToPriority() : null}
+                      </div>
+                    </li>
+                  </ul>
+                )
+              })}
           </div>
         </div>
       </div>

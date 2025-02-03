@@ -42,10 +42,10 @@ const Achievement = () => {
           <FaList className="mt-1 mx-1" />
           <h3 className=""> ACHIEVEMENT</h3>
         </div>
-        <div className="flex w-30 bg-[#0F4C5C] rounded-md p-2">
+        <button className="flex w-30 bg-[#0F4C5C] rounded-md p-2">
           <FaPlus className="mt-1 mx-1" />
           <h3 className="">CREATE</h3>
-        </div>
+        </button>
       </div>
 
       <div className="achievement-box h-100 bg-[#0F4C5C]">
