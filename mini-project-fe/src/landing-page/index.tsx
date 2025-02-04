@@ -13,7 +13,7 @@ export const LandingPage = () => {
         <div className="border-1 p-2 border-solid ">
           <Priority />
         </div>
-        <div className="border-1 p-2 border-solid ">
+        <div className="border-1 p-2 border-solid">
           <CreateTodo />
         </div>
         <div className="border-1 p-2 border-solid ">
