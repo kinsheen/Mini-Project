@@ -28,27 +28,7 @@ export const postCreateToDo = async (
   return response;
 };
 
-//createToDo
-export const updateToDo = async (
-  _id: string,
-  day: string,
-  task: string,
-  status: string,
-  priority: boolean
-) => {
-  const response = await callApi<toDoResponseArray | undefined>(
-    "put",
-    `/api/to-do/${_id}`,
-    {
-      day,
-      task,
-      status,
-      priority,
-    }
-  );
-  console.log("createToDo Response:", response);
-  return response;
-};
+//updateTodo
 
 //deleteTodo
 export const deleteTodo = async (id: string) => {
@@ -78,5 +58,17 @@ export const getAchievements = async () => {
 export const deleteAchievement = async (id: string) => {
   const response = await callApi("delete", `/api/achievements/${id}`, {})
   console.log("deleteAchievement Response:", response)
+  return response
+}
+
+export const addToDoPriority = async (_id: string) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "put",
+    `/api/to-do/${_id}`,
+    {
+      priority: true,
+    }
+  )
+  console.log("AddToDoPriority Response:", response)
   return response
 }

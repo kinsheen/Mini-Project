@@ -2,10 +2,15 @@ import { FaPlus, FaList, FaTrashCan } from "react-icons/fa6"
 import { FaEdit } from "react-icons/fa"
 import { useEffect, useState } from "react"
 import { toDoResponseArray } from "../interfaces/types"
-import { getTodoPriorityList } from "../api/context"
+import {
+  addToDoPriority,
+  getTodoPriorityList,
+  updateToDo,
+} from "../api/context"
 
 const Todo = () => {
   const [todos, setTodos] = useState<toDoResponseArray | undefined>([])
+  const [shouldRefetch, setShouldRefetch] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
 
@@ -39,10 +44,13 @@ const Todo = () => {
     return currentDay
   }
 
-  const addToPriority = () => {
+  const addToPriority = (id: string) => {
     return (
       <div className="w-5 ml-2 flex-none relative group">
-        <FaPlus className="cursor-pointer" />
+        <FaPlus
+          className="cursor-pointer"
+          onClick={async () => await addToDoPriority(id)}
+        />
         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
           Add to Priority
         </span>
@@ -88,7 +96,9 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                        {getCurrentDay() == "Monday" ? addToPriority() : null}
+                        {getCurrentDay() == "Monday"
+                          ? addToPriority(item._id)
+                          : null}
                       </div>
                     </li>
                   </ul>
@@ -121,7 +131,9 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                        {getCurrentDay() == "Tuesday" ? addToPriority() : null}
+                        {getCurrentDay() == "Tuesday"
+                          ? addToPriority(item._id)
+                          : null}
                       </div>
                     </li>
                   </ul>
@@ -155,7 +167,7 @@ const Todo = () => {
                         </span>
                       </div> */}
                         {getCurrentDay() == "Wednesday"
-                          ? addToPriority()
+                          ? addToPriority(item._id)
                           : null}
                       </div>
                     </li>
@@ -189,7 +201,9 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                        {getCurrentDay() == "Thursday" ? addToPriority() : null}
+                        {getCurrentDay() == "Thursday"
+                          ? addToPriority(item._id)
+                          : null}
                       </div>
                     </li>
                   </ul>
@@ -222,7 +236,9 @@ const Todo = () => {
                           Delete
                         </span>
                       </div> */}
-                        {getCurrentDay() == "Friday" ? addToPriority() : null}
+                        {getCurrentDay() == "Friday"
+                          ? addToPriority(item._id)
+                          : null}
                       </div>
                     </li>
                   </ul>

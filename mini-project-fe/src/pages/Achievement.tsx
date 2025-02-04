@@ -42,7 +42,7 @@ const Achievement = () => {
           className="flex w-30 bg-[#0F4C5C] rounded-md p-2 hover:bg-[#0a3540] transition-colors"
         >
           <FaPlus className="mt-1 mx-1" />
-          <h3 className="">CREATE</h3>
+          <h3 className="cursor-pointer">CREATE</h3>
         </button>
       </div>
 
@@ -96,7 +96,7 @@ const Achievement = () => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-[#9FB7BE] border-2 p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex justify-between items-center mb-4">
                     <Dialog.Title
                       as="h3"
@@ -117,7 +117,7 @@ const Achievement = () => {
                       <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent"
+                        className="w-full p-2 border border-gray-300 bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent"
                         placeholder="Enter achievement description"
                         required
                       />
