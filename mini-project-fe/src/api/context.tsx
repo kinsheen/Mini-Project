@@ -28,6 +28,28 @@ export const postCreateToDo = async (
   return response;
 };
 
+//createToDo
+export const updateToDo = async (
+  _id: string,
+  day: string,
+  task: string,
+  status: string,
+  priority: boolean
+) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "put",
+    `/api/to-do/${_id}`,
+    {
+      day,
+      task,
+      status,
+      priority,
+    }
+  );
+  console.log("createToDo Response:", response);
+  return response;
+};
+
 //deleteTodo
 export const deleteTodo = async (id: string) => {
   const response = await callApi<toDoResponseArray | undefined>(
@@ -50,5 +72,11 @@ export const addAchievement = async (description: string) => {
 export const getAchievements = async () => {
   const response = await callApi("get", "/api/achievements", {})
   console.log("getAchievements Response:", response)
+  return response
+}
+
+export const deleteAchievement = async (id: string) => {
+  const response = await callApi("delete", `/api/achievements/${id}`, {})
+  console.log("deleteAchievement Response:", response)
   return response
 }

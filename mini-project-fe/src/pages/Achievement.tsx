@@ -1,28 +1,34 @@
 import { useState, Fragment, useEffect } from "react"
 import { Dialog, Transition } from "@headlessui/react"
-import { FaList, FaPlus } from "react-icons/fa6"
-import { addAchievement, getAchievements } from "../api/context"
+import { FaList, FaPlus, FaTrash, FaTrashCan } from "react-icons/fa6"
+import {
+  addAchievement,
+  deleteAchievement,
+  getAchievements,
+} from "../api/context"
 
 const Achievement = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [description, setDescription] = useState("")
   const [achievements, setAchievements] = useState([])
+  const [shouldRefetch, setShouldRefetch] = useState(false)
+
+  const fetchAchievements = async () => {
+    const response = await getAchievements()
+    setAchievements(response)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     await addAchievement(description)
+    fetchAchievements()
     setIsOpen(false)
   }
 
   useEffect(() => {
-    const fetchAchievements = async () => {
-      const response = await getAchievements()
-      setAchievements(response)
-    }
-
     fetchAchievements()
-  }, [])
+  }, [shouldRefetch])
 
   return (
     <div className="achievement m-4 mt-7 p-7">
@@ -47,6 +53,14 @@ const Achievement = () => {
               <span className="mr-2">•</span>
               <div className="flex flex-1">
                 <div className="flex-1">{achievement.description}</div>
+              </div>
+              <div>
+                <FaTrashCan
+                  onClick={async () => {
+                    await deleteAchievement(achievement._id)
+                    setShouldRefetch((prev) => !prev)
+                  }}
+                />
               </div>
             </li>
           </ul>
