@@ -49,7 +49,10 @@ const Todo = () => {
       <div className="w-5 ml-2 flex-none relative group">
         <FaPlus
           className="cursor-pointer"
-          onClick={async () => await addToDoPriority(id)}
+          onClick={async () => {
+            await addToDoPriority(id)
+            window.location.reload()
+          }}
         />
         <span className="absolute left-1/2 -top-8 w-max -translate-x-1/2 scale-0 rounded bg-gray-800 px-2 py-1 text-xs text-white transition-all group-hover:scale-100">
           Add to Priority

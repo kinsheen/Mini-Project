@@ -55,7 +55,7 @@ const Achievement = () => {
                 <div className="flex-1">{achievement.description}</div>
               </div>
               <div>
-                <FaTrashCan
+                <FaTrashCan className="mx-2 cursor-pointer"
                   onClick={async () => {
                     await deleteAchievement(achievement._id)
                     setShouldRefetch((prev) => !prev)
