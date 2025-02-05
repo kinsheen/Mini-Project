@@ -4,20 +4,22 @@ import CreateTodo from "../pages/CreateTodo";
 import MyCalendar from "../pages/Calendar";
 import Achievement from "../pages/Achievement";
 import Todo from "../pages/Todo";
+import { useState } from "react";
 
 export const LandingPage = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   return (
     <main>
       <Header />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 m-5 px-10">
         <div className="border-1 p-2 border-solid ">
-          <Priority />
+          <Priority date={selectedDate} />
         </div>
         <div className="border-1 p-2 border-solid">
           <CreateTodo />
         </div>
         <div className="border-1 p-2 border-solid ">
-          <MyCalendar />
+          <MyCalendar onDateChange={setSelectedDate} />
         </div>
       </div>
 

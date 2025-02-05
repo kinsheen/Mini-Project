@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { deleteTodo, getTodoPriorityList } from "../api/context";
+import { getTodoPriorityList, updateTodo } from "../api/context";
 import { toDoResponseArray } from "../interfaces/types";
 import { FaTrashCan } from "react-icons/fa6";
-import Swal from "sweetalert2";
+import { formatLocalDateToISO } from "../helpers/dateToLocal";
+import { confirmDeletion } from "../helpers/SwalDelete";
 
-const Priority = () => {
+interface DisplayDateProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  date: Date | any;
+}
+
+const Priority: React.FC<DisplayDateProps> = ({ date }) => {
   const [lists, setList] = useState<toDoResponseArray | null>(null);
+
+  const formattedDate = formatLocalDateToISO(date);
+
+  console.log("Local Date:", formattedDate); // Local time representation
 
   // Function to fetch the priority tasks
   const fetchData = async () => {
@@ -18,7 +28,7 @@ const Priority = () => {
     fetchData();
   }, []);
 
-  // Filter priority tasks
+  //Filter priority tasks
   const priorityTasks = lists
     ? lists.filter((list) => list.priority === true)
     : [];
@@ -45,25 +55,12 @@ const Priority = () => {
                   <FaTrashCan
                     className="text-primary hover:text-primary/60"
                     onClick={async () => {
-                      Swal.fire({
-                        title: "Are you sure to delete this priority?",
-                        icon: "warning",
-                        draggable: true,
-                        confirmButtonColor: "#0f4c5c",
-                        showCancelButton: true,
-                      }).then(async (result) => {
-                        if (result.isConfirmed) {
-                          const response = await deleteTodo(item._id);
-                          await fetchData();
-                          console.log("ASDASDADASDADAD");
-                          if (response) {
-                            console.log("Task deleted successfully:", response);
-                            // Refresh the task list
-                          }
-                        } else if (result.isDismissed) {
-                          console.log("User dismissed the alert.");
-                        }
-                      });
+                      confirmDeletion(
+                        "Are you sure to delete this priority?",
+                        item._id,
+                        updateTodo,
+                        fetchData
+                      );
                     }}
                   />
                 </span>

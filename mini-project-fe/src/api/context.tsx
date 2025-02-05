@@ -41,25 +41,36 @@ export const deleteTodo = async (id: string) => {
   return response;
 };
 
+//updateTodo
+export const updateTodo = async (id: string, priority: boolean) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "put",
+    `/api/to-do/${id}`,
+    { priority }
+  );
+  console.log("updateTodo Response:", response);
+  return response;
+};
+
 export const addAchievement = async (description: string) => {
   const response = await callApi("post", "/api/achievements", {
     description,
-  })
-  console.log("addAchievement Response:", response)
-  return response
-}
+  });
+  console.log("addAchievement Response:", response);
+  return response;
+};
 
 export const getAchievements = async () => {
-  const response = await callApi("get", "/api/achievements", {})
-  console.log("getAchievements Response:", response)
-  return response
-}
+  const response = await callApi("get", "/api/achievements", {});
+  console.log("getAchievements Response:", response);
+  return response;
+};
 
 export const deleteAchievement = async (id: string) => {
-  const response = await callApi("delete", `/api/achievements/${id}`, {})
-  console.log("deleteAchievement Response:", response)
-  return response
-}
+  const response = await callApi("delete", `/api/achievements/${id}`, {});
+  console.log("deleteAchievement Response:", response);
+  return response;
+};
 
 export const addToDoPriority = async (_id: string) => {
   const response = await callApi<toDoResponseArray | undefined>(
@@ -68,7 +79,7 @@ export const addToDoPriority = async (_id: string) => {
     {
       priority: true,
     }
-  )
-  console.log("AddToDoPriority Response:", response)
-  return response
-}
+  );
+  console.log("AddToDoPriority Response:", response);
+  return response;
+};
