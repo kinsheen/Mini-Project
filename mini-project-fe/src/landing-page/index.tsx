@@ -25,7 +25,7 @@ export const LandingPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 m-5 px-10">
         <div className="border-1 p-2 border-solid overflow-hidden">
-          <Todo />
+          <Todo date={selectedDate} />
         </div>
         <div className="border-1 p-2 border-solid ">
           <Achievement />

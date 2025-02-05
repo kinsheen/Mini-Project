@@ -6,7 +6,7 @@ interface ModalProps {
   onSubmit: (day: string, task: string) => void; // Callback to handle form submission
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const ModalEdit: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [day, setDay] = useState("");
   const [task, setTask] = useState("");
 
@@ -24,28 +24,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-secondary rounded-lg shadow-lg p-6 w-1/4">
         {/* Changed width to 50% */}
-        <h2 className="text-xl font-bold mb-4 font-medium">
-          Create To Do Task
-        </h2>
+        <h2 className="text-xl font-bold mb-4 font-medium">Add Notes</h2>
         <form onSubmit={handleSubmit}>
           <label className="block mb-2 font-medium">
-            Day:
-            <input
-              type="date"
-              value={day}
-              onChange={(e) => setDay(e.target.value)}
-              required
-              className="block w-full border border-gray-300 rounded p-2 mt-1 font-medium bg-white"
-            />
-          </label>
-          <label className="block mb-2 font-medium">
-            Task:
+            Note:
             <textarea
               value={task}
               onChange={(e) => setTask(e.target.value)}
               required
               className="block w-full border border-gray-300 rounded p-2 mt-1 h-32 resize-none font-medium bg-white" // Added height and disabled resizing
-              placeholder="Enter your task here..."
+              placeholder="Enter your notes here..."
             />
           </label>
           <div className="flex justify-end mt-4 gap-2">
@@ -60,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
               type="submit"
               className="bg-primary text-white rounded text-sm font-bold px-4 py-2 hover:bg-secondary transition duration-200 font-medium"
             >
-              Add to do task
+              Add Note
             </button>
           </div>
         </form>
@@ -69,4 +57,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   );
 };
 
-export default Modal;
+export default ModalEdit;

@@ -10,3 +10,9 @@ export type toDoResponse = {
   updatedAt: string;
   __v: number;
 };
+
+export const dateFormat: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};

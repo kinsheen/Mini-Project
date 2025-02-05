@@ -3,6 +3,7 @@ import Modal from "../components/modal";
 import { postCreateToDo } from "../api/context";
 import { IoArrowForwardCircle } from "react-icons/io5";
 import Swal from "sweetalert2";
+import { formatLocalDateToISO } from "../helpers/dateToLocal";
 
 const CreateTodo = () => {
   //   const handelAddTodo = () = {
@@ -26,12 +27,14 @@ const CreateTodo = () => {
       const dayOfWeek = date.toLocaleDateString("en-US", options);
 
       console.log("Submitted Data:", { dayOfWeek, task });
+      console.log("Submitted Data Date:", formatLocalDateToISO(day));
 
       const response = await postCreateToDo(
         dayOfWeek,
         task,
         "In Progress",
-        false
+        false,
+        formatLocalDateToISO(day)
       );
 
       // Assuming the response contains the created data directly

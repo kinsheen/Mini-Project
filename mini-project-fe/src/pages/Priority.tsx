@@ -3,7 +3,7 @@ import { getTodoPriorityList, updateTodo } from "../api/context";
 import { toDoResponseArray } from "../interfaces/types";
 import { FaTrashCan } from "react-icons/fa6";
 import { formatLocalDateToISO } from "../helpers/dateToLocal";
-import { confirmDeletion } from "../helpers/SwalDelete";
+import { confirmation } from "../helpers/SwalDelete";
 
 interface DisplayDateProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,11 +55,11 @@ const Priority: React.FC<DisplayDateProps> = ({ date }) => {
                   <FaTrashCan
                     className="text-primary hover:text-primary/60"
                     onClick={async () => {
-                      confirmDeletion(
+                      confirmation(
                         "Are you sure to delete this priority?",
                         item._id,
                         updateTodo,
-                        fetchData
+                        false
                       );
                     }}
                   />

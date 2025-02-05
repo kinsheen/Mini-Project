@@ -1,15 +1,19 @@
 import Swal from "sweetalert2";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UpdateFunction = (id: string, status: boolean) => Promise<any>;
-type FetchFunction = () => Promise<void>;
+type UpdateFunction = (
+  id: string,
+  priority: boolean,
+  status?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => Promise<any>;
 
 // Reusable confirmation function
-export async function confirmDeletion(
+export async function confirmation(
   title: string,
   itemId: string,
   updateFunction: UpdateFunction,
-  fetchDataFunction: FetchFunction
+  priority: boolean,
+  status?: string
 ) {
   const result = await Swal.fire({
     title: title || "Are you sure?",
@@ -20,8 +24,8 @@ export async function confirmDeletion(
   });
 
   if (result.isConfirmed) {
-    const response = await updateFunction(itemId, false);
-    await fetchDataFunction();
+    const response = await updateFunction(itemId, priority, status);
+    window.location.reload();
     console.log("Deletion process initiated.");
 
     if (response) {
