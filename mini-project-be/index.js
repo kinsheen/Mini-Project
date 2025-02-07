@@ -1,11 +1,10 @@
 const express = require("express");
+const pool = require('./database')
 const cors = require("cors");
-const mongoose = require("mongoose");
-const productRoute = require("./routes/product.route");
 const toDoRoute = require("./routes/to-do.route");
 const achievementRoute = require("./routes/achievement.route");
-
 const app = express();
+const port = 3000;
 
 // middleware
 app.use(cors({ origin: "*" }));
@@ -14,22 +13,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //routes
-app.use("/api/products", productRoute);
 app.use("/api/to-do", toDoRoute);
 app.use("/api/achievements", achievementRoute);
 
-const port = 3000;
+// global error handler
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(err.status || 500).json({ message: 'Something went wrong.'})
+})
 
-app.get("/", (req, res) => res.send("Hello World Updated!"));
+pool.query('SELECT 1')
+    .then(() => {
+      app.listen(port, () =>
+        console.log(`app listening on port ${port}!`))
+    })
+    .catch(err => console.log('db connection failed. \n ' + err))
 
-mongoose
-  .connect(
-    "mongodb+srv://dbUser123:dbUserPassword123@mini-project-backend-db.xotgp.mongodb.net/?retryWrites=true&w=majority&appName=mini-project-backend-db"
-  )
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(port, () =>
-      console.log(`Example app listening on port ${port}!`)
-    );
-  })
-  .catch((err) => console.error("Could not connect to MongoDB", err));
