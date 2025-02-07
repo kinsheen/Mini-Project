@@ -1,18 +1,14 @@
 import { FaList } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { dateFormat, toDoResponseArray } from "../interfaces/types";
-import {
-  getTodoPriorityList,
-  postCreateToDo,
-  updateTodo,
-} from "../api/context";
+import { getTodoPriorityList, updateTodo } from "../api/context";
 import { formatLocalDateToISO } from "../helpers/dateToLocal";
-import { FaEdit } from "react-icons/fa";
 import React from "react";
 import Swal from "sweetalert2";
 import { confirmation } from "../helpers/SwalDelete";
 import ModalEdit from "../components/modalEdit";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { MdOutlineSpeakerNotes } from "react-icons/md";
 
 interface DisplayDateProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,42 +17,27 @@ interface DisplayDateProps {
 
 const Todo: React.FC<DisplayDateProps> = ({ date }) => {
   const [lists, setList] = useState<toDoResponseArray | null>(null);
+  const [noteId, setNoteId] = useState<string>("");
   const formattedDate = formatLocalDateToISO(date);
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<{
-    day: string;
     task: string;
   } | null>(null);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  const handleSubmit = async (day: string, task: string) => {
+  const handleSubmit = async (task: string) => {
     try {
-      const date = new Date(day);
-
-      // Get the day of the week as a string
-      const options: Intl.DateTimeFormatOptions = { weekday: "long" };
-      const dayOfWeek = date.toLocaleDateString("en-US", options);
-
-      console.log("Submitted Data:", { dayOfWeek, task });
-      console.log("Submitted Data Date:", day);
-
-      const response = await postCreateToDo(
-        dayOfWeek,
-        task,
-        "In Progress",
-        false,
-        formatLocalDateToISO(day)
-      );
+      const response = await updateTodo(noteId, false, "In Progress", task);
 
       // Assuming the response contains the created data directly
       if (response) {
-        setSubmittedData({ day, task });
-        console.log("To-do created successfully:", response);
+        setSubmittedData({ task });
+        console.log("Note Added successfully:", response);
         Swal.fire({
-          title: "Successfully Added to Priority!",
+          title: "Successfully Added to Note!",
           icon: "success",
           draggable: true,
           confirmButtonColor: "#0f4c5c", // Customize button color
@@ -65,9 +46,9 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
         });
       } else {
         // Handle the case where response does not contain expected data
-        console.error("Failed to create to-do: No data returned");
+        console.error("Failed to create Note: No data returned");
         Swal.fire({
-          title: "Failed Adding Task to Priority!",
+          title: "Failed Adding Note",
           icon: "error", // Changed from "failure" to "error"
           draggable: true,
           confirmButtonColor: "#0f4c5c",
@@ -100,7 +81,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
 
   const priorityTasks = lists
     ? lists.filter((list) => {
-        const createdAtDate = list.createdAt.split("T")[0]; // Get date part (YYYY-MM-DD)
+        const createdAtDate = list.created_at.split("T")[0]; // Get date part (YYYY-MM-DD)
         const inputDate = formattedDate.split("T")[0]; // Get date part (YYYY-MM-DD)
         console.log(createdAtDate, inputDate);
         return createdAtDate === inputDate && list.status === "In Progress"; // Compare dates and check priority
@@ -110,7 +91,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
   const localTextDate = date.toLocaleDateString(undefined, dateFormat);
 
   return (
-    <div className="todo m-4 mt-7 p-7">
+    <div className="todo mt-7 px-7 py-7">
       <div className="flex flex-row gap-2 text-white mb-7 -mt-11">
         <div className="flex w-30 bg-[#0F4C5C] rounded-md p-2">
           <FaList className="mt-1 mx-1" />
@@ -139,7 +120,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
                       // defaultChecked={false}
                       onClick={async (e) => {
                         const priorityTasks = lists
-                          ? lists.filter((list) => list.priority === true)
+                          ? lists.filter((list) => list.is_priority === true)
                               .length
                           : 0;
                         console.log("Priority Tasks:", priorityTasks);
@@ -155,7 +136,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
                         } else {
                           confirmation(
                             "Add this task to priority?",
-                            item._id,
+                            item.id,
                             updateTodo,
                             true
                           );
@@ -168,29 +149,48 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
                   </div>
                   <div className="px-4 flex flex-col">
                     <span className="font-bold text-lg">{item.task}</span>
-                    <div className="flex-1 px-3">Notes</div>
+                    <div className="flex flex-row items-center gap-2">
+                      <div>
+                        <MdOutlineSpeakerNotes />
+                      </div>
+                      <div>{item.note}</div>
+                    </div>
                   </div>
-                  <div className="flex flex-1 justify-end items-center pr-3 gap-2 relative group">
-                    <FaEdit className="text-2xl" onClick={openModal} />
-                    <input
-                      type="checkbox"
-                      className="transform scale-150 cursor-pointer flex items-center justify-center"
-                      defaultChecked={false}
-                      onClick={async (e) => {
-                        if (e.currentTarget.checked) {
-                          confirmation(
-                            "Are you done with this task?",
-                            item._id,
-                            updateTodo,
-                            false,
-                            "Done"
-                          );
-                        }
-                      }}
-                    />
-                    <span className="absolute left-full transform -translate-x-22 -top-8 w-max rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                      Done with this task?
-                    </span>
+                  <div className="flex flex-1 justify-end items-center pr-3 gap-2 ">
+                    <div className="relative group">
+                      <MdOutlineSpeakerNotes
+                        className="text-2xl mt-0.5 cursor-pointer"
+                        onClick={() => {
+                          setNoteId(item.id); // Set the note ID
+                          openModal(); // Open the modal
+                        }}
+                      />
+                      <span className="absolute left-full transform -translate-x-12 -top-8 w-max rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        Add Notes
+                      </span>
+                    </div>
+
+                    <div className="relative group">
+                      <input
+                        type="checkbox"
+                        className="transform scale-150 cursor-pointer"
+                        defaultChecked={false}
+                        onClick={async (e) => {
+                          if (e.currentTarget.checked) {
+                            confirmation(
+                              "Are you done with this task?",
+                              item.id,
+                              updateTodo,
+                              false,
+                              "Done"
+                            );
+                          }
+                        }}
+                      />
+                      <span className="absolute left-full transform -translate-x-18 -top-8 w-max rounded bg-gray-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        Done with this task?
+                      </span>
+                    </div>
                   </div>
                 </li>
               ))

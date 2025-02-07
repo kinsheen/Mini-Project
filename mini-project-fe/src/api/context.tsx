@@ -12,8 +12,8 @@ export const postCreateToDo = async (
   day: string,
   task: string,
   status: string,
-  priority: boolean,
-  createdAt: string
+  is_priority: boolean,
+  created_at: string
 ) => {
   const response = await callApi<toDoResponseArray | undefined>(
     "post",
@@ -22,8 +22,8 @@ export const postCreateToDo = async (
       day,
       task,
       status,
-      priority,
-      createdAt,
+      is_priority,
+      created_at,
     }
   );
   console.log("createToDo Response:", response);
@@ -46,13 +46,14 @@ export const deleteTodo = async (id: string) => {
 //updateTodo
 export const updateTodo = async (
   id: string,
-  priority: boolean,
-  status?: string
+  is_priority: boolean,
+  status?: string,
+  note?: string
 ) => {
   const response = await callApi<toDoResponseArray | undefined>(
     "put",
     `/api/to-do/${id}`,
-    { priority, status }
+    { is_priority, status, note }
   );
   console.log("updateTodo Response:", response);
   return response;

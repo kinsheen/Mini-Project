@@ -3,19 +3,17 @@ import React, { useState } from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (day: string, task: string) => void; // Callback to handle form submission
+  onSubmit: (task: string) => void; // Callback to handle form submission
 }
 
 const ModalEdit: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [day, setDay] = useState("");
   const [task, setTask] = useState("");
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(day, task); // Pass values to parent
-    setDay("");
+    onSubmit(task); // Pass values to parent
     setTask("");
     onClose(); // Close the modal after submission
   };

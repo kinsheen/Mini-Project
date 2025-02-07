@@ -1,14 +1,15 @@
 export type toDoResponseArray = toDoResponse[];
 
 export type toDoResponse = {
-  _id: string;
+  id: string;
   day: string;
   task: string;
   status: string;
-  priority: boolean;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  is_priority: boolean;
+  note: string;
+  created_at: string;
+  deleted_at: string;
+  updated_at: string;
 };
 
 export const dateFormat: Intl.DateTimeFormatOptions = {

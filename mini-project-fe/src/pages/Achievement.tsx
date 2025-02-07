@@ -1,37 +1,37 @@
-import { useState, Fragment, useEffect } from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { FaList, FaPlus, FaTrash, FaTrashCan } from "react-icons/fa6"
+import { useState, Fragment, useEffect } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { FaList, FaPlus, FaTrash, FaTrashCan } from "react-icons/fa6";
 import {
   addAchievement,
   deleteAchievement,
   getAchievements,
-} from "../api/context"
+} from "../api/context";
 
 const Achievement = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [description, setDescription] = useState("")
-  const [achievements, setAchievements] = useState([])
-  const [shouldRefetch, setShouldRefetch] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [description, setDescription] = useState("");
+  const [achievements, setAchievements] = useState([]);
+  const [shouldRefetch, setShouldRefetch] = useState(false);
 
   const fetchAchievements = async () => {
-    const response = await getAchievements()
-    setAchievements(response)
-  }
+    const response = await getAchievements();
+    setAchievements(response);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    await addAchievement(description)
-    fetchAchievements()
-    setIsOpen(false)
-  }
+    await addAchievement(description);
+    fetchAchievements();
+    setIsOpen(false);
+  };
 
   useEffect(() => {
-    fetchAchievements()
-  }, [shouldRefetch])
+    fetchAchievements();
+  }, [shouldRefetch]);
 
   return (
-    <div className="achievement m-4 mt-7 p-7">
+    <div className="achievement mt-7 p-7">
       <div className="flex flex-row gap-2 mb-13 -mt-11 text-white">
         <div className="flex w-40 bg-[#0F4C5C] rounded-md p-2">
           <FaList className="mt-1 mx-1" />
@@ -55,10 +55,11 @@ const Achievement = () => {
                 <div className="flex-1">{achievement.description}</div>
               </div>
               <div>
-                <FaTrashCan className="mx-2 cursor-pointer"
+                <FaTrashCan
+                  className="mx-2 cursor-pointer"
                   onClick={async () => {
-                    await deleteAchievement(achievement._id)
-                    setShouldRefetch((prev) => !prev)
+                    await deleteAchievement(achievement._id);
+                    setShouldRefetch((prev) => !prev);
                   }}
                 />
               </div>
@@ -146,7 +147,7 @@ const Achievement = () => {
         </Dialog>
       </Transition>
     </div>
-  )
-}
+  );
+};
 
-export default Achievement
+export default Achievement;

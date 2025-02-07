@@ -30,7 +30,7 @@ const Priority: React.FC<DisplayDateProps> = ({ date }) => {
 
   //Filter priority tasks
   const priorityTasks = lists
-    ? lists.filter((list) => list.priority === true)
+    ? lists.filter((list) => list.is_priority == true)
     : [];
 
   return (
@@ -57,7 +57,7 @@ const Priority: React.FC<DisplayDateProps> = ({ date }) => {
                     onClick={async () => {
                       confirmation(
                         "Are you sure to delete this priority?",
-                        item._id,
+                        item.id,
                         updateTodo,
                         false
                       );
