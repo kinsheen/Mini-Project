@@ -1,4 +1,3 @@
-const ToDoSchema = require('../models/to-do.model');
 const service = require('../services/to-do.service')
 
 // Get All To-Dos
