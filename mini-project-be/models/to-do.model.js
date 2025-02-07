@@ -1,6 +1,5 @@
 const mongoose =  require('mongoose');
 
-
 const ToDoSchema = mongoose.Schema({
     day: {
         type: String,
@@ -17,6 +16,10 @@ const ToDoSchema = mongoose.Schema({
     priority: {
         type: Boolean,
         required: [true, 'Priority is required']
+    },
+    note: {
+        type: String,
+        required: [false]
     }
 },
 {
