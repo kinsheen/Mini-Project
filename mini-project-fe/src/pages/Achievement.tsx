@@ -70,13 +70,14 @@ const Achievement = () => {
 
       <div className="achievement-box h-100 bg-[#0F4C5C]">
         {achievements?.map((item, index) => (
-          <ul key={index} className="list-disc list-inside p-2">
+          <ul key={index} className="p-2">
             <li className="text-white flex items-start">
-              <span className="mr-2">•</span>
               <div className="flex flex-1">
                 <div className="flex-1">
-                  {item.task}
-                  {item?.note}
+                  <p className="font-bold text-xl">
+                    {index + 1}. {item.task}
+                  </p>
+                  <span className="text-md ml-5 italic">- {item.note}</span>
                 </div>
               </div>
               <div className="relative group inline-block">
@@ -88,23 +89,23 @@ const Achievement = () => {
                     setId(+item.id)
                   }}
                 >
-                  <FaEdit />
+                  <FaEdit className="text-xl cursor-pointer" />
                 </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Add notes
                 </span>
               </div>
               <div className="relative group inline-block">
                 <button className="text-white py-2 rounded">
                   <FaTrashCan
-                    className="mx-2 cursor-pointer"
+                    className="text-xl cursor-pointer"
                     onClick={async () => {
                       await deleteTodo(item.id)
                       setShouldRefetch((prev) => !prev)
                     }}
                   />
                 </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Delete
                 </span>
               </div>

@@ -39,7 +39,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full mb-3 p-2 border border-gray-400 bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
-              placeholder="Enter achievement description"
+              placeholder="Enter achievement description..."
               required
             />
           </div>
@@ -52,7 +52,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full mb-3 p-2 border border-gray-400 bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
-              placeholder="Enter notes description"
+              placeholder="Enter achievement notes..."
               required
             />
           </div>
