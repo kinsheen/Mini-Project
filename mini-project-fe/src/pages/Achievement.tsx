@@ -1,34 +1,53 @@
-import { useState, Fragment, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { FaList, FaPlus, FaTrash, FaTrashCan } from "react-icons/fa6";
+import { useState, useEffect } from "react"
+import { FaList, FaPlus, FaTrashCan } from "react-icons/fa6"
 import {
-  addAchievement,
-  deleteAchievement,
-  getAchievements,
-} from "../api/context";
+  deleteTodo,
+  getToDoByField,
+  getTodoById,
+  postCreateToDo,
+  updateTodo,
+} from "../api/context"
+import AchievementModal from "../components/AchievementModal"
+import { toDoResponseArray } from "../interfaces/types"
+import { FaEdit } from "react-icons/fa"
 
 const Achievement = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [description, setDescription] = useState("");
-  const [achievements, setAchievements] = useState([]);
-  const [shouldRefetch, setShouldRefetch] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [isUpdate, setIsUpdate] = useState(false)
+  const [id, setId] = useState(0)
+  const [achievements, setAchievements] = useState<toDoResponseArray>([])
+  const [shouldRefetch, setShouldRefetch] = useState(false)
 
   const fetchAchievements = async () => {
-    const response = await getAchievements();
-    setAchievements(response);
-  };
+    const response = await getToDoByField("status", "Done")
+    fetchTodo()
+    setAchievements(response || [])
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const fetchTodo = async () => {
+    const response = await getTodoById("9")
+    console.log(response)
+  }
 
-    await addAchievement(description);
-    fetchAchievements();
-    setIsOpen(false);
-  };
+  const handleSubmit = async (description: string) => {
+    if (isUpdate === true) {
+      await updateTodo(id, false, "Done", description)
+    } else {
+      await postCreateToDo(
+        new Date().toLocaleDateString(),
+        description,
+        "Done",
+        false,
+        new Date().toLocaleDateString()
+      )
+    }
+
+    fetchAchievements()
+  }
 
   useEffect(() => {
-    fetchAchievements();
-  }, [shouldRefetch]);
+    fetchAchievements()
+  }, [shouldRefetch])
 
   return (
     <div className="achievement mt-7 p-7">
@@ -38,7 +57,10 @@ const Achievement = () => {
           <h3 className=""> ACHIEVEMENT</h3>
         </div>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={async () => {
+            setIsOpen(true)
+            setIsUpdate(false)
+          }}
           className="flex w-30 bg-[#0F4C5C] rounded-md p-2 hover:bg-[#0a3540] transition-colors"
         >
           <FaPlus className="mt-1 mx-1" />
@@ -47,107 +69,58 @@ const Achievement = () => {
       </div>
 
       <div className="achievement-box h-100 bg-[#0F4C5C]">
-        {achievements?.map((achievement, index) => (
+        {achievements?.map((item, index) => (
           <ul key={index} className="list-disc list-inside p-2">
             <li className="text-white flex items-start">
               <span className="mr-2">•</span>
               <div className="flex flex-1">
-                <div className="flex-1">{achievement.description}</div>
+                <div className="flex-1">
+                  {item.task}
+                  {item?.note}
+                </div>
               </div>
-              <div>
-                <FaTrashCan
-                  className="mx-2 cursor-pointer"
-                  onClick={async () => {
-                    await deleteAchievement(achievement._id);
-                    setShouldRefetch((prev) => !prev);
+              <div className="relative group inline-block">
+                <button
+                  className="text-white py-2 mx-2 rounded"
+                  onClick={() => {
+                    setIsOpen(true)
+                    setIsUpdate(true)
+                    setId(+item.id)
                   }}
-                />
+                >
+                  <FaEdit />
+                </button>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  Add notes
+                </span>
+              </div>
+              <div className="relative group inline-block">
+                <button className="text-white py-2 rounded">
+                  <FaTrashCan
+                    className="mx-2 cursor-pointer"
+                    onClick={async () => {
+                      await deleteTodo(item.id)
+                      setShouldRefetch((prev) => !prev)
+                    }}
+                  />
+                </button>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-xs rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  Delete
+                </span>
               </div>
             </li>
           </ul>
         ))}
       </div>
 
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setIsOpen(false)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0  bg-opacity-50" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-[#9FB7BE] border-2 p-6 text-left align-middle shadow-xl transition-all">
-                  <div className="flex justify-between items-center mb-4">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
-                    >
-                      Add New Achievement
-                    </Dialog.Title>
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  <form onSubmit={handleSubmit}>
-                    <div className="mt-2">
-                      <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border border-gray-300 bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent"
-                        placeholder="Enter achievement description"
-                        required
-                      />
-                    </div>
-
-                    <div className="mt-4 flex justify-end">
-                      <button
-                        type="button"
-                        className="mr-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 text-sm font-medium text-white bg-[#0F4C5C] rounded-md hover:bg-[#0a3540]"
-                      >
-                        Add Achievement
-                      </button>
-                    </div>
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+      <AchievementModal
+        isOpen={isOpen}
+        isUpdate={isUpdate}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default Achievement;
+export default Achievement

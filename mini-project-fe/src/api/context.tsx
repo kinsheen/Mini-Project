@@ -31,6 +31,15 @@ export const postCreateToDo = async (
 };
 
 //updateTodo
+export const getTodoById = async (id: string) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "get",
+    `/api/to-do/${id}`,
+    {}
+  )
+  console.log("getTodoById Response:", response)
+  return response
+}
 
 //deleteTodo
 export const deleteTodo = async (id: string) => {
@@ -38,14 +47,14 @@ export const deleteTodo = async (id: string) => {
     "delete",
     `/api/to-do/${id}`,
     {}
-  );
-  console.log("deleteTodo Response:", response);
-  return response;
-};
+  )
+  console.log("deleteTodo Response:", response)
+  return response
+}
 
 //updateTodo
 export const updateTodo = async (
-  id: string,
+  id: number,
   is_priority: boolean,
   status?: string,
   note?: string
@@ -54,30 +63,10 @@ export const updateTodo = async (
     "put",
     `/api/to-do/${id}`,
     { is_priority, status, note }
-  );
-  console.log("updateTodo Response:", response);
-  return response;
-};
-
-export const addAchievement = async (description: string) => {
-  const response = await callApi("post", "/api/achievements", {
-    description,
-  });
-  console.log("addAchievement Response:", response);
-  return response;
-};
-
-export const getAchievements = async () => {
-  const response = await callApi("get", "/api/achievements", {});
-  console.log("getAchievements Response:", response);
-  return response;
-};
-
-export const deleteAchievement = async (id: string) => {
-  const response = await callApi("delete", `/api/achievements/${id}`, {});
-  console.log("deleteAchievement Response:", response);
-  return response;
-};
+  )
+  console.log("updateTodo Response:", response)
+  return response
+}
 
 export const addToDoPriority = async (_id: string) => {
   const response = await callApi<toDoResponseArray | undefined>(
@@ -86,7 +75,17 @@ export const addToDoPriority = async (_id: string) => {
     {
       priority: true,
     }
-  );
-  console.log("AddToDoPriority Response:", response);
-  return response;
-};
+  )
+  console.log("AddToDoPriority Response:", response)
+  return response
+}
+
+export const getToDoByField = async (field: string, value: string) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "get",
+    `/api/to-do/${field}/${value}`,
+    {}
+  )
+  console.log("getToDoByField Response:", response)
+  return response
+}
