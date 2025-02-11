@@ -3,13 +3,13 @@ import { FaList, FaPlus, FaTrashCan } from "react-icons/fa6"
 import {
   deleteTodo,
   getToDoByField,
-  getTodoById,
   postCreateToDo,
   updateTodo,
 } from "../api/context"
 import AchievementModal from "../components/AchievementModal"
 import { toDoResponseArray } from "../interfaces/types"
 import { FaEdit } from "react-icons/fa"
+import Swal from "sweetalert2"
 
 const Achievement = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,13 +20,8 @@ const Achievement = () => {
 
   const fetchAchievements = async () => {
     const response = await getToDoByField("status", "Done")
-    fetchTodo()
+    console.log("response=>", response)
     setAchievements(response || [])
-  }
-
-  const fetchTodo = async () => {
-    const response = await getTodoById("9")
-    console.log(response)
   }
 
   const handleSubmit = async (description: string) => {
@@ -43,6 +38,24 @@ const Achievement = () => {
     }
 
     fetchAchievements()
+  }
+
+  const handleDelete = (itemId: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await deleteTodo(itemId)
+        setShouldRefetch((prev) => !prev)
+        Swal.fire("Deleted!", "Your item has been deleted.", "success")
+      }
+    })
   }
 
   useEffect(() => {
@@ -77,7 +90,9 @@ const Achievement = () => {
                   <p className="font-bold text-xl">
                     {index + 1}. {item.task}
                   </p>
-                  <span className="text-md ml-5 italic">- {item.note}</span>
+                  <span className="text-md ml-5 italic">
+                    {item.note ? `- ${item.note}` : ""}
+                  </span>
                 </div>
               </div>
               <div className="relative group inline-block">
@@ -96,14 +111,11 @@ const Achievement = () => {
                 </span>
               </div>
               <div className="relative group inline-block">
-                <button className="text-white py-2 rounded">
-                  <FaTrashCan
-                    className="text-xl cursor-pointer"
-                    onClick={async () => {
-                      await deleteTodo(item.id)
-                      setShouldRefetch((prev) => !prev)
-                    }}
-                  />
+                <button
+                  className="text-white py-2 rounded"
+                  onClick={async () => handleDelete(item.id)}
+                >
+                  <FaTrashCan className="text-xl cursor-pointer" />
                 </button>
                 <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Delete

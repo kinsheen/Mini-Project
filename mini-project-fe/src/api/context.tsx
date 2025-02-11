@@ -81,11 +81,17 @@ export const addToDoPriority = async (_id: string) => {
 }
 
 export const getToDoByField = async (field: string, value: string) => {
-  const response = await callApi<toDoResponseArray | undefined>(
-    "get",
-    `/api/to-do/${field}/${value}`,
-    {}
-  )
-  console.log("getToDoByField Response:", response)
-  return response
+  try {
+    const response = await callApi<toDoResponseArray | undefined>(
+      "get",
+      `/api/to-do/${field}/${value}`,
+      {}
+    )
+    console.log("getToDoByField Response:", response)
+    return response
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+
 }
