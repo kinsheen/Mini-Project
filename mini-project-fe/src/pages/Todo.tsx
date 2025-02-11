@@ -17,7 +17,7 @@ interface DisplayDateProps {
 
 const Todo: React.FC<DisplayDateProps> = ({ date }) => {
   const [lists, setList] = useState<toDoResponseArray | null>(null);
-  const [noteId, setNoteId] = useState<string>("");
+  const [noteId, setNoteId] = useState<number>(0);
   const formattedDate = formatLocalDateToISO(date);
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -30,7 +30,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
 
   const handleSubmit = async (task: string) => {
     try {
-      const response = await updateTodo(noteId, false, "In Progress", task);
+      const response = await updateTodo(+noteId, false, "In Progress", task);
 
       // Assuming the response contains the created data directly
       if (response) {
@@ -81,12 +81,18 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
 
   const priorityTasks = lists
     ? lists.filter((list) => {
+        // Ensure created_at is a valid string before splitting
+        if (!list.created_at) return false;
+
         const createdAtDate = list.created_at.split("T")[0]; // Get date part (YYYY-MM-DD)
         const inputDate = formattedDate.split("T")[0]; // Get date part (YYYY-MM-DD)
         console.log(createdAtDate, inputDate);
+
         return createdAtDate === inputDate && list.status === "In Progress"; // Compare dates and check priority
       })
     : [];
+
+  console.log("PRIORITY ATSDISD", priorityTasks);
 
   const localTextDate = date.toLocaleDateString(undefined, dateFormat);
 

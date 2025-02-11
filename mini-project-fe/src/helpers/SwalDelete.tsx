@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 type UpdateFunction = (
-  id: string,
+  id: number,
   priority: boolean,
   status?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,7 +10,7 @@ type UpdateFunction = (
 // Reusable confirmation function
 export async function confirmation(
   title: string,
-  itemId: string,
+  itemId: number,
   updateFunction: UpdateFunction,
   priority: boolean,
   status?: string

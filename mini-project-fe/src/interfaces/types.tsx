@@ -1,7 +1,7 @@
 export type toDoResponseArray = toDoResponse[];
 
 export type toDoResponse = {
-  id: string;
+  id: number;
   day: string;
   task: string;
   status: string;
