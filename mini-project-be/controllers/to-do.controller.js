@@ -11,26 +11,57 @@ const getToDo = async (req, res) => {
     const id = req.params.id
     const result = await service.getToDoById(id)
     if (result.length === 0) {
-        return res.status(404).json({ message: 'To-Do not found' })
+        return res.status(404).json({ message: 'To-Do not found by id' })
     }
     res.status(200).json(result)
 }
 
 // Get To-Do by Field
-const getToDoByField = async (req, res) => {
-    const { field, value } = req.params; // Extract field and value from URL params
+const getToDoByField = async ({ params }, res) => {
+    const { field, value } = params;
     if (!field || !value) {
         return res.status(400).json({ message: "Field and value parameters are required" });
     }
-    // Validate field to prevent SQL injection
-    const validFields = ["day", "task", "status","priority", "created_at", "deleted_at"]; // Define allowed fields
+
+    // Define allowed fields
+    const validFields = ["day", "task", "status", "priority"];
     if (!validFields.includes(field)) {
         return res.status(400).json({ message: "Invalid field parameter" });
     }
+
     const result = await service.getToDoByField(field, value);
     if (result.length === 0) {
         return res.status(404).json({ message: `No To-Do items found with ${field} = ${value}` });
     }
+    res.status(200).json(result);
+};
+
+const getToDoByDate = async ({ query }, res) => {
+    const { field, date } = query; // Extract start and end date from query params
+
+    if (!field || !date) {
+        return res.status(400).json({ message: "Fields are required" });
+    }
+
+    // Define allowed date fields
+    const validDateFields = ["created_at", "deleted_at"];
+    if (!validDateFields.includes(field)) {
+        return res.status(400).json({ message: "Invalid field parameter for date filtering" });
+    }
+
+    // Validate date format (YYYY-MM-DD only)
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(date)) {
+        return res.status(400).json({ message: "Invalid date format. Use YYYY-MM-DD." + date});
+    }
+
+    // Fetch records within the date range
+    const result = await service.getToDoByDate(field, date);
+
+    if (result.length === 0) {
+        return res.status(404).json({ message: `No To-Do items found in date: ${date}` });
+    }
+
     res.status(200).json(result);
 };
 
@@ -44,12 +75,11 @@ const createToDo = async (req, res) => {
     }
 
     // Construct dynamic column names and placeholders
-    const fields = Object.keys(data).map(field => `\`${field}\``).join(", ");
     const placeholders = Object.keys(data).map(() => "?").join(", ");
+    const fields = Object.keys(data).map(field => `\`${field}\``).join(", ");
     const values = Object.values(data);
 
     const newRecord = await service.createToDo(fields, placeholders, values)
-
     res.status(201).json(newRecord[0]); // Return the inserted to-do item
 
 }
@@ -59,17 +89,12 @@ const updateToDo = async (req, res) => {
     const id = req.params.id;
     const data = req.body;
 
-    console.log(data);
-
     if (!id || Object.keys(data).length === 0) {
         return null; // No valid update fields provided
     }
 
     const fields = Object.keys(data).map(field => `\`${field}\` = ?`).join(", ");
     const values = Object.values(data);
-
-    console.log(fields);
-    console.log(values);
 
     const result = await service.updateToDo(id, fields, values)
     res.status(200).json(result)
@@ -87,4 +112,4 @@ const deleteToDo = async (req, res) => {
     res.status(201).json({ message: 'To-Do deleted successfully' })
 }
 
-module.exports = { getToDos, getToDo, createToDo, updateToDo, deleteToDo, getToDoByField };
+module.exports = { getToDos, getToDo, createToDo, updateToDo, deleteToDo, getToDoByField, getToDoByDate };

@@ -1,15 +1,13 @@
 
-const db = require('../database')
+const db = require('../config/database')
 
 module.exports.getAllToDo = async () => {
     const [records] = await db.query("SELECT * FROM todo")
-    
     return records;
 }
 
 module.exports.getToDoById = async (id) => {
     const [record] = await db.query("SELECT * FROM todo WHERE id = ?", [id])
-
     return record;
 }
 
@@ -20,9 +18,16 @@ module.exports.getToDoByField = async (field, value) => {
     return record;
 }
 
+module.exports.getToDoByDate = async (field, value) => {
+    const query = `SELECT * FROM todo WHERE ${field} BETWEEN '${value} 00:00:00' AND '${value} 23:59:59'`;
+    const [record] = await db.query(query, [value]);
+    console.log(query);
+
+    return record;
+}
+
 module.exports.createToDo = async (fields, placeholders, values) => {
     const query = `INSERT INTO todo (${fields}) VALUES (${placeholders})`;
-    console.log(query);
     const [result] = await db.query(query, values);
 
     const [newRecord] = await db.query(`SELECT * FROM todo WHERE id = ?`, [result.insertId]);
@@ -33,7 +38,6 @@ module.exports.updateToDo = async (id, fields, values) => {
     const query = `UPDATE todo SET ${fields} WHERE id = ?`;
     const [result] = await db.query(query, [...values, id]);
 
-    console.log(result);
     if (result.affectedRows === 0) {
         return null;
     }

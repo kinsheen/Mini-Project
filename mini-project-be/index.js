@@ -1,10 +1,11 @@
 const express = require("express");
-const pool = require('./database')
+const pool = require('./config/database')
 const cors = require("cors");
-const toDoRoute = require("./routes/to-do.route");
-const achievementRoute = require("./routes/achievement.route");
 const app = express();
 const port = 3000;
+
+const toDoRoute = require("./routes/to-do.route");
+const achievementRoute = require("./routes/achievement.route");
 
 // middleware
 app.use(cors({ origin: "*" }));
