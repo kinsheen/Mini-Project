@@ -1,7 +1,7 @@
 import { FaList } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { dateFormat, toDoResponseArray } from "../interfaces/types";
-import { getTodoPriorityList, updateTodo } from "../api/context";
+import { getTodoPriorityList, updateNotes, updateTodo } from "../api/context";
 import { formatLocalDateToISO } from "../helpers/dateToLocal";
 import React from "react";
 import Swal from "sweetalert2";
@@ -30,7 +30,7 @@ const Todo: React.FC<DisplayDateProps> = ({ date }) => {
 
   const handleSubmit = async (task: string) => {
     try {
-      const response = await updateTodo(+noteId, false, "In Progress", task);
+      const response = await updateNotes(+noteId, task);
 
       // Assuming the response contains the created data directly
       if (response) {
