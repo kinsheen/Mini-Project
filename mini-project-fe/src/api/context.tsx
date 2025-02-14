@@ -36,10 +36,10 @@ export const getTodoById = async (id: string) => {
     "get",
     `/api/to-do/${id}`,
     {}
-  )
-  console.log("getTodoById Response:", response)
-  return response
-}
+  );
+  console.log("getTodoById Response:", response);
+  return response;
+};
 
 //deleteTodo
 export const deleteTodo = async (id: string) => {
@@ -47,15 +47,15 @@ export const deleteTodo = async (id: string) => {
     "delete",
     `/api/to-do/${id}`,
     {}
-  )
-  console.log("deleteTodo Response:", response)
-  return response
-}
+  );
+  console.log("deleteTodo Response:", response);
+  return response;
+};
 
 //updateTodo
 export const updateTodo = async (
   id: number,
-  is_priority: boolean,
+  is_priority?: boolean,
   status?: string,
   note?: string
 ) => {
@@ -63,10 +63,21 @@ export const updateTodo = async (
     "put",
     `/api/to-do/${id}`,
     { is_priority, status, note }
-  )
-  console.log("updateTodo Response:", response)
-  return response
-}
+  );
+  console.log("updateTodo Response:", response);
+  return response;
+};
+
+//updateNotes
+export const updateNotes = async (id: number, note: string) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "put",
+    `/api/to-do/${id}`,
+    { note }
+  );
+  console.log("updateNotes Response:", response);
+  return response;
+};
 
 export const addToDoPriority = async (_id: string) => {
   const response = await callApi<toDoResponseArray | undefined>(
@@ -75,10 +86,10 @@ export const addToDoPriority = async (_id: string) => {
     {
       priority: true,
     }
-  )
-  console.log("AddToDoPriority Response:", response)
-  return response
-}
+  );
+  console.log("AddToDoPriority Response:", response);
+  return response;
+};
 
 export const getToDoByField = async (field: string, value: string) => {
   try {
@@ -86,12 +97,11 @@ export const getToDoByField = async (field: string, value: string) => {
       "get",
       `/api/to-do/${field}/${value}`,
       {}
-    )
-    console.log("getToDoByField Response:", response)
-    return response
+    );
+    console.log("getToDoByField Response:", response);
+    return response;
   } catch (error) {
-    console.log(error)
-    return null
+    console.log(error);
+    return null;
   }
-
-}
+};
