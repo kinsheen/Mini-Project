@@ -46,14 +46,19 @@ const Achievement = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#0F4C5C",
+      cancelButtonColor: "bg-gray-400",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteTodo(itemId)
         setShouldRefetch((prev) => !prev)
-        Swal.fire("Deleted!", "Your item has been deleted.", "success")
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your item has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#0F4C5C",
+        })
       }
     })
   }
@@ -64,7 +69,7 @@ const Achievement = () => {
 
   return (
     <div className="achievement mt-7 p-7">
-      <div className="flex flex-row gap-2 mb-13 -mt-11 text-white">
+      <div className="flex flex-row gap-2 -mt-12 text-white">
         <div className="flex w-40 bg-[#0F4C5C] rounded-md p-2">
           <FaList className="mt-1 mx-1" />
           <h3 className=""> ACHIEVEMENT</h3>
@@ -81,9 +86,9 @@ const Achievement = () => {
         </button>
       </div>
 
-      <div className="achievement-box h-100 bg-[#0F4C5C]">
+      <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3">
         {achievements?.map((item, index) => (
-          <ul key={index} className="p-2">
+          <ul key={index} className="p-2 border-2 border-white rounded-md mb-3">
             <li className="text-white flex items-start">
               <div className="flex flex-1">
                 <div className="flex-1">
@@ -95,7 +100,7 @@ const Achievement = () => {
                   </span>
                 </div>
               </div>
-              <div className="relative group inline-block">
+              <div className="relative group inline-block mt-2">
                 <button
                   className="text-white py-2 mx-2 rounded"
                   onClick={() => {
@@ -110,10 +115,10 @@ const Achievement = () => {
                   Add notes
                 </span>
               </div>
-              <div className="relative group inline-block">
+              <div className="relative group inline-block mt-2 mr-3">
                 <button
                   className="text-white py-2 rounded"
-                  onClick={async () => handleDelete(item.id)}
+                  onClick={async () => handleDelete(item.id.toString())}
                 >
                   <FaTrashCan className="text-xl cursor-pointer" />
                 </button>
