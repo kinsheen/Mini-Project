@@ -27,6 +27,12 @@ const Achievement = () => {
   const handleSubmit = async (description: string) => {
     if (isUpdate === true) {
       await updateTodo(id, false, "Done", description)
+      Swal.fire({
+        title: "Successfully Updated a Task!",
+        icon: "success",
+        draggable: true,
+        confirmButtonColor: "#0F4C5C",
+      })
     } else {
       await postCreateToDo(
         new Date().toLocaleDateString(),
@@ -35,6 +41,13 @@ const Achievement = () => {
         false,
         new Date().toLocaleDateString()
       )
+
+      Swal.fire({
+        title: "Successfully Added a Task!",
+        icon: "success",
+        draggable: true,
+        confirmButtonColor: "#0F4C5C", // Customize button color
+      })
     }
 
     fetchAchievements()
@@ -102,7 +115,7 @@ const Achievement = () => {
               </div>
               <div className="relative group inline-block mt-2">
                 <button
-                  className="text-white py-2 mx-2 rounded"
+                  className="text-white py-2 mx-2 rounded  hover:scale-135"
                   onClick={() => {
                     setIsOpen(true)
                     setIsUpdate(true)
@@ -111,18 +124,18 @@ const Achievement = () => {
                 >
                   <FaEdit className="text-xl cursor-pointer" />
                 </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Add notes
                 </span>
               </div>
               <div className="relative group inline-block mt-2 mr-3">
                 <button
-                  className="text-white py-2 rounded"
+                  className="text-white py-2 rounded  hover:scale-135"
                   onClick={async () => handleDelete(item.id.toString())}
                 >
                   <FaTrashCan className="text-xl cursor-pointer" />
                 </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Delete
                 </span>
               </div>
