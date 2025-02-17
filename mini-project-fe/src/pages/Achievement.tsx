@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
-import { FaList, FaPlus, FaTrashCan } from "react-icons/fa6"
+import { FaList, FaPlus, FaRegNoteSticky, FaTrashCan } from "react-icons/fa6"
 import {
   deleteTodo,
   getToDoByField,
+  getTodoById,
   postCreateToDo,
+  updateAchievement,
   updateTodo,
 } from "../api/context"
 import AchievementModal from "../components/AchievementModal"
@@ -14,17 +16,19 @@ import Swal from "sweetalert2"
 const Achievement = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isUpdate, setIsUpdate] = useState(false)
+  const [isEditAchievement, setIsEditAchievement] = useState(false)
   const [id, setId] = useState(0)
   const [achievements, setAchievements] = useState<toDoResponseArray>([])
+  const [task, setTask] = useState("")
+  const [note, setNote] = useState("")
   const [shouldRefetch, setShouldRefetch] = useState(false)
 
   const fetchAchievements = async () => {
     const response = await getToDoByField("status", "Done")
-    console.log("response=>", response)
     setAchievements(response || [])
   }
 
-  const handleSubmit = async (description: string) => {
+  const handleSubmit = async (description?: string, notes?: string) => {
     if (isUpdate === true) {
       await updateTodo(id, false, "Done", description)
       Swal.fire({
@@ -33,10 +37,27 @@ const Achievement = () => {
         draggable: true,
         confirmButtonColor: "#0F4C5C",
       })
+    } else if (isEditAchievement === true) {
+      if (!description && !notes) {
+        return
+      } else {
+        await updateAchievement(id, false, "Done", description, notes)
+      }
+      if (!description) {
+        await updateAchievement(id, false, "Done", task, notes)
+      } else if (!notes) {
+        await updateAchievement(id, false, "Done", description, note)
+      }
+      Swal.fire({
+        title: "Succesfully Edited a Task!",
+        icon: "success",
+        draggable: true,
+        confirmButtonColor: "#0F4C5C",
+      })
     } else {
       await postCreateToDo(
         new Date().toLocaleDateString(),
-        description,
+        description || "",
         "Done",
         false,
         new Date().toLocaleDateString()
@@ -46,7 +67,7 @@ const Achievement = () => {
         title: "Successfully Added a Task!",
         icon: "success",
         draggable: true,
-        confirmButtonColor: "#0F4C5C", // Customize button color
+        confirmButtonColor: "#0F4C5C",
       })
     }
 
@@ -91,6 +112,7 @@ const Achievement = () => {
           onClick={async () => {
             setIsOpen(true)
             setIsUpdate(false)
+            setIsEditAchievement(false)
           }}
           className="flex w-30 bg-[#0F4C5C] rounded-md p-2 hover:bg-[#0a3540] transition-colors"
         >
@@ -116,19 +138,44 @@ const Achievement = () => {
               <div className="relative group inline-block mt-2">
                 <button
                   className="text-white py-2 mx-2 rounded  hover:scale-135"
-                  onClick={() => {
+                  onClick={async () => {
                     setIsOpen(true)
-                    setIsUpdate(true)
+                    setIsEditAchievement(true)
+                    setIsUpdate(false)
                     setId(+item.id)
+                    const [data] = (await getTodoById(item.id.toString())) ?? []
+                    const { task, note } = data
+                    setTask(task)
+                    setNote(note)
                   }}
                 >
                   <FaEdit className="text-xl cursor-pointer" />
                 </button>
                 <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  Edit Achievements
+                </span>
+              </div>
+              <div className="relative group inline-block mt-2">
+                <button
+                  className="text-white py-2 mx-2 rounded  hover:scale-135"
+                  onClick={async () => {
+                    setIsOpen(true)
+                    setIsUpdate(true)
+                    setIsEditAchievement(false)
+                    setId(+item.id)
+                    const [data] = (await getTodoById(item.id.toString())) ?? []
+                    const { task, note } = data
+                    setTask(task)
+                    setNote(note)
+                  }}
+                >
+                  <FaRegNoteSticky className="text-xl cursor-pointer" />
+                </button>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   Add notes
                 </span>
               </div>
-              <div className="relative group inline-block mt-2 mr-3">
+              <div className="relative group inline-block mt-2 mr-3 ml-2">
                 <button
                   className="text-white py-2 rounded  hover:scale-135"
                   onClick={async () => handleDelete(item.id.toString())}
@@ -146,7 +193,10 @@ const Achievement = () => {
 
       <AchievementModal
         isOpen={isOpen}
+        task={task}
+        note={note}
         isUpdate={isUpdate}
+        isEditAchievement={isEditAchievement}
         onClose={() => setIsOpen(false)}
         onSubmit={handleSubmit}
       />

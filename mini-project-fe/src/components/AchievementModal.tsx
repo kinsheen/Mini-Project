@@ -1,26 +1,48 @@
 import { useState } from "react"
+import { FaEdit } from "react-icons/fa"
 
 interface AchievementModalProps {
   isOpen: boolean
+  task: string
+  note: string
   isUpdate: boolean
+  isEditAchievement: boolean
   onClose: () => void
-  onSubmit: (description: string) => void
+  onSubmit: (description?: string, note?: string) => void
 }
 
 const AchievementModal: React.FC<AchievementModalProps> = ({
   isOpen,
+  task,
+  note,
   isUpdate,
+  isEditAchievement,
   onClose,
   onSubmit,
 }) => {
   const [description, setDescription] = useState("")
+  const [newNote, setNewNote] = useState("")
+  const [isEditTask, setIsEditTask] = useState(false)
+  const [isEditNote, setIsEditNote] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit(description)
+    onSubmit(description, newNote)
     setDescription("")
+    setNewNote("")
     onClose()
   }
+
+  // const showTextArea = () => {
+  //   return (
+  //     <textarea
+  //       value={description}
+  //       onChange={(e) => setDescription(e.target.value)}
+  //       className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+  //       placeholder="Enter achievement description..."
+  //     />
+  //   )
+  // }
 
   if (!isOpen) return null
 
@@ -30,7 +52,84 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
         className="border-2 w-200 bg-[#B7C9CE] p-5 rounded-md"
         onSubmit={handleSubmit}
       >
-        {!isUpdate ? (
+        {isEditAchievement === true ? (
+          <>
+            <div className="mt-2">
+              <label className="block text-3xl font-semibold mb-15 text-center bg-[#0F4C5C] text-white p-5 rounded-md">
+                Edit Achievements
+              </label>
+              <div className="flex items-center justify-between w-full bg-amber-50 rounded-md">
+                <div className="flex items-center">
+                  <span className="bg-[#0F4C5C]  text-xl font-bold text-white mr-3 px-2 py-3 rounded w-[120px]">
+                    Task Title:
+                  </span>
+                  <span className="text-xl font-bold py-3">{task}</span>
+                </div>
+
+                <div className="relative group">
+                  <FaEdit
+                    onClick={() => setIsEditTask(!isEditTask)}
+                    className="cursor-pointer text-2xl mr-5"
+                  />
+                  <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    Edit Task Title
+                  </span>
+                </div>
+              </div>
+
+              {isEditTask && (
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+                  placeholder="Edit Task Title..."
+                />
+              )}
+            </div>
+            <div className="mt-7">
+              <div className="flex items-center justify-between w-full bg-amber-50 rounded-md">
+                <div className="flex items-center">
+                  <span className="bg-[#0F4C5C] text-xl font-bold text-white mr-3 px-2 py-3 rounded  w-[120px]">
+                    Task Note:
+                  </span>
+                  <span className="text-xl font-bold py-3">{note}</span>
+                </div>
+
+                <div className="relative group">
+                  <FaEdit
+                    onClick={() => setIsEditNote(!isEditNote)}
+                    className="cursor-pointer text-2xl mr-5"
+                  />
+                  <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    Edit Task Note
+                  </span>
+                </div>
+              </div>
+
+              {isEditNote && (
+                <textarea
+                  value={newNote}
+                  onChange={(e) => setNewNote(e.target.value)}
+                  className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+                  placeholder="Edit Task Note..."
+                />
+              )}
+            </div>
+          </>
+        ) : isUpdate === true ? (
+          <div className="mt-10">
+            <label className="block text-3xl font-semibold mb-15 text-center bg-[#0F4C5C] text-white p-5 rounded-md">
+              Add Notes
+            </label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+              placeholder="Enter achievement notes..."
+              required
+            />
+          </div>
+        ) : (
           <div className="mt-10">
             <label className="block text-3xl font-semibold mb-2">
               Enter New Achievement
@@ -43,26 +142,19 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
               required
             />
           </div>
-        ) : (
-          <div className="mt-10">
-            <label className="block text-3xl font-semibold mb-2">
-              Add Notes
-            </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
-              placeholder="Enter achievement notes..."
-              required
-            />
-          </div>
         )}
+
+        <hr className="my-5" />
 
         <div className="mt-4 flex justify-end">
           <button
-            onClick={onClose}
+            onClick={() => {
+              onClose()
+              setIsEditNote(false)
+              setIsEditTask(false)
+            }}
             type="button"
-            className="mr-2 px-4 py-2 text-md font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pinter"
+            className="cursor-pointer font-bold mr-2 px-4 py-2 text-md  text-gray-700 bg-amber-100 rounded-md hover:bg-gray-200 cursor-pinter"
           >
             Cancel
           </button>
