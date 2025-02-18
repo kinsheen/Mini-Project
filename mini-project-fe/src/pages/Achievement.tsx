@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { FaList, FaPlus, FaRegNoteSticky, FaTrashCan } from "react-icons/fa6"
 import {
-  deleteTodo,
   getToDoByField,
   getTodoById,
   postCreateToDo,
@@ -54,12 +53,15 @@ const Achievement = () => {
         confirmButtonColor: "#0F4C5C",
       })
     } else {
+      const date = new Date()
+      const dayName = date.toLocaleDateString("en-US", { weekday: "long" })
+
       await postCreateToDo(
-        new Date().toLocaleDateString(),
+        dayName,
         description || "",
         "Done",
         false,
-        new Date().toLocaleDateString()
+        new Date().toISOString()
       )
 
       Swal.fire({
@@ -84,7 +86,7 @@ const Achievement = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteTodo(itemId)
+        await updateTodo(+itemId, false, "In Progress")
         setShouldRefetch((prev) => !prev)
         Swal.fire({
           title: "Deleted!",
@@ -120,7 +122,7 @@ const Achievement = () => {
         </button>
       </div>
 
-      <div className="achievement-box min-h-106 bg-[#0F4C5C] mt-8 p-3">
+      <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3 overflow-y-auto">
         {achievements.length > 0 ? (
           <>
             {achievements &&
@@ -142,7 +144,7 @@ const Achievement = () => {
                     </div>
                     <div className="relative group inline-block mt-2">
                       <button
-                        className="text-white py-2 mx-2 rounded  hover:scale-135"
+                        className="text-white py-2 rounded  hover:scale-135"
                         onClick={async () => {
                           setIsOpen(true)
                           setIsEditAchievement(true)
@@ -161,9 +163,9 @@ const Achievement = () => {
                         Edit Achievements
                       </span>
                     </div>
-                    <div className="relative group inline-block mt-2">
+                    <div className="relative group inline-block mt-2 mx-2">
                       <button
-                        className="text-white py-2 mx-2 rounded  hover:scale-135"
+                        className="text-white py-2 rounded  hover:scale-135"
                         onClick={async () => {
                           setIsOpen(true)
                           setIsUpdate(true)
@@ -182,7 +184,7 @@ const Achievement = () => {
                         Add notes
                       </span>
                     </div>
-                    <div className="relative group inline-block mt-2 mr-3 ml-2">
+                    <div className="relative group inline-block mt-2 mr-3">
                       <button
                         className="text-white py-2 rounded  hover:scale-135"
                         onClick={async () => handleDelete(item.id.toString())}
@@ -198,7 +200,7 @@ const Achievement = () => {
               ))}
           </>
         ) : (
-          <div className="text-center text-white text-3xl mt-10">
+          <div className="text-center text-white text-2xl mt-10 border-2 border-white rounded-md p-3">
             No Achievement for Today!...
           </div>
         )}
