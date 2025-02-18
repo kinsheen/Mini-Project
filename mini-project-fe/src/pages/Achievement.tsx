@@ -120,7 +120,7 @@ const Achievement = () => {
         </button>
       </div>
 
-      <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3">
+      <div className="achievement-box min-h-106 bg-[#0F4C5C] mt-8 p-3">
         {achievements.length > 0 ? (
           <>
             {achievements &&
