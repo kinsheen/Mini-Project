@@ -40,13 +40,12 @@ const Achievement = () => {
     } else if (isEditAchievement === true) {
       if (!description && !notes) {
         return
-      } else {
-        await updateAchievement(id, false, "Done", description, notes)
-      }
-      if (!description) {
+      } else if (!description) {
         await updateAchievement(id, false, "Done", task, notes)
       } else if (!notes) {
         await updateAchievement(id, false, "Done", description, note)
+      } else {
+        await updateAchievement(id, false, "Done", description, notes)
       }
       Swal.fire({
         title: "Succesfully Edited a Task!",
@@ -122,73 +121,87 @@ const Achievement = () => {
       </div>
 
       <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3">
-        {achievements?.map((item, index) => (
-          <ul key={index} className="p-2 border-2 border-white rounded-md mb-3">
-            <li className="text-white flex items-start">
-              <div className="flex flex-1">
-                <div className="flex-1">
-                  <p className="font-bold text-xl">
-                    {index + 1}. {item.task}
-                  </p>
-                  <span className="text-md ml-5 italic">
-                    {item.note ? `- ${item.note}` : ""}
-                  </span>
-                </div>
-              </div>
-              <div className="relative group inline-block mt-2">
-                <button
-                  className="text-white py-2 mx-2 rounded  hover:scale-135"
-                  onClick={async () => {
-                    setIsOpen(true)
-                    setIsEditAchievement(true)
-                    setIsUpdate(false)
-                    setId(+item.id)
-                    const [data] = (await getTodoById(item.id.toString())) ?? []
-                    const { task, note } = data
-                    setTask(task)
-                    setNote(note)
-                  }}
+        {achievements.length > 0 ? (
+          <>
+            {achievements &&
+              achievements?.map((item, index) => (
+                <ul
+                  key={index}
+                  className="p-2 border-2 border-white rounded-md mb-3"
                 >
-                  <FaEdit className="text-xl cursor-pointer" />
-                </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  Edit Achievements
-                </span>
-              </div>
-              <div className="relative group inline-block mt-2">
-                <button
-                  className="text-white py-2 mx-2 rounded  hover:scale-135"
-                  onClick={async () => {
-                    setIsOpen(true)
-                    setIsUpdate(true)
-                    setIsEditAchievement(false)
-                    setId(+item.id)
-                    const [data] = (await getTodoById(item.id.toString())) ?? []
-                    const { task, note } = data
-                    setTask(task)
-                    setNote(note)
-                  }}
-                >
-                  <FaRegNoteSticky className="text-xl cursor-pointer" />
-                </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  Add notes
-                </span>
-              </div>
-              <div className="relative group inline-block mt-2 mr-3 ml-2">
-                <button
-                  className="text-white py-2 rounded  hover:scale-135"
-                  onClick={async () => handleDelete(item.id.toString())}
-                >
-                  <FaTrashCan className="text-xl cursor-pointer" />
-                </button>
-                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  Delete
-                </span>
-              </div>
-            </li>
-          </ul>
-        ))}
+                  <li className="text-white flex items-start">
+                    <div className="flex flex-1">
+                      <div className="flex-1">
+                        <p className="font-bold text-xl">
+                          {index + 1}. {item.task}
+                        </p>
+                        <span className="text-md ml-5 italic">
+                          {item.note ? `- ${item.note}` : ""}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="relative group inline-block mt-2">
+                      <button
+                        className="text-white py-2 mx-2 rounded  hover:scale-135"
+                        onClick={async () => {
+                          setIsOpen(true)
+                          setIsEditAchievement(true)
+                          setIsUpdate(false)
+                          setId(+item.id)
+                          const [data] =
+                            (await getTodoById(item.id.toString())) ?? []
+                          const { task, note } = data
+                          setTask(task)
+                          setNote(note)
+                        }}
+                      >
+                        <FaEdit className="text-xl cursor-pointer" />
+                      </button>
+                      <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Edit Achievements
+                      </span>
+                    </div>
+                    <div className="relative group inline-block mt-2">
+                      <button
+                        className="text-white py-2 mx-2 rounded  hover:scale-135"
+                        onClick={async () => {
+                          setIsOpen(true)
+                          setIsUpdate(true)
+                          setIsEditAchievement(false)
+                          setId(+item.id)
+                          const [data] =
+                            (await getTodoById(item.id.toString())) ?? []
+                          const { task, note } = data
+                          setTask(task)
+                          setNote(note)
+                        }}
+                      >
+                        <FaRegNoteSticky className="text-xl cursor-pointer" />
+                      </button>
+                      <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Add notes
+                      </span>
+                    </div>
+                    <div className="relative group inline-block mt-2 mr-3 ml-2">
+                      <button
+                        className="text-white py-2 rounded  hover:scale-135"
+                        onClick={async () => handleDelete(item.id.toString())}
+                      >
+                        <FaTrashCan className="text-xl cursor-pointer" />
+                      </button>
+                      <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        Delete
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              ))}
+          </>
+        ) : (
+          <div className="text-center text-white text-3xl mt-10">
+            No Achievement for Today!...
+          </div>
+        )}
       </div>
 
       <AchievementModal
