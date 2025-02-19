@@ -20,16 +20,20 @@ const Achievement = () => {
   const [achievements, setAchievements] = useState<toDoResponseArray>([])
   const [task, setTask] = useState("")
   const [note, setNote] = useState("")
-  const [shouldRefetch, setShouldRefetch] = useState(false)
+
+  const date = new Date()
+  const dayName = date.toLocaleDateString("en-US", { weekday: "long" })
 
   const fetchAchievements = async () => {
     const response = await getToDoByField("status", "Done")
-    setAchievements(response || [])
+    const achievements = response?.filter((item) => item.day === dayName)
+    setAchievements(achievements || [])
   }
 
   const handleSubmit = async (description?: string, notes?: string) => {
     if (isUpdate === true) {
       await updateTodo(id, false, "Done", description)
+
       Swal.fire({
         title: "Successfully Updated a Task!",
         icon: "success",
@@ -46,6 +50,7 @@ const Achievement = () => {
       } else {
         await updateAchievement(id, false, "Done", description, notes)
       }
+
       Swal.fire({
         title: "Succesfully Edited a Task!",
         icon: "success",
@@ -53,9 +58,6 @@ const Achievement = () => {
         confirmButtonColor: "#0F4C5C",
       })
     } else {
-      const date = new Date()
-      const dayName = date.toLocaleDateString("en-US", { weekday: "long" })
-
       await postCreateToDo(
         dayName,
         description || "",
@@ -72,7 +74,7 @@ const Achievement = () => {
       })
     }
 
-    fetchAchievements()
+    await fetchAchievements()
   }
 
   const handleDelete = (itemId: string) => {
@@ -87,7 +89,8 @@ const Achievement = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await updateTodo(+itemId, false, "In Progress")
-        setShouldRefetch((prev) => !prev)
+        // await deleteTodo(itemId)
+
         Swal.fire({
           title: "Deleted!",
           text: "Your item has been deleted.",
@@ -95,12 +98,14 @@ const Achievement = () => {
           confirmButtonColor: "#0F4C5C",
         })
       }
+
+      await fetchAchievements()
     })
   }
 
   useEffect(() => {
     fetchAchievements()
-  }, [shouldRefetch])
+  }, [])
 
   return (
     <div className="achievement mt-7 p-7">

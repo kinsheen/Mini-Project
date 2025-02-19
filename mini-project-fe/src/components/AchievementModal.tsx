@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaEdit } from "react-icons/fa"
 
 interface AchievementModalProps {
@@ -28,21 +28,17 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit(description, newNote)
-    setDescription("")
-    setNewNote("")
+    setIsEditTask(false)
+    setIsEditNote(false)
+    setDescription(task)
+    setNewNote(note)
     onClose()
   }
 
-  // const showTextArea = () => {
-  //   return (
-  //     <textarea
-  //       value={description}
-  //       onChange={(e) => setDescription(e.target.value)}
-  //       className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
-  //       placeholder="Enter achievement description..."
-  //     />
-  //   )
-  // }
+  useEffect(() => {
+    setDescription(task || "")
+    setNewNote(note || "")
+  }, [task, note])
 
   if (!isOpen) return null
 
@@ -79,6 +75,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
 
               {isEditTask && (
                 <textarea
+                  autoFocus
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
@@ -108,6 +105,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
 
               {isEditNote && (
                 <textarea
+                  autoFocus
                   value={newNote}
                   onChange={(e) => setNewNote(e.target.value)}
                   className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
@@ -122,6 +120,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
               Add Notes
             </label>
             <textarea
+              autoFocus
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
@@ -135,6 +134,7 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
               Enter New Achievement
             </label>
             <textarea
+              autoFocus
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
@@ -150,6 +150,8 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
           <button
             onClick={() => {
               onClose()
+              setDescription(task)
+              setNewNote(note)
               setIsEditNote(false)
               setIsEditTask(false)
             }}
