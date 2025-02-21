@@ -2,9 +2,9 @@ import Header from "../header/Header";
 import Priority from "../pages/Priority";
 import CreateTodo from "../pages/CreateTodo";
 import MyCalendar from "../pages/Calendar";
-import Achievement from "../pages/Achievement";
 import Todo from "../pages/Todo";
 import { useState } from "react";
+import Accomplishment from "../pages/Accomplishment"
 
 export const LandingPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -28,9 +28,9 @@ export const LandingPage = () => {
           <Todo date={selectedDate} />
         </div>
         <div className=" p-2 border-solid ">
-          <Achievement />
+          <Accomplishment />
         </div>
       </div>
     </main>
-  );
+  )
 };

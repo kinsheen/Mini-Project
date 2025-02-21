@@ -4,11 +4,10 @@ import { FaEdit } from "react-icons/fa"
 interface AchievementModalProps {
   isOpen: boolean
   task: string
-  note: string
+  note?: string
   isUpdate: boolean
-  isEditAchievement: boolean
   onClose: () => void
-  onSubmit: (description?: string, note?: string) => void
+  onSubmit: (description: string, note?: string) => void
 }
 
 const AchievementModal: React.FC<AchievementModalProps> = ({
@@ -16,22 +15,21 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
   task,
   note,
   isUpdate,
-  isEditAchievement,
   onClose,
   onSubmit,
 }) => {
-  const [description, setDescription] = useState("")
-  const [newNote, setNewNote] = useState("")
-  const [isEditTask, setIsEditTask] = useState(false)
-  const [isEditNote, setIsEditNote] = useState(false)
+  const [description, setDescription] = useState<string>("")
+  const [newNote, setNewNote] = useState<string>("")
+  const [isEditTask, setIsEditTask] = useState<boolean>(false)
+  const [isEditNote, setIsEditNote] = useState<boolean>(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit(description, newNote)
     setIsEditTask(false)
     setIsEditNote(false)
-    setDescription(task)
-    setNewNote(note)
+    setDescription("")
+    setNewNote("")
     onClose()
   }
 
@@ -48,13 +46,13 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
         className="border-2 w-200 bg-[#B7C9CE] p-5 rounded-md"
         onSubmit={handleSubmit}
       >
-        {isEditAchievement === true ? (
+        {isUpdate === true ? (
           <>
             <div className="mt-2">
               <label className="block text-3xl font-semibold mb-15 text-center bg-[#0F4C5C] text-white p-5 rounded-md">
                 Edit Achievements
               </label>
-              <div className="flex items-center justify-between w-full bg-amber-50 rounded-md">
+              <div className="flex items-center justify-between w-full  text-black bg-amber-50 rounded-md">
                 <div className="flex items-center">
                   <span className="bg-[#0F4C5C]  text-xl font-bold text-white mr-3 px-2 py-3 rounded w-[120px]">
                     Task Title:
@@ -78,13 +76,13 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
                   autoFocus
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+                  className="w-full mb-3 p-2 mt-2 border text-black border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
                   placeholder="Edit Task Title..."
                 />
               )}
             </div>
             <div className="mt-7">
-              <div className="flex items-center justify-between w-full bg-amber-50 rounded-md">
+              <div className="flex items-center justify-between w-full  text-black bg-amber-50 rounded-md">
                 <div className="flex items-center">
                   <span className="bg-[#0F4C5C] text-xl font-bold text-white mr-3 px-2 py-3 rounded  w-[120px]">
                     Task Note:
@@ -108,26 +106,12 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
                   autoFocus
                   value={newNote}
                   onChange={(e) => setNewNote(e.target.value)}
-                  className="w-full mb-3 p-2 mt-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
+                  className="w-full mb-3 p-2 mt-2 border border-gray-400  text-black outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
                   placeholder="Edit Task Note..."
                 />
               )}
             </div>
           </>
-        ) : isUpdate === true ? (
-          <div className="mt-10">
-            <label className="block text-3xl font-semibold mb-15 text-center bg-[#0F4C5C] text-white p-5 rounded-md">
-              Add Notes
-            </label>
-            <textarea
-              autoFocus
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full mb-3 p-2 border border-gray-400 outline-none bg-white rounded-md focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent text-[20px] font-sm"
-              placeholder="Enter achievement notes..."
-              required
-            />
-          </div>
         ) : (
           <div className="mt-10">
             <label className="block text-3xl font-semibold mb-2">
@@ -150,8 +134,8 @@ const AchievementModal: React.FC<AchievementModalProps> = ({
           <button
             onClick={() => {
               onClose()
-              setDescription(task)
-              setNewNote(note)
+              setDescription("")
+              setNewNote("")
               setIsEditNote(false)
               setIsEditTask(false)
             }}

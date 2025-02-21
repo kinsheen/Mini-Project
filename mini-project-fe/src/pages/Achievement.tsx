@@ -24,88 +24,88 @@ const Achievement = () => {
   const date = new Date()
   const dayName = date.toLocaleDateString("en-US", { weekday: "long" })
 
-  const fetchAchievements = async () => {
-    const response = await getToDoByField("status", "Done")
-    const achievements = response?.filter((item) => item.day === dayName)
-    setAchievements(achievements || [])
-  }
+  // const fetchAchievements = async () => {
+  //   const response = await getToDoByField("status", "Done")
+  //   const achievements = response?.filter((item) => item.day === dayName)
+  //   setAchievements(response || [])
+  // }
 
-  const handleSubmit = async (description?: string, notes?: string) => {
-    if (isUpdate === true) {
-      await updateTodo(id, false, "Done", description)
+  // const handleSubmit = async (description?: string, notes?: string) => {
+  //   if (isUpdate === true) {
+  //     await updateTodo(id, false, "Done", description)
 
-      Swal.fire({
-        title: "Successfully Updated a Task!",
-        icon: "success",
-        draggable: true,
-        confirmButtonColor: "#0F4C5C",
-      })
-    } else if (isEditAchievement === true) {
-      if (!description && !notes) {
-        return
-      } else if (!description) {
-        await updateAchievement(id, false, "Done", task, notes)
-      } else if (!notes) {
-        await updateAchievement(id, false, "Done", description, note)
-      } else {
-        await updateAchievement(id, false, "Done", description, notes)
-      }
+  //     Swal.fire({
+  //       title: "Successfully Updated a Task!",
+  //       icon: "success",
+  //       draggable: true,
+  //       confirmButtonColor: "#0F4C5C",
+  //     })
+  //   } else if (isEditAchievement === true) {
+  //     if (!description && !notes) {
+  //       return
+  //     } else if (!description) {
+  //       await updateAchievement(id, false, "Done", task, notes)
+  //     } else if (!notes) {
+  //       await updateAchievement(id, false, "Done", description, note)
+  //     } else {
+  //       await updateAchievement(id, false, "Done", description, notes)
+  //     }
 
-      Swal.fire({
-        title: "Succesfully Edited a Task!",
-        icon: "success",
-        draggable: true,
-        confirmButtonColor: "#0F4C5C",
-      })
-    } else {
-      await postCreateToDo(
-        dayName,
-        description || "",
-        "Done",
-        false,
-        new Date().toISOString()
-      )
+  //     Swal.fire({
+  //       title: "Succesfully Edited a Task!",
+  //       icon: "success",
+  //       draggable: true,
+  //       confirmButtonColor: "#0F4C5C",
+  //     })
+  //   } else {
+  //     await postCreateToDo(
+  //       dayName,
+  //       description || "",
+  //       "Done",
+  //       false,
+  //       new Date().toISOString()
+  //     )
 
-      Swal.fire({
-        title: "Successfully Added a Task!",
-        icon: "success",
-        draggable: true,
-        confirmButtonColor: "#0F4C5C",
-      })
-    }
+  //     Swal.fire({
+  //       title: "Successfully Added a Task!",
+  //       icon: "success",
+  //       draggable: true,
+  //       confirmButtonColor: "#0F4C5C",
+  //     })
+  //   }
 
-    await fetchAchievements()
-  }
+  //   await fetchAchievements()
+  // }
 
-  const handleDelete = (itemId: string) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#0F4C5C",
-      cancelButtonColor: "bg-gray-400",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await updateTodo(+itemId, false, "In Progress")
-        // await deleteTodo(itemId)
+  // const handleDelete = (itemId: string) => {
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#0F4C5C",
+  //     cancelButtonColor: "bg-gray-400",
+  //     confirmButtonText: "Yes, delete it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       await updateTodo(+itemId, false, "In Progress")
+  //       // await deleteTodo(itemId)
 
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your item has been deleted.",
-          icon: "success",
-          confirmButtonColor: "#0F4C5C",
-        })
-      }
+  //       Swal.fire({
+  //         title: "Deleted!",
+  //         text: "Your item has been deleted.",
+  //         icon: "success",
+  //         confirmButtonColor: "#0F4C5C",
+  //       })
+  //     }
 
-      await fetchAchievements()
-    })
-  }
+  //     await fetchAchievements()
+  //   })
+  // }
 
-  useEffect(() => {
-    fetchAchievements()
-  }, [])
+  // useEffect(() => {
+  //   fetchAchievements()
+  // }, [])
 
   return (
     <div className="achievement mt-7 p-7">
@@ -127,7 +127,7 @@ const Achievement = () => {
         </button>
       </div>
 
-      <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3 overflow-y-auto">
+      {/* <div className="achievement-box h-106 bg-[#0F4C5C] mt-8 p-3 overflow-y-auto">
         {achievements.length > 0 ? (
           <>
             {achievements &&
@@ -209,9 +209,9 @@ const Achievement = () => {
             No Achievement for Today!...
           </div>
         )}
-      </div>
+      </div> */}
 
-      <AchievementModal
+      {/* <AchievementModal
         isOpen={isOpen}
         task={task}
         note={note}
@@ -219,7 +219,7 @@ const Achievement = () => {
         isEditAchievement={isEditAchievement}
         onClose={() => setIsOpen(false)}
         onSubmit={handleSubmit}
-      />
+      /> */}
     </div>
   )
 }
