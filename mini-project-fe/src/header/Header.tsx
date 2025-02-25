@@ -3,16 +3,18 @@
 export default function Header() {
   return (
     <div>
-      <header className="p-5 bg-[url('assets/blue.jpg')] bg-center bg-cover">
-        <nav aria-label="Global" className="flex p-5 justify-center">
-          <div className="flex text-white text-center text-[75px] font-caveat font-bold">
-            You can do it
-          </div>
-        </nav>
+      <header className="bg-[url('assets/blue.jpg')] bg-center bg-cover flex flex-row p-3 justify-between items-center">
+        <div className="text-white text-[40px] font-inter font-bold">
+          Habit Tracker
+        </div>
+        <div className="text-white text-[60px] font-caveat font-bold">
+          You can do it
+        </div>
+        <div className="text-white text-[30px] font-inter font-bold">
+          Account
+        </div>
       </header>
-      <div className=" text-black text-[35px] px-15 pt-5 font-inter font-bold">
-        Habit Tracker
-      </div>
+
       <div className="flex flex-row px-15 py-5">
         <div className="relative w-full h-15 flex items-center rounded-2xl  border-2 border-black">
           <div className="absolute inset-0 bg-primary opacity-40 rounded-2xl"></div>

@@ -75,43 +75,21 @@ const CreateTodo = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-2 w-full px-11">
-        <div className="flex flex-col justify-start gap-2 md:flex-row ">
-          <div>
-            <h3 className="bg-primary text-white py-8 px-5 font-inter text-6xl">
-              20
-            </h3>
+      <div className="px-16 flex items-center justify-start">
+        <button
+          className="flex flex-row justify-between gap-2 bg-primary p-3 w-65 rounded hover:bg-primary hover:bg-primary/70 transition duration-200"
+          onClick={openModal}
+        >
+          <div className="font-inter font-bold text-white mx-auto">
+            Add Task
           </div>
-          <div>
-            <h3 className="bg-primary text-white py-8 px-5 font-inter text-6xl">
-              25
-            </h3>
-          </div>
-        </div>
-        <div className="bg-secondary w-full h-38">
-          <div className="flex row items-center gap-2 p-3">
-            <div className="bg-primary w-3 h-3 rounded-full" />
-            <div className="py-1">
-              <span className="font-crimson text-primary">Create New</span>
-            </div>
-          </div>
-          <div className="px-6 flex items-center justify-center">
-            <button
-              className="flex flex-row gap-2 bg-white text-primary p-3 w-65 rounded hover:bg-primary hover:text-white transition duration-200"
-              onClick={openModal}
-            >
-              <IoArrowForwardCircle className="text-2xl" />
-
-              <div className="font-crimson">Add To Do</div>
-            </button>
-
-            <Modal
-              isOpen={isModalOpen}
-              onClose={closeModal}
-              onSubmit={handleSubmit}
-            />
-          </div>
-        </div>
+          <IoArrowForwardCircle className="text-2xl text-white" />
+        </button>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+        />
       </div>
     </div>
   );
