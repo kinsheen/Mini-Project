@@ -13,7 +13,7 @@ export const postCreateToDo = async (
   task: string,
   status: string,
   is_priority: boolean,
-  created_at: string
+  createdAt: string
 ) => {
   const response = await callApi<toDoResponseArray | undefined>(
     "post",
@@ -23,7 +23,7 @@ export const postCreateToDo = async (
       task,
       status,
       is_priority,
-      created_at,
+      createdAt,
     }
   );
   console.log("createToDo Response:", response);
@@ -85,11 +85,11 @@ export const updateAchievement = async (
       task,
       note,
     }
-  )
+  );
 
-  console.log("Update Achievement Response:", response)
-  return response
-}
+  console.log("Update Achievement Response:", response);
+  return response;
+};
 
 //updateNotes
 export const updateNotes = async (id: number, note: string) => {

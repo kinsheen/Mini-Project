@@ -18,4 +18,8 @@ export const dateFormat: Intl.DateTimeFormatOptions = {
   day: "numeric",
 };
 
-
+export enum status {
+  done = "Done",
+  inProgress = "In Progress",
+  unassigned = "Unassigned",
+}

@@ -32,7 +32,7 @@ const CreateTodo = () => {
       const response = await postCreateToDo(
         dayOfWeek,
         task,
-        "In Progress",
+        "Unassigned",
         false,
         formatLocalDateToISO(day)
       );

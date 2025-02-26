@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,6 +9,21 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [day, setDay] = useState("");
   const [task, setTask] = useState("");
+
+  // Helper function to format today's date as YYYY-MM-DD
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const date = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${date}`;
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      setDay(getCurrentDate()); // Set the day to today's date when the modal opens
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -23,7 +38,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-secondary rounded-lg shadow-lg p-6 w-1/4">
-        {/* Changed width to 50% */}
         <h2 className="text-xl font-bold mb-4 font-medium">
           Create To Do Task
         </h2>
@@ -44,7 +58,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
               value={task}
               onChange={(e) => setTask(e.target.value)}
               required
-              className="block w-full border border-gray-300 rounded p-2 mt-1 h-32 resize-none font-medium bg-white" // Added height and disabled resizing
+              className="block w-full border border-gray-300 rounded p-2 mt-1 h-32 resize-none font-medium bg-white"
               placeholder="Enter your task here..."
             />
           </label>
