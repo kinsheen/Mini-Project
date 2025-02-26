@@ -1,13 +1,15 @@
 const express = require('express');
 require('express-async-errors');
 const router = express.Router();
-const {getToDos, getToDo, createToDo, updateToDo, deleteToDo, getToDoByField} = require('../controllers/to-do.controller');
+const {getToDos, getToDo, createToDo, updateToDo, deleteToDo, getToDoByField, getToDoByDate} = require('../controllers/to-do.controller');
+const { protect } = require("../middlewares/auth.middleware");
 
-router.get('/', getToDos);
-router.get('/:id', getToDo);
-router.get('/:field/:value', getToDoByField);
-router.post('/', createToDo);
-router.put('/:id', updateToDo);
-router.delete('/:id', deleteToDo);
+router.get('/', protect, getToDos);
+router.get('/get', protect, getToDo);
+router.get('/find', protect, getToDoByField);
+router.get('/date', protect, getToDoByDate);
+router.post('/create', protect, createToDo);
+router.put('/update', protect, updateToDo);
+router.delete('/delete', protect, deleteToDo);
 
 module.exports = router;

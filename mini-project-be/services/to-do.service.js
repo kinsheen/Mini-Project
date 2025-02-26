@@ -1,9 +1,8 @@
 
-const db = require('../database')
+const Todo = require('../models/to-do.model'); // Adjust the path if needed
 
 module.exports.getAllToDo = async () => {
-    const [records] = await db.query("SELECT * FROM todo")
-    
+    const [records] = await Todo.findAll();
     return records;
 }
 
