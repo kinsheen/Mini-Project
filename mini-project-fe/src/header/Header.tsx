@@ -47,7 +47,7 @@ export default function Header() {
             className="text-white text-[30px] font-inter font-bold cursor-pointer flex flex-row items-center gap-3"
             onClick={toggleDropdown}
           >
-            <span>Kin Sheen De Leon</span>
+            <span className="text-2xl">Kin Sheen De Leon</span>
             <span>
               <BsPersonCircle className="text-5xl hover:text-gray-300" />
             </span>

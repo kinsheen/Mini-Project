@@ -29,10 +29,10 @@ export const OverView: React.FC = () => {
           <TaskList searchTerm={searchTerm} />
         </div>
         <div className="p-2 border-solid">
-          <Backlog />
+          <Backlog searchTerm={searchTerm} />
         </div>
         <div className="p-2 border-solid">
-          <Achievements />
+          <Achievements searchTerm={searchTerm} />
         </div>
       </div>
     </main>
