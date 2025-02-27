@@ -71,7 +71,7 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
                   <span className="mr-auto px-6">{task.task}</span>
                   <span
                     className={`drop-shadow-2xl font-bold ${
-                      task.status === "Done"
+                      task.status === "Done" || task.status === "DONE"
                         ? "text-green-500"
                         : task.status === "Unassigned"
                         ? "text-red-500"
