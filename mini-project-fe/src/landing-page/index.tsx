@@ -5,13 +5,20 @@ import MyCalendar from "../pages/Calendar";
 import Todo from "../pages/Todo";
 import { useState } from "react";
 import Accomplishment from "../pages/Accomplishment"
+import { IoCalendarNumberSharp, IoCreateSharp } from "react-icons/io5"
+import { FaCalendarAlt } from "react-icons/fa"
+import Prio from "../pages/Prio"
+import Accomplishment2 from "../pages/Accomplishment2"
+import Todo2 from "../pages/Todo2"
+import { TiExportOutline } from "react-icons/ti"
+import { LiaPagerSolid } from "react-icons/lia"
 
 export const LandingPage = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
   return (
     <main>
       <Header />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 m-5 px-10">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 m-5 px-10">
         <div className=" p-2 border-solid ">
           <Priority date={selectedDate} />
         </div>
@@ -30,7 +37,40 @@ export const LandingPage = () => {
         <div className=" p-2 border-solid ">
           <Accomplishment />
         </div>
+      </div> */}
+
+      <div className="flex flex-row m-1 mb-3 lg:my-8 lg:mx-15 gap-3">
+        <div className="flex-1 text-white text-center text-sm md:text-md lg:text-xl">
+          <button className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2 rounded-md md:p-2 lg:p-3 ">
+            <IoCalendarNumberSharp className="mt-[2px]" />
+            Calendar
+          </button>
+        </div>
+        <div className="flex text-white text-center  text-sm md:text-md lg:text-xl">
+          <button className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2  rounded-md md:p-2 lg:p-3 ">
+            <LiaPagerSolid className="mt-[1px] h-5 w-5 lg:h-7 lg:w-7" />
+            Overview
+          </button>
+        </div>
+        <div className="flex text-white text-center  text-sm md:text-md lg:text-xl">
+          <button className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2  rounded-md md:p-2 lg:p-3 ">
+            <TiExportOutline className="h-5 w-5  lg:h-7 lg:w-7" />
+            ExportCsv
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row mx-1  lg:mx-15 border-2 gap-3 h-150 mb-20">
+        <div className="flex border-2 h-full w-full bg-[#87A5AD]">
+          <Prio />
+        </div>
+        <div className="flex border-2 h-full w-full bg-[#87A5AD]">
+          <Todo2 />
+        </div>
+        <div className="flex border-2 h-full w-full bg-[#87A5AD]">
+          <Accomplishment2 />
+        </div>
       </div>
     </main>
   )
-};
+}

@@ -15,7 +15,7 @@ export default function Header() {
         </div>
       </header>
 
-      <div className="flex flex-row px-15 py-5">
+      <div className="flex flex-row px-1 md:px-5 lg:px-15 py-3">
         <div className="relative w-full h-15 flex items-center rounded-2xl  border-2 border-black">
           <div className="absolute inset-0 bg-primary opacity-40 rounded-2xl"></div>
           <div className="flex z-10 pl-5">
@@ -29,5 +29,5 @@ export default function Header() {
         </div>
       </div>
     </div>
-  );
+  )
 }
