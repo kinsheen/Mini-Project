@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { logIn } from "../api/context";
-import { loadingButton } from "../helpers/swalAlert";
+import { Loading, loadingButton } from "../helpers/swalAlert";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    Loading("Please Wait...");
     try {
       const response = await logIn(email, password);
       if (response?.message === "Login successful") {
-        loadingButton("success", "Successfully Login", "Success", false);
-        window.location.href = "/";
         sessionStorage.setItem("token", response.token);
+        window.location.href = "/";
+        Swal.close();
+      } else {
+        loadingButton("error", "Login Failed", "Please login again", true);
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
+      loadingButton("error", "Login Failed", "Please login again", true);
     }
   };
 
@@ -76,6 +81,7 @@ export default function Login() {
         </div>
 
         <button
+          type="button"
           className="w-full h-12 outline-none bg-white/70 rounded-md text-lg text-black/90 font-medium mb-7 hover:bg-white/30 ease-out duration-500"
           onClick={handleLogin}
         >

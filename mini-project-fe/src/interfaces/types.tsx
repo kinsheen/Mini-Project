@@ -17,6 +17,16 @@ export type loginResponse = {
   token: string;
 };
 
+export type userResponse = {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export const dateFormat: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",

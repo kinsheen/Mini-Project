@@ -3,18 +3,22 @@ import Priority from "../pages/Priority";
 import CreateTodo from "../pages/CreateTodo";
 import MyCalendar from "../pages/Calendar";
 import Todo from "../pages/Todo";
-import { useState } from "react";
-import Accomplishment from "../pages/Accomplishment"
-import { IoCalendarNumberSharp, IoCreateSharp } from "react-icons/io5"
-import { FaCalendarAlt } from "react-icons/fa"
-import Prio from "../pages/Prio"
-import Accomplishment2 from "../pages/Accomplishment2"
-import Todo2 from "../pages/Todo2"
-import { TiExportOutline } from "react-icons/ti"
-import { LiaPagerSolid } from "react-icons/lia"
+import { useEffect, useState } from "react";
+import Accomplishment from "../pages/Accomplishment";
+import { getUserId } from "../api/context";
 
 export const LandingPage = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+  const fetchData = async () => {
+    const response = await getUserId();
+    sessionStorage.setItem("userRole", String(response?.role));
+    sessionStorage.setItem("userId", String(response?.id));
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <main>
       <Header />
@@ -72,5 +76,5 @@ export const LandingPage = () => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};

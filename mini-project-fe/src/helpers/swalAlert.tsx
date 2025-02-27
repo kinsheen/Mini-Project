@@ -21,13 +21,13 @@ export const loadingButton = (
     Swal.fire({
       icon: icon,
       width: 420,
-      iconColor: "#dc2626",
+      iconColor: "#0f4c5c",
       title: title,
       text: text,
       showConfirmButton: false,
       cancelButtonText: "Okay",
       showCancelButton: true,
-      cancelButtonColor: "#dc2626",
+      cancelButtonColor: "#0f4c5c",
     });
   } else {
     Swal.fire({
