@@ -25,7 +25,7 @@ export default function Achievements() {
     <div className="todo mt-7 px-7 py-7">
       <div className="flex flex-row text-white mb-5 -mt-11">
         <div className="flex w-auto bg-primary rounded-md p-2 pr-4">
-          <div className="flex flex-row justify-center items-center">
+          <div className="flex flex-row justify-center items-center gap-2">
             <span className="">
               <TbMessage2Star />
             </span>

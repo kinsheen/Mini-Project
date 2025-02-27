@@ -24,25 +24,27 @@ export const callApi = async <T,>(
   data?: any
 ): Promise<T> => {
   try {
-    const response = await axiosInstance({
+    const token = sessionStorage.getItem("token"); // Replace with your token retrieval method
+
+    const config = {
       method,
       url: endpoint,
       data: { ...data },
-    });
+      headers: token ? { Authorization: `Bearer ${token}` } : {}, // Add token if it exists
+    };
+
+    const response = await axiosInstance(config);
     if (
-      response.status == 200 ||
-      response.status == 201 ||
-      response.status == 204
+      response.status === 200 ||
+      response.status === 201 ||
+      response.status === 204
     ) {
       return response.data;
     } else {
       throw new Error("Error: " + response.statusText);
     }
-    // If the API call is successful, return the dta
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    // If the API call fails, throw an error
     throw new Error("An error occurred");
   }
 };

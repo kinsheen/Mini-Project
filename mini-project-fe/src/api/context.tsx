@@ -1,4 +1,4 @@
-import { toDoResponseArray } from "../interfaces/types";
+import { loginResponse, toDoResponseArray } from "../interfaces/types";
 import { callApi } from "../services/services";
 
 //getTodoPriorityList
@@ -27,6 +27,17 @@ export const postCreateToDo = async (
     }
   );
   console.log("createToDo Response:", response);
+  return response;
+};
+
+//Login
+export const logIn = async (email: string, password: string) => {
+  const response = await callApi<loginResponse | undefined>(
+    "post",
+    `/api/auth/login`,
+    { email, password }
+  );
+  console.log("logIn Response:", response);
   return response;
 };
 

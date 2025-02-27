@@ -1,6 +1,25 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { logIn } from "../api/context";
+import { loadingButton } from "../helpers/swalAlert";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await logIn(email, password);
+      if (response?.message === "Login successful") {
+        loadingButton("success", "Successfully Login", "Success", false);
+        window.location.href = "/";
+        sessionStorage.setItem("token", response.token);
+      }
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+    }
+  };
+
   return (
     <div className="bg-[url('assets/blue.jpg')] bg-cover w-full h-screen bg-no-repeat flex items-center justify-center loginpage">
       <div className="w-[25%] h-auto py-10 px-12 rounded-xl logincard">
@@ -12,19 +31,6 @@ export default function Login() {
             Welcome back, you've been missed
           </p>
         </div>
-        {/* <div className="w-full h-auto flex items-center gap-7">
-          <div className="w-1/2 h-auto">
-            <button className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/20 text-white rounded-md flex items-center gap-x-2 hover:bg-gray-100/40 ease-out duration-700"></button>
-          </div>
-          <div className="w-1/2 h-auto">
-            <button className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/20 text-white rounded-md flex items-center gap-x-2 hover:bg-gray-100/40 ease-out duration-700"></button>
-          </div>
-        </div> */}
-        {/* <div className="w-full h-auto flex items-center gap-x-1 my-5">
-          <div className="w-1/2 h-[1.5px] bg-gray-200/40 rounded-md"></div>
-          <p className="text-sm text-gray-300 font-normal px-2">OR</p>
-          <div className="w-1/2 h-[1.5px] bg-gray-200/40 rounded-md"></div>
-        </div> */}
         <div className="w-full h-auto mb-5">
           <label htmlFor="username" className="block text-white mb-1">
             Username
@@ -34,6 +40,7 @@ export default function Login() {
             id="username"
             className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
             placeholder="Enter your username"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="w-full h-auto mb-5">
@@ -45,6 +52,7 @@ export default function Login() {
             id="password"
             className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
             placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="w-full h-auto flex items-center justify-between mb-5">
@@ -67,7 +75,10 @@ export default function Login() {
           </Link>
         </div>
 
-        <button className="w-full h-12 outline-none bg-white/70 rounded-md text-lg text-black/90 font-medium mb-7 hover:bg-white/30 ease-out duration-500">
+        <button
+          className="w-full h-12 outline-none bg-white/70 rounded-md text-lg text-black/90 font-medium mb-7 hover:bg-white/30 ease-out duration-500"
+          onClick={handleLogin}
+        >
           Sign In
         </button>
         <div className="w-full h-auto flex items-center justify-center gap-x-1">

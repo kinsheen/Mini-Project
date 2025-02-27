@@ -12,6 +12,11 @@ export type toDoResponse = {
   updated_at: string;
 };
 
+export type loginResponse = {
+  message: string;
+  token: string;
+};
+
 export const dateFormat: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",
