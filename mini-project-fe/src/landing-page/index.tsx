@@ -3,11 +3,22 @@ import Priority from "../pages/Priority";
 import CreateTodo from "../pages/CreateTodo";
 import MyCalendar from "../pages/Calendar";
 import Todo from "../pages/Todo";
-import { useState } from "react";
-import Accomplishment from "../pages/Accomplishment"
+import { useEffect, useState } from "react";
+import Accomplishment from "../pages/Accomplishment";
+import { getUserId } from "../api/context";
 
 export const LandingPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+  const fetchData = async () => {
+    const response = await getUserId();
+    sessionStorage.setItem("userRole", String(response?.role));
+    sessionStorage.setItem("userId", String(response?.id));
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <main>
       <Header />
@@ -32,5 +43,5 @@ export const LandingPage = () => {
         </div>
       </div>
     </main>
-  )
+  );
 };

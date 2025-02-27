@@ -1,4 +1,8 @@
-import { loginResponse, toDoResponseArray } from "../interfaces/types";
+import {
+  loginResponse,
+  toDoResponseArray,
+  userResponse,
+} from "../interfaces/types";
 import { callApi } from "../services/services";
 
 //getTodoPriorityList
@@ -41,7 +45,7 @@ export const logIn = async (email: string, password: string) => {
   return response;
 };
 
-//updateTodo
+//getTodoById
 export const getTodoById = async (id: string) => {
   const response = await callApi<toDoResponseArray | undefined>(
     "get",
@@ -49,6 +53,28 @@ export const getTodoById = async (id: string) => {
     {}
   );
   console.log("getTodoById Response:", response);
+  return response;
+};
+
+//getTodoByUserId
+export const getTodoByUserId = async (id: string) => {
+  const response = await callApi<toDoResponseArray | undefined>(
+    "get",
+    `/api/to-do/get?id=${id}`,
+    {}
+  );
+  console.log("getTodoByUserId Response:", response);
+  return response;
+};
+
+//getUserId
+export const getUserId = async () => {
+  const response = await callApi<userResponse | undefined>(
+    "get",
+    `/api/auth/me`,
+    {}
+  );
+  console.log("getUserId Response:", response);
   return response;
 };
 
