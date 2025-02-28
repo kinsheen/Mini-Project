@@ -129,6 +129,21 @@ export const updateAchievement = async (
   return response
 }
 
+export type UpdateTaskProps = {
+  id: number
+  is_priority?: boolean
+  status?: string
+  task?: string
+  note?: string
+}
+
+export const updateTask = async (data: UpdateTaskProps) => {
+  const response = await callApi<TodoResponse>("put", `/api/to-do/update`, data)
+
+  console.log("Update Achievement Response:", response)
+  return response
+}
+
 //updateNotes
 export const updateNotes = async (id: number, note: string) => {
   const response = await callApi<toDoResponseArray | undefined>(

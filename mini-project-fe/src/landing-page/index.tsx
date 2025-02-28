@@ -50,7 +50,7 @@ export const LandingPage = () => {
         </div>
       </div> */}
 
-      <div className="flex flex-row m-1 mb-3 lg:my-8 lg:mx-15 gap-3">
+      <div className="flex flex-row m-1 mb-10 lg:my-8 lg:mx-15 gap-3">
         <div className="flex-1 text-white text-center text-sm md:text-md lg:text-xl">
           <button className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2 rounded-md md:p-2 lg:p-3 ">
             <IoCalendarNumberSharp className="mt-[2px]" />
@@ -71,8 +71,8 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row mx-1  lg:mx-15 border-2 gap-3 h-150 mb-20">
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]">
+      <div className="flex flex-col lg:flex-row mx-1 lg:mx-15 border-2 gap-3 h-150 mb-20 ">
+        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD] mb-10">
           <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
             <FaListCheck className="h-5 w-5 mx-2 mt-1" />
             Priority
@@ -81,7 +81,7 @@ export const LandingPage = () => {
             <Prio />
           </div>
         </div>
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]">
+        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]  mb-10">
           <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
             <FaList className="h-5 w-5 mx-2 mt-1" />
             Todo
@@ -90,7 +90,7 @@ export const LandingPage = () => {
             <Todo2 />
           </div>
         </div>
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]">
+        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD] mb-10">
           <div className="flex w-55 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
             <FaListOl className="h-5 w-5 mx-2 mt-1" />
             Accomplishment
