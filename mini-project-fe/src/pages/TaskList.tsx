@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaList } from "react-icons/fa6";
-import { toDoResponseArray } from "../interfaces/types";
+import { status, toDoResponseArray } from "../interfaces/types";
 import { getTodoPriorityList, updateTodo } from "../api/context";
 import { confirmation } from "../helpers/SwalDelete";
 
@@ -20,11 +20,15 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
     fetchData();
   }, []);
 
-  const priorityTasks = lists ? lists : [];
+  const priorityTasks = lists
+    ? lists.filter((list) => list.status !== status.done)
+    : [];
 
   // Filter tasks based on the search term
-  const filteredTasks = priorityTasks.filter((task) =>
-    task.task.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTasks = priorityTasks.filter(
+    (task) =>
+      task.task.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -50,7 +54,7 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
               filteredTasks.map((task) => (
                 <li
                   key={task.id}
-                  className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md"
+                  className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md px-8"
                 >
                   <input
                     type="checkbox"
@@ -68,10 +72,10 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
                       }
                     }}
                   />
-                  <span className="mr-auto px-6">{task.task}</span>
+                  <span className="mr-auto px-4">{task.task}</span>
                   <span
                     className={`drop-shadow-2xl font-bold ${
-                      task.status === "Done" || task.status === "DONE"
+                      task.status === "Done"
                         ? "text-green-500"
                         : task.status === "Unassigned"
                         ? "text-red-500"

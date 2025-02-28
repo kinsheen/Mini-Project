@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { status, toDoResponseArray } from "../interfaces/types";
 import { getTodoPriorityList } from "../api/context";
 
-export default function Backlog() {
+interface TaskListProps {
+  searchTerm: string;
+}
+
+const Backlog: React.FC<TaskListProps> = ({ searchTerm }) => {
   const [lists, setList] = useState<toDoResponseArray | null>(null);
 
   // Function to fetch the priority tasks
@@ -20,6 +24,11 @@ export default function Backlog() {
   const priorityTasks = lists
     ? lists.filter((list) => list.status === status.unassigned)
     : [];
+
+  const filteredTasks = priorityTasks.filter((task) =>
+    task.task.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="todo mt-7 px-7 py-7">
       <div className="flex flex-row text-white mb-5 -mt-11">
@@ -33,14 +42,14 @@ export default function Backlog() {
         </div>
       </div>
       <div className="h-150">
-        <div className=" h-full overflow-auto">
+        <div className="h-full overflow-auto">
           <ul className="list-disc list-inside flex flex-col gap-2">
-            {priorityTasks.length === 0 ? (
+            {filteredTasks.length === 0 ? (
               <div className="text-white font-bold flex justify-center items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md">
                 NO BACKLOGS AVAILABLE
               </div>
             ) : (
-              priorityTasks.map((task) => (
+              filteredTasks.map((task) => (
                 <li
                   key={task.id}
                   className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md"
@@ -67,4 +76,6 @@ export default function Backlog() {
       </div>
     </div>
   );
-}
+};
+
+export default Backlog;
