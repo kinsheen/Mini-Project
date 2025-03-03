@@ -1,16 +1,12 @@
 const Todo = require('../models/to-do.model')
 const { Op } = require("sequelize");
+const services = require('../services/to-do.service')
 
 // Get All To-Dos (Authenticated User)
 const getToDos = async (req, res) => {
     // ✅ Extract user ID from `req.user` (set in protect middleware)
     const userId = req.user.id;
-
-    // ✅ Fetch To-Dos for the authenticated user
-    const result = await Todo.findAll({
-        where: { userId },
-    });
-
+    const result = services.getAllToDo();
     return res.status(200).json(result);
 };
 
