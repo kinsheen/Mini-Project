@@ -1,29 +1,42 @@
 import Header from "../header/Header";
-import Priority from "../pages/Priority";
-import CreateTodo from "../pages/CreateTodo";
-import MyCalendar from "../pages/Calendar";
-import Todo from "../pages/Todo";
-import { useEffect, useState } from "react";
-import Accomplishment from "../pages/Accomplishment";
-import { getUserId } from "../api/context";
+import { useEffect, useState } from "react"
+import { getUserId } from "../api/context"
 import { IoCalendarNumberSharp } from "react-icons/io5"
 import { LiaPagerSolid } from "react-icons/lia"
 import { TiExportOutline } from "react-icons/ti"
-import Accomplishment2 from "../pages/Accomplishment2"
-import Todo2 from "../pages/Todo2"
-import Prio from "../pages/Prio"
 import { FaList, FaListCheck, FaListOl } from "react-icons/fa6"
+import Priority from "../pages/Priority"
+import Todo from "../pages/Todo"
+import Accomplishment from "../pages/Accomplishment"
+import CalendarModal from "../modals/CalendarModal"
+import { formattedSelectedDate } from "../helpers/dateToLocal"
 
 export const LandingPage = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  // const [currentDate, setCurrentDate] = useState<string>("")
+
+  // const getCurrentDate = async () => {
+  //   return selectedDate.toLocaleDateString("en-US", {
+  //     month: "short",
+  //     day: "2-digit",
+  //     year: "numeric",
+  //   })
+  // }
+
+  // const handleDateChange = (date: Date) => {
+  //   console.log("selectedDate", date)
+  //   setSelectedDate(date)
+  // }
 
   const fetchData = async () => {
     const response = await getUserId()
     sessionStorage.setItem("userRole", String(response?.role))
     sessionStorage.setItem("userId", String(response?.id))
   }
+
   useEffect(() => {
     fetchData()
+    // getCurrentDate()
   }, [])
 
   return (
@@ -52,9 +65,17 @@ export const LandingPage = () => {
 
       <div className="flex flex-row m-1 mb-10 lg:my-8 lg:mx-15 gap-3">
         <div className="flex-1 text-white text-center text-sm md:text-md lg:text-xl">
-          <button className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2 rounded-md md:p-2 lg:p-3 ">
+          <button
+            className="flex gap-1 cursor-pointer  bg-[#0F4C5C] p-1 px-2 rounded-md md:p-2 lg:p-3 "
+            onClick={() => setIsOpen(true)}
+          >
             <IoCalendarNumberSharp className="mt-[2px]" />
-            Calendar
+            {/* {selectedDate.toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            })} */}
+            {formattedSelectedDate()}
           </button>
         </div>
         <div className="flex text-white text-center  text-sm md:text-md lg:text-xl">
@@ -78,7 +99,7 @@ export const LandingPage = () => {
             Priority
           </div>
           <div className="flex h-full">
-            <Prio />
+            <Priority />
           </div>
         </div>
         <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]  mb-10">
@@ -87,7 +108,7 @@ export const LandingPage = () => {
             Todo
           </div>
           <div className="flex h-full">
-            <Todo2 />
+            <Todo />
           </div>
         </div>
         <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD] mb-10">
@@ -96,10 +117,16 @@ export const LandingPage = () => {
             Accomplishment
           </div>
           <div className="flex h-full">
-            <Accomplishment2 />
+            <Accomplishment />
           </div>
         </div>
       </div>
+
+      <CalendarModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        // handleDateChange={handleDateChange}
+      />
     </main>
   )
 }

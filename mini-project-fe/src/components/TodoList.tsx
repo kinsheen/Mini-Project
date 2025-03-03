@@ -1,20 +1,31 @@
 import { FaRegEdit } from "react-icons/fa"
 import { MdOutlinePlaylistRemove } from "react-icons/md"
 import { TiPlusOutline } from "react-icons/ti"
-import { updateTask, UpdateTaskProps } from "../api/context"
+import { updateTask } from "../api/context"
 import Swal from "sweetalert2"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import { useState } from "react"
+import EditTaskModal from "../modals/ EditTaskModal"
+import { UpdateTaskProps } from "../interfaces/types"
+
+type TodoListProps = {
+  task: string
+  note?: string
+  id: number
+  fetchTodos: () => void
+  is_priority: boolean
+}
 
 const TodoList = ({
   task,
+  note,
   id,
   fetchTodos,
-}: {
-  task: string
-  id: number
-  fetchTodos: () => void
-}) => {
+  is_priority,
+}: TodoListProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
   const handleUpdate = (data: UpdateTaskProps) => {
     Swal.fire({
       title: "Add this task to Priority?",
@@ -100,6 +111,19 @@ const TodoList = ({
     })
   }
 
+  const handleSubmit = async (task?: string, note?: string) => {
+    await updateTask({ id, task, note })
+
+    Swal.fire({
+      title: "Succesfully Edited a Task!",
+      icon: "success",
+      draggable: true,
+      confirmButtonColor: "#0F4C5C",
+    })
+
+    fetchTodos()
+  }
+
   return (
     <div
       ref={setNodeRef}
@@ -121,15 +145,20 @@ const TodoList = ({
             handleUpdate({ id, is_priority: true })
           }}
         >
-          <TiPlusOutline className=" lg:h-6 lg:w-6" />
+          {is_priority ? null : <TiPlusOutline className=" lg:h-6 lg:w-6 " />}
         </button>
         {/* <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Add to Priority
         </span> */}
       </div>
       <div className="flex relative group ">
-        <button className="cursor-pointer transition-transform duration-200 hover:scale-140">
-          <FaRegEdit />
+        <button
+          className="cursor-pointer transition-transform duration-200 hover:scale-140"
+          onClick={() => {
+            setIsOpen(true)
+          }}
+        >
+          <FaRegEdit className="" />
         </button>
         {/* <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Edit
@@ -146,6 +175,14 @@ const TodoList = ({
           Remove
         </span> */}
       </div>
+
+      <EditTaskModal
+        isOpen={isOpen}
+        task={task}
+        note={note}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </div>
   )
 }
