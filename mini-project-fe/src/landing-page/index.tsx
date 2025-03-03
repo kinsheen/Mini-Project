@@ -28,6 +28,7 @@ export const LandingPage = () => {
   //   setSelectedDate(date)
   // }
 
+<<<<<<< Updated upstream
   const fetchData = async () => {
     const response = await getUserId()
     sessionStorage.setItem("userRole", String(response?.role))
@@ -38,6 +39,17 @@ export const LandingPage = () => {
     fetchData()
     // getCurrentDate()
   }, [])
+=======
+  // const fetchData = async () => {
+  //   const response = await getUserId();
+  //   sessionStorage.setItem("userRole", String(response?.role));
+  //   sessionStorage.setItem("userId", String(response?.id));
+  //   console.log(response);
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+>>>>>>> Stashed changes
 
   return (
     <main>

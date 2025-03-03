@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../components/modal";
 import { postCreateToDo } from "../api/context";
-import { IoArrowForwardCircle } from "react-icons/io5";
+import { FaTasks } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { formatLocalDateToISO } from "../helpers/dateToLocal";
 
@@ -75,7 +75,7 @@ const CreateTodo = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="px-16 flex items-center justify-start">
+      <div className="px-16 flex items-center">
         <button
           className="flex flex-row justify-between gap-2 bg-primary p-3 w-65 rounded hover:bg-primary hover:bg-primary/70 transition duration-200"
           onClick={openModal}
@@ -83,7 +83,7 @@ const CreateTodo = () => {
           <div className="font-inter font-bold text-white mx-auto">
             Add Task
           </div>
-          <IoArrowForwardCircle className="text-2xl text-white" />
+          <FaTasks className="text-2xl text-white" />
         </button>
         <Modal
           isOpen={isModalOpen}

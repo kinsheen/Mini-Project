@@ -10,6 +10,22 @@ export const Loading = (title: string) => {
   Swal.showLoading();
 };
 
+export const swalWarning = async (title: string) => {
+  const result = await Swal.fire({
+    title: title,
+    icon: "warning",
+    draggable: true,
+    confirmButtonColor: "#0f4c5c",
+    showCancelButton: true,
+  });
+
+  if (result.isConfirmed) {
+    return true;
+  } else if (result.isDismissed) {
+    return false;
+  }
+};
+
 export const loadingButton = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any,
