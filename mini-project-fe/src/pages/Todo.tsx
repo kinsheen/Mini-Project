@@ -54,7 +54,7 @@ const Todo = () => {
 
   return (
     <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
-      <div className="border-2 w-full p-3">
+      <div className="w-full p-3 min-h-100">
         <SortableContext
           items={todos.map((item: TaskProps) => ({
             id: item.id,

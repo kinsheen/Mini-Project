@@ -1,6 +1,7 @@
 import Calendar from "react-calendar"
 import "../components/Calendar.css"
 import { useEffect, useState } from "react"
+import { FaX } from "react-icons/fa6"
 
 type ValuePiece = Date | null
 type Value = ValuePiece | [ValuePiece, ValuePiece]
@@ -54,9 +55,10 @@ const CalendarModal = ({ isOpen, onClose }: CalendarModalProps) => {
         <Calendar onChange={onDateChange} value={value} />
         <hr className="mt-5" />
         <button
-          className="bg-[#0F4C5C] text-white p-2 rounded-md mt-2 float-end px-4 cursor-pointer"
+          className=" flex bg-[#0F4C5C] text-white p-2 rounded-md mt-2 float-end px-4 cursor-pointer  hover:bg-transparent hover:text-[#0F4C5C] hover:font-bold hover:scale-90 hover:border-4"
           onClick={handleClose}
         >
+          <FaX className="mt-2 w-5 h-5 mr-1" />
           Close
         </button>
       </div>
