@@ -19,7 +19,6 @@ export const LandingPage = () => {
 
   const navigate = useNavigate()
 
-<<<<<<< Updated upstream
   const fetchData = async () => {
     const response = await getUserId()
     sessionStorage.setItem("userRole", String(response?.role))
@@ -29,17 +28,6 @@ export const LandingPage = () => {
   useEffect(() => {
     fetchData()
   }, [])
-=======
-  // const fetchData = async () => {
-  //   const response = await getUserId();
-  //   sessionStorage.setItem("userRole", String(response?.role));
-  //   sessionStorage.setItem("userId", String(response?.id));
-  //   console.log(response);
-  // };
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
->>>>>>> Stashed changes
 
   return (
     <main>
@@ -75,9 +63,9 @@ export const LandingPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row mx-1 md:mx-20 lg:mx-15  gap-3 h-180 mb-20 ">
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD] mb-10">
-          <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
+      <div className="flex flex-col lg:flex-row mx-1 md:mx-20 lg:mx-15 lg:mt-20  gap-3 h-180 mb-20 ">
+        <div className="flex flex-col  rounded-lg h-full w-full bg-[#87A5AD] mb-10">
+          <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-3 -mt-5 mb-12 rounded-md ml-4 justify-center">
             <FaListCheck className="h-5 w-5 mx-2 mt-1" />
             Priority
           </div>
@@ -85,8 +73,8 @@ export const LandingPage = () => {
             <Priority />
           </div>
         </div>
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD]  mb-10">
-          <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
+        <div className="flex flex-col rounded-lg  h-full w-full bg-[#87A5AD]  mb-10">
+          <div className="flex w-35 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-3 -mt-5 mb-12 rounded-md ml-4 justify-center">
             <FaList className="h-5 w-5 mx-2 mt-1" />
             Todo
           </div>
@@ -94,8 +82,8 @@ export const LandingPage = () => {
             <Todo />
           </div>
         </div>
-        <div className="flex flex-col border-2 h-full w-full bg-[#87A5AD] mb-10">
-          <div className="flex w-55 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-2 -mt-5 mb-5 rounded-md ml-4 justify-center">
+        <div className="flex flex-col rounded-lg  h-full w-full bg-[#87A5AD] mb-10">
+          <div className="flex w-55 border-2 border-none bg-[#0F4C5C] text-sm md:text-md lg:text-xl text-white p-3 -mt-5 mb-12 rounded-md ml-4 justify-center">
             <FaListOl className="h-5 w-5 mx-2 mt-1" />
             Accomplishment
           </div>
