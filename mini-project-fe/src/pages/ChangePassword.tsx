@@ -1,0 +1,88 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+const ChangePassword: React.FC = () => {
+  const [currentPassword, setCurrentPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
+
+  const handleChangePassword = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Add change password logic here
+    console.log({ currentPassword, newPassword, confirmNewPassword });
+  };
+
+  return (
+    <div className="bg-[url('assets/blue.jpg')] bg-cover w-full h-screen bg-no-repeat flex items-center justify-center loginpage">
+      <form
+        onSubmit={handleChangePassword}
+        className="w-[25%] h-auto py-10 px-12 rounded-xl logincard"
+      >
+        <div className="w-full h-auto">
+          <h1 className="text text-white font-semibold mb-1 text-2xl">
+            Change Password
+          </h1>
+          <p className="text-sm text-white font-normal mb-4">
+            Please enter your new password.
+          </p>
+        </div>
+        <div className="w-full h-auto mb-5">
+          <label htmlFor="currentPassword" className="block text-white mb-1">
+            Current Password
+          </label>
+          <input
+            type="password"
+            id="currentPassword"
+            className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
+            placeholder="Enter your current password"
+            onChange={(e) => setCurrentPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="w-full h-auto mb-5">
+          <label htmlFor="newPassword" className="block text-white mb-1">
+            New Password
+          </label>
+          <input
+            type="password"
+            id="newPassword"
+            className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
+            placeholder="Enter your new password"
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="w-full h-auto mb-5">
+          <label htmlFor="confirmNewPassword" className="block text-white mb-1">
+            Confirm New Password
+          </label>
+          <input
+            type="password"
+            id="confirmNewPassword"
+            className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
+            placeholder="Confirm your new password"
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full h-12 outline-none bg-white/70 rounded-md text-lg text-black/90 font-medium mb-7 hover:bg-white/30 ease-out duration-500"
+        >
+          Change Password
+        </button>
+        <div className="w-full h-auto flex items-center justify-center gap-x-1">
+          <p className="text-black/80 text-sm font-medium">Back to</p>
+          <Link
+            to="/profile"
+            className="text-black/80 text-sm font-medium hover:underline ease-out duration-500"
+          >
+            Profile
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default ChangePassword;
