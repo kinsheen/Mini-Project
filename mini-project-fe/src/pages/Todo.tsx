@@ -64,9 +64,10 @@ const Todo = () => {
           <div className="border-2 w-full h-full bg-[#0F4C5C]  rounded-xl">
             {todos?.length > 0 ? (
               <>
-                {todos?.map((item) => {
+                {todos?.map((item, index) => {
                   return (
                     <TodoList
+                      index={index}
                       task={item.task}
                       note={item?.note}
                       key={item.id}

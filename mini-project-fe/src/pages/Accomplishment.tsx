@@ -63,9 +63,10 @@ const Accomplishment = () => {
           <div className="border-2 w-full h-full bg-[#0F4C5C]  rounded-xl">
             {accomplishments?.length > 0 ? (
               <>
-                {accomplishments.map((item) => {
+                {accomplishments.map((item, index) => {
                   return (
                     <AccomplishmentList
+                      index={index}
                       task={item.task}
                       note={item?.note}
                       key={item.id}

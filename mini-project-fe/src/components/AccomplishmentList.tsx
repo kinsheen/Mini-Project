@@ -9,6 +9,7 @@ import { useState } from "react"
 import { UpdateTaskProps } from "../interfaces/types"
 
 type AccomplishmentProps = {
+  index: number
   task: string
   note?: string
   id: number
@@ -16,6 +17,7 @@ type AccomplishmentProps = {
 }
 
 const AccomplishmentList = ({
+  index,
   task,
   note,
   id,
@@ -72,10 +74,10 @@ const AccomplishmentList = ({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex flex-row my-1 rounded border-2 text-white mx-1 text-sm md:text-md lg:text-xl p-1 gap-2"
+      className="flex flex-row my-2 rounded border-2 text-white mx-1 text-sm md:text-md lg:text-xl p-1 gap-2"
     >
       <div {...attributes} {...listeners} className="flex-1  cursor-move">
-        {task}
+        { index + 1}. {task}
       </div>
       <div className="flex relative group">
         <button

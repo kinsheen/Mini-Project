@@ -10,6 +10,7 @@ import EditTaskModal from "../modals/ EditTaskModal"
 import { UpdateTaskProps } from "../interfaces/types"
 
 type TodoListProps = {
+  index: number
   task: string
   note?: string
   id: number
@@ -18,6 +19,7 @@ type TodoListProps = {
 }
 
 const TodoList = ({
+  index,
   task,
   note,
   id,
@@ -136,7 +138,7 @@ const TodoList = ({
         onChange={handleCheckboxClick}
       />
       <div {...attributes} {...listeners} className="flex-1 cursor-move">
-        {task}
+        {index + 1}. {task}
       </div>
       <div className="flex relative group ">
         <button

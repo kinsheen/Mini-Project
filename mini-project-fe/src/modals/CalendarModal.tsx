@@ -2,6 +2,7 @@ import Calendar from "react-calendar"
 import "../components/Calendar.css"
 import { useEffect, useState } from "react"
 import { FaX } from "react-icons/fa6"
+import { formatDate } from "../helpers/dateToLocal"
 
 type ValuePiece = Date | null
 type Value = ValuePiece | [ValuePiece, ValuePiece]
@@ -30,12 +31,7 @@ const CalendarModal = ({ isOpen, onClose }: CalendarModalProps) => {
 
   useEffect(() => {
     if (value) {
-      const myDate = new Date(value as Date)
-      const formattedDate = myDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      })
+      const formattedDate = formatDate(value as unknown as string)
 
       const prevStoredDate = localStorage.getItem("selectedDate")
 

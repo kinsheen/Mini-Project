@@ -20,6 +20,7 @@ const ExportCsvModal = ({
   const [todos, setTodos] = useState<TaskProps[]>([])
   const [accomplishments, setAccomplishments] = useState<TaskProps[]>([])
   const [priorities, setPriorities] = useState<TaskProps[]>([])
+  const [selectedDate, setSelectedDate] = useState<string>("")
 
   const fetchAccomplishments = async () => {
     const response = await getToDoByField(TaskField.STATUS, TaskStatus.DONE)
@@ -55,7 +56,13 @@ const ExportCsvModal = ({
     setTodos(filteredResponse)
   }
 
+  const getStoredDate = () => {
+    const storedDate = localStorage.getItem("selectedDate")
+    setSelectedDate(storedDate || "")
+  }
+
   useEffect(() => {
+    getStoredDate()
     fetchAccomplishments()
     getPriorities()
     fetchTodos()
@@ -141,7 +148,7 @@ const ExportCsvModal = ({
       <div className="border-2 w-400 h-[90%] bg-[#B7C9CE] p-5 rounded-md overflow-auto">
         <div className="p-5">
           <h2 className="text-2xl font-bold mb-4">
-            📊 Daily Task Report - {formatDate(new Date() as unknown as string)}
+            📊 Daily Task Report - {formatDate(selectedDate)}
           </h2>
           <div className="flex flex-wrap justify-center gap-5">
             {renderTable(priorities, "Priority Task")}

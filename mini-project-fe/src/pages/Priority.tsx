@@ -67,9 +67,10 @@ const Priority = () => {
             <div className="border-2 w-full h-full bg-[#0F4C5C] rounded-xl">
               {priorities?.length > 0 ? (
                 <>
-                  {priorities?.map((item) => {
+                  {priorities?.map((item, index) => {
                     return (
                       <PriorityList
+                        index={ index}
                         task={item.task}
                         key={item.id}
                         id={item.id}
