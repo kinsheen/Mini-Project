@@ -1,6 +1,6 @@
 const express = require("express");
 require('express-async-errors');
-const { login, getCurrentUser, changePassword, forgotPassword, resetPassword} = require("../controllers/auth.controller");
+const { login, logout, getCurrentUser, changePassword, forgotPassword, resetPassword} = require("../controllers/auth.controller");
 const { protect } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/login", login);
 
 // Protected Routes
+router.delete("/logout",protect, logout);
 router.get("/me", protect, getCurrentUser); // Get current user
 router.put("/change-password", protect, changePassword);
 router.post("/forgot-password", protect, forgotPassword);
