@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { FaList } from "react-icons/fa6";
-import { toDoResponseArray } from "../interfaces/types";
+import { status, toDoResponseArray } from "../interfaces/types";
 import { getTodoPriorityList, updateTodo } from "../api/context";
 import { confirmation } from "../helpers/SwalDelete";
 
-export default function TaskList() {
+interface TaskListProps {
+  searchTerm: string;
+}
+
+const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
   const [lists, setList] = useState<toDoResponseArray | null>(null);
 
-  // Function to fetch the priority tasks
   const fetchData = async () => {
     const response = await getTodoPriorityList();
     setList(response);
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
-  //   const priorityTasks = lists
-  //     ? lists.filter((list) => list.status === status.unassigned)
-  //     : [];
+  const priorityTasks = lists
+    ? lists.filter((list) => list.status !== status.done)
+    : [];
 
-  const priorityTasks = lists ? lists : [];
+  // Filter tasks based on the search term
+  const filteredTasks = priorityTasks.filter(
+    (task) =>
+      task.task.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.status.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="todo mt-7 px-7 py-7">
@@ -37,17 +44,17 @@ export default function TaskList() {
         </div>
       </div>
       <div className="h-150">
-        <div className=" h-full overflow-auto">
+        <div className="h-full overflow-auto">
           <ul className="list-disc list-inside flex flex-col gap-2">
-            {priorityTasks.length === 0 ? (
+            {filteredTasks.length === 0 ? (
               <div className="text-white font-bold flex justify-center items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md">
                 NO TASK AVAILABLE
               </div>
             ) : (
-              priorityTasks.map((task) => (
+              filteredTasks.map((task) => (
                 <li
                   key={task.id}
-                  className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md"
+                  className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md px-8"
                 >
                   <input
                     type="checkbox"
@@ -65,7 +72,7 @@ export default function TaskList() {
                       }
                     }}
                   />
-                  <span className="mr-auto px-6">{task.task}</span>
+                  <span className="mr-auto px-4">{task.task}</span>
                   <span
                     className={`drop-shadow-2xl font-bold ${
                       task.status === "Done"
@@ -87,4 +94,6 @@ export default function TaskList() {
       </div>
     </div>
   );
-}
+};
+
+export default TaskList;

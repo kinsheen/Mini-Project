@@ -12,3 +12,32 @@ export function formatLocalDateToISO(date: string) {
   // Construct the ISO-like string in local time
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
 }
+
+export function formattedSelectedDate() {
+  const date = localStorage.getItem("selectedDate")
+  const formattedDate = formatLocalDateToISO(date || "")
+  return formatDate(formattedDate)
+}
+
+export const formattedTaskDate = (date: string) => {
+  return formatDate(date)
+}
+
+export const formatDate = (date: string) => {
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  })
+  return formattedDate
+}
+
+export const getHourMinute = (date: string) => {
+  const formattedDate = new Date(date).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
+  return formattedDate
+}
+

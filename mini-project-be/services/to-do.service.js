@@ -2,11 +2,13 @@
 const Todo = require('../models/to-do.model'); // Adjust the path if needed
 
 module.exports.getAllToDo = async (userId) => {
-    // ✅ Fetch To-Dos for the authenticated user
-    const records = await Todo.findAll({
-        where: { userId },
-    });
-    return records;
+  // ✅ Fetch To-Dos for the authenticated user
+
+  const records = await Todo.findAll({
+    where: { userId },
+  })
+  const todos = records.map((record) => record.get({ plain: true }))
+  return todos
 }
 
 module.exports.getToDoById = async (id) => {
