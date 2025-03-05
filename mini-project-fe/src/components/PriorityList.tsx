@@ -48,7 +48,7 @@ const PriorityList = ({ index, task, id, getPriorities }: PriorityProps) => {
     <div
       ref={setNodeRef}
       style={style}
-      className="flex flex-row my-1 rounded border-2 text-white mx-1 text-sm md:text-md lg:text-xl p-1 gap-2"
+      className="flex flex-row my-2 rounded border-2 text-white mx-1 text-sm md:text-md lg:text-xl p-1 gap-2"
     >
       <div {...attributes} {...listeners} className="flex-1 cursor-move">
         {index + 1}. {task}
