@@ -31,6 +31,19 @@ const login = async (req, res) => {
     return res.status(200).json({ message: "Login successful", token });
 };
 
+// ✅ LOGOUT FUNCTION
+const logout = async (req, res) => {
+    try {
+        // If using JWT stored in cookies, clear the cookie
+        res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "Strict" });
+
+        // Send a success response
+        return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Logout failed", error: error.message });
+    }
+};
+
 // ✅ GET CURRENT USER
 const getCurrentUser = async (req, res) => {
     const user = await User.findByPk(req.user.id, {
@@ -142,4 +155,4 @@ const resetPassword = async (req, res) => {
     return res.status(200).json({ message: "Password reset successfully" });
 };
 
-module.exports = { login, getCurrentUser, changePassword, forgotPassword, resetPassword};
+module.exports = { login, logout, getCurrentUser, changePassword, forgotPassword, resetPassword};
