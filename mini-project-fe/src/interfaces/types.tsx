@@ -14,11 +14,14 @@ export type toDoResponse = {
 
 export type loginResponse = {
   message: string;
+  userStatus: string;
   token: string;
 };
 
 export type userResponse = {
   id: number;
+  firstname: string;
+  lastname: string;
   username: string;
   email: string;
   role: string;
@@ -26,6 +29,8 @@ export type userResponse = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type userResponseArray = userResponse[];
 
 export const dateFormat: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -40,16 +45,16 @@ export enum status {
 }
 
 export type TaskProps = {
-  id: number
-  userId: number
-  task: string
-  note?: string
-  status: TaskStatus
-  is_priority: boolean
-  day: string
-  createdAt: string
-  updatedAt: string
-}
+  id: number;
+  userId: number;
+  task: string;
+  note?: string;
+  status: TaskStatus;
+  is_priority: boolean;
+  day: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export enum TaskField {
   STATUS = "status",
@@ -62,9 +67,9 @@ export enum TaskStatus {
 }
 
 export type UpdateTaskProps = {
-  id: number
-  is_priority?: boolean
-  status?: string
-  task?: string
-  note?: string
-}
+  id: number;
+  is_priority?: boolean;
+  status?: string;
+  task?: string;
+  note?: string;
+};

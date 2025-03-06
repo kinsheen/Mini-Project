@@ -1,33 +1,39 @@
 import Header from "../header/Header";
-import { useEffect, useState } from "react"
-import { getUserId } from "../api/context"
-import { IoCalendarNumberSharp } from "react-icons/io5"
-import { LiaPagerSolid } from "react-icons/lia"
-import { TiExportOutline } from "react-icons/ti"
-import { FaList, FaListCheck, FaListOl } from "react-icons/fa6"
-import Priority from "../pages/Priority"
-import Todo from "../pages/Todo"
-import Accomplishment from "../pages/Accomplishment"
-import CalendarModal from "../modals/CalendarModal"
-import { formattedSelectedDate } from "../helpers/dateToLocal"
-import ExportCsvModal from "../modals/ExportCsvModal"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { getUserId } from "../api/context";
+import { IoCalendarNumberSharp } from "react-icons/io5";
+import { LiaPagerSolid } from "react-icons/lia";
+import { TiExportOutline } from "react-icons/ti";
+import { FaList, FaListCheck, FaListOl } from "react-icons/fa6";
+import Priority from "../pages/Priority";
+import Todo from "../pages/Todo";
+import Accomplishment from "../pages/Accomplishment";
+import CalendarModal from "../modals/CalendarModal";
+import { formattedSelectedDate } from "../helpers/dateToLocal";
+import ExportCsvModal from "../modals/ExportCsvModal";
+import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
-  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState<boolean>(false)
-  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false)
+  const [isCalendarModalOpen, setIsCalendarModalOpen] =
+    useState<boolean>(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  // const handleDateChange = (date: Date) => {
+  //   console.log("selectedDate", date)
+  //   setSelectedDate(date)
+  // }
 
   const fetchData = async () => {
-    const response = await getUserId()
-    sessionStorage.setItem("userRole", String(response?.role))
-    sessionStorage.setItem("userId", String(response?.id))
-  }
+    const response = await getUserId();
+    sessionStorage.setItem("userRole", String(response?.role));
+    sessionStorage.setItem("userId", String(response?.id));
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <main>
@@ -103,5 +109,5 @@ export const LandingPage = () => {
         onClose={() => setIsExportModalOpen(false)}
       />
     </main>
-  )
-}
+  );
+};

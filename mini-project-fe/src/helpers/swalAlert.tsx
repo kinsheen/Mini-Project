@@ -54,7 +54,7 @@ export const loadingButton = (
       showConfirmButton: false,
       cancelButtonText: "Okay",
       showCancelButton: true,
-      cancelButtonColor: "#dc2626",
+      cancelButtonColor: "#0f4c5c",
     }).then(() => {
       window.location.href = "/";
     });

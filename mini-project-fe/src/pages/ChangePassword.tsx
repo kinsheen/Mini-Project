@@ -1,13 +1,40 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { changePassword } from "../api/context";
+import { loadingButton } from "../helpers/swalAlert";
 
 const ChangePassword: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleChangePassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (newPassword === confirmNewPassword) {
+      const response = changePassword(currentPassword, newPassword);
+      if (!response) {
+        loadingButton(
+          "error",
+          "Changing Password Failed",
+          "Please Contact Admin",
+          false
+        );
+      } else {
+        loadingButton("success", "Success", "Please Login Again", true);
+        sessionStorage.clear();
+        navigate("/login");
+      }
+    } else {
+      loadingButton(
+        "error",
+        "Confirm Password is not correct",
+        "Please re Write your password",
+        false
+      );
+    }
+
     // Add change password logic here
     console.log({ currentPassword, newPassword, confirmNewPassword });
   };
@@ -74,8 +101,8 @@ const ChangePassword: React.FC = () => {
         <div className="w-full h-auto flex items-center justify-center gap-x-1">
           <p className="text-black/80 text-sm font-medium">Back to</p>
           <Link
-            to="/profile"
-            className="text-black/80 text-sm font-medium hover:underline ease-out duration-500"
+            to="/"
+            className="text-black/80 text-sm font-medium hover:underline hover:text-white ease-out duration-500"
           >
             Profile
           </Link>

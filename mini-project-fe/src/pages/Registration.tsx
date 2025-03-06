@@ -1,17 +1,53 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { createUser } from "../api/context";
+import { loadingButton } from "../helpers/swalAlert";
 
 const Registration: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [username, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     // Add registration logic here
     console.log({ firstName, lastName, email, password, confirmPassword });
+    if (password === confirmPassword) {
+      const response = createUser(
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        "inactive"
+      );
+      if (!response) {
+        loadingButton(
+          "error",
+          "Registration Failed",
+          "Please Contact Admin",
+          false
+        );
+      } else {
+        loadingButton(
+          "success",
+          "Registration Success",
+          "Please Contact Admin for Activation",
+          true
+        );
+      }
+    } else {
+      loadingButton(
+        "error",
+        "Confirm Password is not correct",
+        "Please re Write your password",
+        false
+      );
+    }
   };
 
   return (
@@ -51,6 +87,19 @@ const Registration: React.FC = () => {
             className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
             placeholder="Enter your last name"
             onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="w-full h-auto mb-5">
+          <label htmlFor="email" className="block text-white mb-1">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="w-full h-12 p-4 outline-none bg-transparent border-[2px] border-gray-200/40 text-white rounded-md"
+            placeholder="Enter your username"
+            onChange={(e) => setUserName(e.target.value)}
             required
           />
         </div>

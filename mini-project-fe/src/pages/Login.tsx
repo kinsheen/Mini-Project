@@ -30,7 +30,7 @@ export default function Login() {
     Loading("Please Wait...");
     try {
       const response = await logIn(email, password);
-      if (response?.message === "Login successful") {
+      if (response?.userStatus === "active") {
         sessionStorage.setItem("token", response.token);
         // Store email in localStorage if "Remember Me" is checked
         if (rememberMe) {
@@ -42,7 +42,12 @@ export default function Login() {
         Swal.close();
         await fetchData();
       } else {
-        loadingButton("error", "Login Failed", "Please login again", true);
+        loadingButton(
+          "error",
+          "In Active User Login",
+          "Please Contact Admin for Activation",
+          true
+        );
       }
     } catch (error) {
       console.error("An error occurred during login:", error);

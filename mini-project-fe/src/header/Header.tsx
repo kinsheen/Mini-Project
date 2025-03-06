@@ -5,52 +5,52 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { swalWarning } from "../helpers/swalAlert";
-import { getUserId } from "../api/context"
-import { userResponse } from "../interfaces/types"
+import { getUserId } from "../api/context";
+import { userResponse } from "../interfaces/types";
 
 export default function Header() {
-  const [dropdownVisible, setDropdownVisible] = useState<boolean>(false)
-  const [user, setUser] = useState<userResponse | null>(null)
+  const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const [user, setUser] = useState<userResponse | null>(null);
 
-  const dropdownRef = useRef<HTMLDivElement | null>(null)
-  const role = sessionStorage.getItem("userRole")
-  const navigate = useNavigate()
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const role = sessionStorage.getItem("userRole");
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
-    setDropdownVisible((prev) => !prev)
-  }
+    setDropdownVisible((prev) => !prev);
+  };
 
   const handleLogout = async () => {
-    const result = await swalWarning("Do you want to Logout?")
+    const result = await swalWarning("Do you want to Logout?");
     if (result) {
-      await sessionStorage.clear()
-      localStorage.clear()
-      navigate("/login")
+      await sessionStorage.clear();
+      localStorage.clear();
+      navigate("/login");
     }
-  }
+  };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
-      setDropdownVisible(false)
+      setDropdownVisible(false);
     }
-  }
+  };
 
   const getUser = async () => {
-    const response = await getUserId()
-    setUser(response as userResponse)
-    return response
-  }
+    const response = await getUserId();
+    setUser(response as userResponse);
+    return response;
+  };
 
   useEffect(() => {
-    getUser()
-    document.addEventListener("mousedown", handleClickOutside)
+    getUser();
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div>
@@ -66,7 +66,9 @@ export default function Header() {
             className="text-white text-[30px] font-inter font-bold cursor-pointer flex flex-row items-center gap-3"
             onClick={toggleDropdown}
           >
-            <span className="text-2xl">{user?.username}</span>
+            <span className="text-2xl">
+              {user?.firstname} {user?.lastname}
+            </span>
             <span>
               <BsPersonCircle className="text-5xl hover:text-gray-300" />
             </span>
@@ -76,7 +78,9 @@ export default function Header() {
               <div className="flex flex-col items-center py-3 gap-3">
                 <div className="flex flex-col items-center text-primary mb-2 gap-2">
                   <BsPersonCircle className="text-5xl mr-2" />
-                  <span>Hi! {user?.username}</span>
+                  <span>
+                    Hi! {user?.firstname} {user?.lastname}
+                  </span>
                 </div>
                 {role == "admin" ? (
                   <Link to="/admin" className="">
@@ -88,11 +92,12 @@ export default function Header() {
                 ) : (
                   ""
                 )}
-
-                <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
-                  <LiaUserEditSolid className="text-xl text-primary" />
-                  <span>Change Password</span>
-                </div>
+                <Link to="/changepassword" className="">
+                  <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
+                    <LiaUserEditSolid className="text-xl text-primary" />
+                    <span>Change Password</span>
+                  </div>
+                </Link>
                 <div
                   className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4 mb-4"
                   onClick={handleLogout}
@@ -120,5 +125,5 @@ export default function Header() {
         </div>
       </div>
     </div>
-  )
+  );
 }
