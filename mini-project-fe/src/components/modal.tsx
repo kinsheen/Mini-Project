@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-secondary rounded-lg shadow-lg p-6 w-1/4">
+      <div className="bg-secondary rounded-lg shadow-lg p-6 w-100 md:w-1/4">
         <h2 className="text-xl font-bold mb-4 font-medium">
           Create To Do Task
         </h2>

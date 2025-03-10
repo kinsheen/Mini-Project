@@ -15,16 +15,16 @@ export const OverView: React.FC = () => {
   return (
     <main>
       <Header />
-      <div className="mx-5 px-10 pb-5 flex flex-row items-center gap-4">
+      <div className="mx-5 pb-5 flex flex-row items-center gap-4 md:px-10">
         <span>
           <IoArrowUndo
-            className="text-primary text-5xl hover:text-secondary"
+            className="text-primary text-3xl hover:text-secondary md:text-5xl"
             onClick={() => navigate("/")}
           />
         </span>
-        <h3 className="text-primary text-6xl">Overview</h3>
+        <h3 className="text-primary text-4xl md:text-6xl">Overview</h3>
       </div>
-      <div className="flex flex-row justify-end pr-16">
+      <div className="flex flex-row pr-6 justify-end items-center gap-3 md:pr-16">
         <span>
           <CreateTodo />
         </span>
@@ -33,7 +33,7 @@ export const OverView: React.FC = () => {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-2 m-5 px-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-2 mx-5 md:px-10">
         <div className="p-2 border-solid">
           <TaskList searchTerm={searchTerm} />
         </div>

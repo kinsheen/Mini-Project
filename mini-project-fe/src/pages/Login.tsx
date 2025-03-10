@@ -51,7 +51,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      loadingButton("error", "Login Failed", "Please login again", true);
+      loadingButton("error", "Login Failed", "Please login again", false);
     }
   };
 

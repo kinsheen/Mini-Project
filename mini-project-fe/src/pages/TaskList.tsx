@@ -72,7 +72,9 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
                       }
                     }}
                   />
-                  <span className="mr-auto px-4">{task.task}</span>
+                  <span className="mr-auto px-4 text-sm md:text-base">
+                    {task.task}
+                  </span>
                   <span
                     className={`drop-shadow-2xl font-bold ${
                       task.status === "Done"
@@ -82,7 +84,7 @@ const TaskList: React.FC<TaskListProps> = ({ searchTerm }) => {
                         : task.status === "In Progress"
                         ? "text-blue-500"
                         : "text-black"
-                    }`}
+                    } text-sm md:text-base`}
                   >
                     {task.status}
                   </span>

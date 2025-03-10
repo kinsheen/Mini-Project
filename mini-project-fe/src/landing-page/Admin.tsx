@@ -11,14 +11,14 @@ export const Admin: React.FC = () => {
   return (
     <main>
       <Header />
-      <div className="mx-5 px-10 pb-5 flex flex-row items-center gap-4">
+      <div className="mx-5 pb-5 flex flex-row items-center gap-4 md:px-10">
         <span>
           <IoArrowUndo
-            className="text-primary text-5xl hover:text-secondary"
+            className="text-primary text-3xl hover:text-secondary md:text-5xl"
             onClick={() => navigate("/")}
           />
         </span>
-        <h3 className="text-primary text-6xl">User List</h3>
+        <h3 className="text-primary text-4xl md:text-6xl">User List</h3>
       </div>
       <div className="flex flex-row justify-start mx-5 px-10">
         <span className="pr-16">

@@ -55,20 +55,22 @@ export default function Header() {
   return (
     <div>
       <header className="bg-[url('assets/blue.jpg')] bg-center bg-cover flex flex-row p-3 justify-between items-center">
-        <div className="text-white text-[40px] font-inter font-bold hidden sm:block">
-          Habit Tracker
+        <div className="text-white font-inter font-bold">
+          <span className="text-[40px] hidden md:block">Habit Tracker</span>
+          <span className="text-[40px] md:hidden">HT</span>
         </div>
-        <div className="text-white text-[60px] font-caveat font-bold">
+        <div className="text-white text-[40px] font-caveat font-bold md:text-[60px]">
           You can do it
         </div>
-        <div className="relative hidden sm:block" ref={dropdownRef}>
+        <div className="relative sm:block" ref={dropdownRef}>
           <div
             className="text-white text-[30px] font-inter font-bold cursor-pointer flex flex-row items-center gap-3"
             onClick={toggleDropdown}
           >
-            <span className="text-2xl">
+            <span className="text-2xl hidden md:block">
               {user?.firstname} {user?.lastname}
             </span>
+            <span className="text-2xl md:hidden"></span>
             <span>
               <BsPersonCircle className="text-5xl hover:text-gray-300" />
             </span>

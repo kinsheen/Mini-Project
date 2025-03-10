@@ -37,6 +37,23 @@ export const postCreateToDo = async (
   return response;
 };
 
+//UpdateUser
+export const updateUser = async (
+  id: number,
+  username: string,
+  role: string,
+  status: string
+) => {
+  const response = await callApi<userResponse>("put", `/api/user/update`, {
+    id,
+    username,
+    role,
+    status,
+  });
+  console.log("updateUser Response:", response);
+  return response;
+};
+
 //ChangePassword
 export const changePassword = async (
   oldPassword: string,

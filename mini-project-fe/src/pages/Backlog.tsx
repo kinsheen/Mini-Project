@@ -54,7 +54,9 @@ const Backlog: React.FC<TaskListProps> = ({ searchTerm }) => {
                   key={task.id}
                   className="text-white flex justify-between items-center p-3 bg-primary drop-shadow-xl py-5 rounded-md"
                 >
-                  <span className="mr-auto px-5">{task.task}</span>
+                  <span className="mr-auto px-5 text-sm md:text-base">
+                    {task.task}
+                  </span>
                   <span
                     className={`drop-shadow-2xl font-bold px-5 ${
                       task.status === "Done"
@@ -64,7 +66,7 @@ const Backlog: React.FC<TaskListProps> = ({ searchTerm }) => {
                         : task.status === "In Progress"
                         ? "text-blue-500"
                         : "text-black"
-                    }`}
+                    } text-sm md:text-base`}
                   >
                     {task.status}
                   </span>

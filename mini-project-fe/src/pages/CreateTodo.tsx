@@ -75,15 +75,15 @@ const CreateTodo = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="px-16 flex items-center">
+      <div className="flex items-center">
         <button
-          className="flex flex-row justify-between gap-2 bg-primary p-3 w-65 rounded hover:bg-primary hover:bg-primary/70 transition duration-200"
+          className="flex flex-row justify-between gap-2 bg-primary p-3 w-30 rounded hover:bg-primary hover:bg-primary/70 transition duration-200 md:w-65"
           onClick={openModal}
         >
-          <div className="font-inter font-bold text-white mx-auto">
+          <div className="font-inter font-bold text-sm text-white mx-auto md:text-lg">
             Add Task
           </div>
-          <FaTasks className="text-2xl text-white" />
+          <FaTasks className="text-md text-white md:text-2xl" />
         </button>
         <Modal
           isOpen={isModalOpen}
