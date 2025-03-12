@@ -30,30 +30,31 @@ const ChangePassword: React.FC = () => {
       loadingButton(
         "error",
         "Confirm Password is not correct",
-        "Please re Write your password",
+        "Please re-write your password",
         false
       );
     }
 
-    // Add change password logic here
     console.log({ currentPassword, newPassword, confirmNewPassword });
   };
+
+  const UserRole = sessionStorage.getItem("userRole");
 
   return (
     <div className="bg-[url('assets/blue.jpg')] bg-cover w-full h-screen bg-no-repeat flex items-center justify-center loginpage">
       <form
         onSubmit={handleChangePassword}
-        className="w-[25%] h-auto py-10 px-12 rounded-xl logincard"
+        className="w-full max-w-md py-10 px-6 rounded-xl logincard"
       >
-        <div className="w-full h-auto">
-          <h1 className="text text-white font-semibold mb-1 text-2xl">
+        <div className="w-full mb-4">
+          <h1 className="text text-white font-semibold mb-1 text-2xl text-center">
             Change Password
           </h1>
-          <p className="text-sm text-white font-normal mb-4">
+          <p className="text-sm text-white font-normal mb-4 text-center">
             Please enter your new password.
           </p>
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="currentPassword" className="block text-white mb-1">
             Current Password
           </label>
@@ -66,7 +67,7 @@ const ChangePassword: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="newPassword" className="block text-white mb-1">
             New Password
           </label>
@@ -79,7 +80,7 @@ const ChangePassword: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="confirmNewPassword" className="block text-white mb-1">
             Confirm New Password
           </label>
@@ -98,10 +99,10 @@ const ChangePassword: React.FC = () => {
         >
           Change Password
         </button>
-        <div className="w-full h-auto flex items-center justify-center gap-x-1">
+        <div className="w-full flex items-center justify-center gap-x-1">
           <p className="text-black/80 text-sm font-medium">Back to</p>
           <Link
-            to="/"
+            to={UserRole === "admin" ? "/admin" : "/"}
             className="text-black/80 text-sm font-medium hover:underline hover:text-white ease-out duration-500"
           >
             Profile

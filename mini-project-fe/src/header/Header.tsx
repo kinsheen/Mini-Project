@@ -13,7 +13,7 @@ export default function Header() {
   const [user, setUser] = useState<userResponse | null>(null);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const role = sessionStorage.getItem("userRole");
+
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -23,7 +23,7 @@ export default function Header() {
   const handleLogout = async () => {
     const result = await swalWarning("Do you want to Logout?");
     if (result) {
-      await sessionStorage.clear();
+      sessionStorage.clear();
       localStorage.clear();
       navigate("/login");
     }
@@ -56,7 +56,10 @@ export default function Header() {
     <div>
       <header className="bg-[url('assets/blue.jpg')] bg-center bg-cover flex flex-row p-3 justify-between items-center">
         <div className="text-white font-inter font-bold">
-          <span className="text-[40px] hidden md:block">Habit Tracker</span>
+          <Link to="/">
+            <span className="text-[40px] hidden md:block">Habit Tracker</span>
+          </Link>
+
           <span className="text-[40px] md:hidden">HT</span>
         </div>
         <div className="text-white text-[40px] font-caveat font-bold md:text-[60px]">
@@ -84,16 +87,7 @@ export default function Header() {
                     Hi! {user?.firstname} {user?.lastname}
                   </span>
                 </div>
-                {role == "admin" ? (
-                  <Link to="/admin" className="">
-                    <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
-                      <BsPersonCircle className="text-xl text-primary" />
-                      <span>Admin</span>
-                    </div>
-                  </Link>
-                ) : (
-                  ""
-                )}
+
                 <Link to="/changepassword" className="">
                   <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
                     <LiaUserEditSolid className="text-xl text-primary" />

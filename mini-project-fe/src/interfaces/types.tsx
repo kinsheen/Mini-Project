@@ -15,6 +15,7 @@ export type toDoResponse = {
 export type loginResponse = {
   message: string;
   userStatus: string;
+  userRole: string;
   token: string;
 };
 

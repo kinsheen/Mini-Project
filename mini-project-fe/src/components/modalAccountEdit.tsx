@@ -5,6 +5,8 @@ interface ModalProps {
   onClose: () => void;
   onSubmit: (user: string, role: string, status: string) => void; // Callback to handle form submission
   userName: string;
+  staTus: string;
+  roLe: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -12,6 +14,8 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   onSubmit,
   userName,
+  staTus,
+  roLe,
 }) => {
   const [username, setUsername] = useState("");
   const [role, setRole] = useState("");
@@ -19,7 +23,9 @@ const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
-      setUsername(userName); // Set the day to today's date when the modal opens
+      setUsername(userName);
+      setRole(roLe);
+      setStatus(staTus);
     }
   }, [isOpen]);
 
@@ -44,7 +50,6 @@ const Modal: React.FC<ModalProps> = ({
             <input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              required
               className="block w-full border border-gray-300 rounded p-2 mt-1 h-10 resize-none font-medium bg-white"
               placeholder="Enter your task here..."
             />
@@ -54,7 +59,6 @@ const Modal: React.FC<ModalProps> = ({
             <select
               value={role} // Assuming you have a state variable for role
               onChange={(e) => setRole(e.target.value)} // Update the state handler accordingly
-              required
               className="block w-full border border-gray-300 rounded p-2 mt-1 h-10 font-medium bg-white"
             >
               <option value="" disabled>
@@ -69,7 +73,6 @@ const Modal: React.FC<ModalProps> = ({
             <select
               value={status} // Assuming you have a state variable for role
               onChange={(e) => setStatus(e.target.value)} // Update the state handler accordingly
-              required
               className="block w-full border border-gray-300 rounded p-2 mt-1 h-10 font-medium bg-white"
             >
               <option value="" disabled>

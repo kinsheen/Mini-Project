@@ -15,22 +15,26 @@ export const OverView: React.FC = () => {
   return (
     <main>
       <Header />
-      <div className="mx-5 pb-5 flex flex-row items-center gap-4 md:px-10">
-        <span>
-          <IoArrowUndo
-            className="text-primary text-3xl hover:text-secondary md:text-5xl"
-            onClick={() => navigate("/")}
-          />
-        </span>
-        <h3 className="text-primary text-4xl md:text-6xl">Overview</h3>
-      </div>
-      <div className="flex flex-row pr-6 justify-end items-center gap-3 md:pr-16">
-        <span>
-          <CreateTodo />
-        </span>
-        <span className="">
-          <SearchInput onSearch={setSearchTerm} />
-        </span>
+
+      <div className="flex flex-row justify-between">
+        <div className="mx-5 pb-5 flex flex-row justify-start items-center gap-1 md:px-10 md:gap-4">
+          <span>
+            <IoArrowUndo
+              className="text-primary text-3xl hover:text-secondary md:text-5xl"
+              onClick={() => navigate("/")}
+            />
+          </span>
+          <h3 className="text-primary text-3xl md:text-6xl">Overview</h3>
+        </div>
+
+        <div className="flex flex-row pr-6 items-center gap-3 md:pr-16">
+          <span>
+            <CreateTodo />
+          </span>
+          <span className="">
+            <SearchInput onSearch={setSearchTerm} />
+          </span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-2 mx-5 md:px-10">

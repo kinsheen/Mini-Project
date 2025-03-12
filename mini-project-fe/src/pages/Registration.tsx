@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUser } from "../api/context";
 import { loadingButton } from "../helpers/swalAlert";
 
@@ -10,11 +10,11 @@ const Registration: React.FC = () => {
   const [username, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Add registration logic here
     console.log({ firstName, lastName, email, password, confirmPassword });
     if (password === confirmPassword) {
       const response = createUser(
@@ -39,12 +39,13 @@ const Registration: React.FC = () => {
           "Please Contact Admin for Activation",
           true
         );
+        navigate("/login");
       }
     } else {
       loadingButton(
         "error",
         "Confirm Password is not correct",
-        "Please re Write your password",
+        "Please re-write your password",
         false
       );
     }
@@ -54,17 +55,17 @@ const Registration: React.FC = () => {
     <div className="bg-[url('assets/blue.jpg')] bg-cover w-full h-screen bg-no-repeat flex items-center justify-center loginpage">
       <form
         onSubmit={handleRegistration}
-        className="w-[25%] h-auto py-10 px-12 rounded-xl logincard"
+        className="w-full max-w-md py-10 px-6 rounded-xl logincard"
       >
-        <div className="w-full h-auto">
+        <div className="w-full mb-4 text-center">
           <h1 className="text text-white font-semibold mb-1 text-2xl">
             Create Account
           </h1>
           <p className="text-sm text-white font-normal mb-4">
-            Join us today. Tracking your task made Easier!
+            Join us today. Tracking your task made easier!
           </p>
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="firstName" className="block text-white mb-1">
             First Name
           </label>
@@ -77,7 +78,7 @@ const Registration: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="lastName" className="block text-white mb-1">
             Last Name
           </label>
@@ -90,8 +91,8 @@ const Registration: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
-          <label htmlFor="email" className="block text-white mb-1">
+        <div className="w-full mb-5">
+          <label htmlFor="username" className="block text-white mb-1">
             Username
           </label>
           <input
@@ -103,7 +104,7 @@ const Registration: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="email" className="block text-white mb-1">
             Email
           </label>
@@ -116,7 +117,7 @@ const Registration: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="password" className="block text-white mb-1">
             Password
           </label>
@@ -129,7 +130,7 @@ const Registration: React.FC = () => {
             required
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="confirmPassword" className="block text-white mb-1">
             Confirm Password
           </label>
@@ -148,7 +149,7 @@ const Registration: React.FC = () => {
         >
           Register
         </button>
-        <div className="w-full h-auto flex items-center justify-center gap-x-1">
+        <div className="w-full flex items-center justify-center gap-x-1">
           <p className="text-black/80 text-sm font-medium">
             Already have an account?
           </p>
