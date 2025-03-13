@@ -16,8 +16,8 @@ export const OverView: React.FC = () => {
     <main>
       <Header />
 
-      <div className="flex flex-row justify-between">
-        <div className="mx-5 pb-5 flex flex-row justify-start items-center gap-1 md:px-10 md:gap-4">
+      <div className="flex flex-row justify-between pb-3">
+        <div className="mx-5 flex flex-row justify-start items-center gap-1 md:px-10 md:gap-4">
           <span>
             <IoArrowUndo
               className="text-primary text-3xl hover:text-secondary md:text-5xl"

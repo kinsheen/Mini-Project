@@ -1,20 +1,20 @@
 "use client";
 import { BsPersonCircle } from "react-icons/bs";
 import { PiSignOutBold } from "react-icons/pi";
-import { LiaUserEditSolid } from "react-icons/lia";
+import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { swalWarning } from "../helpers/swalAlert";
 import { getUserId } from "../api/context";
 import { userResponse } from "../interfaces/types";
+import { MdManageAccounts } from "react-icons/md";
 
 export default function Header() {
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [user, setUser] = useState<userResponse | null>(null);
-
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
   const navigate = useNavigate();
+  const role = sessionStorage.getItem("userRole");
 
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
@@ -88,9 +88,20 @@ export default function Header() {
                   </span>
                 </div>
 
+                {role == "admin" ? (
+                  <Link to="/registration" className="">
+                    <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
+                      <MdOutlineSupervisorAccount className="text-xl text-primary" />
+                      <span>Add Account</span>
+                    </div>
+                  </Link>
+                ) : (
+                  ""
+                )}
+
                 <Link to="/changepassword" className="">
                   <div className="px-4 py-2 text-black hover:bg-gray-200 cursor-pointer w-80 text-center border-2 border-primary rounded-3xl flex justify-center items-center gap-4">
-                    <LiaUserEditSolid className="text-xl text-primary" />
+                    <MdManageAccounts className="text-xl text-primary" />
                     <span>Change Password</span>
                   </div>
                 </Link>

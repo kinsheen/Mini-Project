@@ -106,7 +106,7 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
   };
 
   return (
-    <div className="bg-primary mx-5 my-5 md:mx-15">
+    <div className="bg-primary mx-1 my-5 p-5 overflow-x-auto md:mx-15">
       <div className="flex justify-center p-10">
         <table className="w-full text-white border-2">
           <thead className="border-3 ">
@@ -155,7 +155,7 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
           roLe={role}
         />
       </div>
-      <div className="flex justify-end flex-row gap-3 mr-4 pb-3">
+      <div className="flex justify-end flex-row gap-3 mr-4">
         <button
           onClick={() => handlePageChange("prev")}
           disabled={currentPage === 1}

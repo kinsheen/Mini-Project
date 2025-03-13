@@ -11,6 +11,7 @@ const Registration: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
+  const UserRole = sessionStorage.getItem("userRole");
 
   const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,13 +34,23 @@ const Registration: React.FC = () => {
           false
         );
       } else {
-        loadingButton(
-          "success",
-          "Registration Success",
-          "Please Contact Admin for Activation",
-          true
-        );
-        navigate("/login");
+        if (!UserRole) {
+          loadingButton(
+            "success",
+            "Registration Success",
+            "Please Contact Admin for Activation",
+            true
+          );
+          navigate("/");
+        } else {
+          loadingButton(
+            "success",
+            "Registration Success",
+            "Please Activate the Account",
+            false
+          );
+          navigate("/admin");
+        }
       }
     } else {
       loadingButton(
@@ -58,9 +69,16 @@ const Registration: React.FC = () => {
         className="w-full max-w-md py-10 px-6 rounded-xl logincard"
       >
         <div className="w-full mb-4 text-center">
-          <h1 className="text text-white font-semibold mb-1 text-2xl">
-            Create Account
-          </h1>
+          {!UserRole ? (
+            <h1 className="text text-white font-semibold mb-1 text-2xl">
+              Create Account
+            </h1>
+          ) : (
+            <h1 className="text text-white font-semibold mb-1 text-2xl">
+              Add Account
+            </h1>
+          )}
+
           <p className="text-sm text-white font-normal mb-4">
             Join us today. Tracking your task made easier!
           </p>
@@ -149,17 +167,29 @@ const Registration: React.FC = () => {
         >
           Register
         </button>
-        <div className="w-full flex items-center justify-center gap-x-1">
-          <p className="text-black/80 text-sm font-medium">
-            Already have an account?
-          </p>
-          <Link
-            to="/login"
-            className="text-black/80 text-sm font-medium hover:underline hover:text-white ease-out duration-500"
-          >
-            Sign In
-          </Link>
-        </div>
+        {!UserRole ? (
+          <div className="w-full flex items-center justify-center gap-x-1">
+            <p className="text-black/80 text-sm font-medium">
+              Already have an account?
+            </p>
+            <Link
+              to="/login"
+              className="text-black/80 text-sm font-medium hover:underline hover:text-white ease-out duration-500"
+            >
+              Sign In
+            </Link>
+          </div>
+        ) : (
+          <div className="w-full flex items-center justify-center gap-x-1">
+            <p className="text-black/80 text-sm font-medium">Want to</p>
+            <Link
+              to="/admin"
+              className="text-black/80 text-sm font-medium hover:underline hover:text-white ease-out duration-500"
+            >
+              Go Back?
+            </Link>
+          </div>
+        )}
       </form>
     </div>
   );
