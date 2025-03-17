@@ -3,6 +3,10 @@ import { userResponseArray } from "../interfaces/types";
 import { getUser, updateUser } from "../api/context";
 import Swal from "sweetalert2";
 import Modal from "../components/modalAccountEdit";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 
 interface TaskListProps {
   searchTerm: string;
@@ -12,14 +16,18 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
   const [lists, setList] = useState<userResponseArray | null>(null);
   const [id, setId] = useState<number>(0);
   const [user, setUser] = useState<string>("");
-  // Modal
-
+  const [role, setRole] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [submittedData, setSubmittedData] = useState<{
     username: string;
     role: string;
     status: string;
   } | null>(null);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 7; // Adjust the number of items per page as needed
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -66,24 +74,36 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
   };
 
   console.log(submittedData);
-  // Function to fetch the priority tasks
+
   const fetchData = async () => {
     const response = await getUser();
     setList(response);
   };
 
-  // Fetch data on component mount
   useEffect(() => {
     fetchData();
   }, []);
 
   const priorityTasks = lists || [];
-
   const filteredTasks = priorityTasks.filter((task) =>
     task.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log("USERSSSSSS", filteredTasks);
+  // Calculate current items for the current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredTasks.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredTasks.length / itemsPerPage);
+
+  const handlePageChange = (direction: string) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage((page) => page + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage((page) => page - 1);
+    }
+  };
 
   return (
     <div className="bg-primary mx-1 my-5 p-5 overflow-x-auto md:mx-15">
@@ -91,15 +111,15 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
         <table className="w-full text-white border-2">
           <thead className="border-3 ">
             <tr>
-              <th className="py-5 text-center w-1/5">USERNAME</th>
-              <th className="py-2 text-center w-1/5">ROLE</th>
-              <th className="py-2 text-center w-1/5">PASSWORD</th>
-              <th className="py-2 text-center w-1/5">STATUS</th>
-              <th className="py-2 text-center w-1/5">ACTION</th>
+              <th className="py-5 px-1 text-center w-1/5">USERNAME</th>
+              <th className="py-2 px-1 text-center w-1/5">ROLE</th>
+              <th className="py-2 px-1 text-center w-1/5">PASSWORD</th>
+              <th className="py-2 px-1 text-center w-1/5">STATUS</th>
+              <th className="py-2 px-1 text-center w-1/5">ACTION</th>
             </tr>
           </thead>
           <tbody>
-            {filteredTasks.map((user) => (
+            {currentItems.map((user) => (
               <tr className="border-2" key={user.id}>
                 <td className="py-4 text-center w-1/5">{user.username}</td>
                 <td className="py-2 text-center w-1/5">{user.role}</td>
@@ -113,6 +133,8 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
                         setId(user.id);
                         openModal();
                         setUser(user.username);
+                        setRole(user.role);
+                        setStatus(user.status);
                       }}
                     >
                       Edit
@@ -123,12 +145,35 @@ const AdminTable: React.FC<TaskListProps> = ({ searchTerm }) => {
             ))}
           </tbody>
         </table>
+
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
           onSubmit={handleSubmit}
           userName={user}
+          staTus={status}
+          roLe={role}
         />
+      </div>
+      <div className="flex justify-end flex-row gap-3 mr-4">
+        <button
+          onClick={() => handlePageChange("prev")}
+          disabled={currentPage === 1}
+          className="bg-primary text-white text-3xl rounded px-4 py-2"
+        >
+          <MdOutlineArrowBackIosNew />
+        </button>
+
+        <span className="self-center text-white">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange("next")}
+          disabled={currentPage === totalPages}
+          className="bg-primary text-white text-3xl rounded px-4 py-2"
+        >
+          <MdOutlineArrowForwardIos />
+        </button>
       </div>
     </div>
   );

@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserId, logIn } from "../api/context";
+import { logIn } from "../api/context";
 import { Loading, loadingButton } from "../helpers/swalAlert";
 import Swal from "sweetalert2";
 
-export default function Login() {
+interface LoginProps {
+  onLogin: (role: string) => void; // New prop for handling login
+}
+
+export default function Login({ onLogin }: LoginProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if email is stored in localStorage
     const storedEmail = localStorage.getItem("email");
     if (storedEmail) {
       setEmail(storedEmail);
-      setRememberMe(true); // Check the checkbox if an email is found
+      setRememberMe(true);
     }
   }, []);
-
-  const fetchData = async () => {
-    const response = await getUserId();
-    sessionStorage.setItem("userRole", String(response?.role));
-    sessionStorage.setItem("userId", String(response?.id));
-    console.log(response);
-  };
 
   const handleLogin = async () => {
     Loading("Please Wait...");
@@ -32,26 +28,28 @@ export default function Login() {
       const response = await logIn(email, password);
       if (response?.userStatus === "active") {
         sessionStorage.setItem("token", response.token);
-        // Store email in localStorage if "Remember Me" is checked
+        sessionStorage.setItem("userRole", response.userRole);
+        onLogin(response.userRole); // Update role in App component
+
         if (rememberMe) {
           localStorage.setItem("email", email);
         } else {
           localStorage.removeItem("email");
         }
-        navigate("/");
+
         Swal.close();
-        await fetchData();
+        navigate(response.userRole === "admin" ? "/admin" : "/");
       } else {
         loadingButton(
           "error",
-          "In Active User Login",
+          "Inactive User Login",
           "Please Contact Admin for Activation",
-          true
+          false
         );
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      loadingButton("error", "Login Failed", "Please login again", false);
+      loadingButton("error", "Login Failed", "Please try again", false);
     }
   };
 
@@ -62,17 +60,17 @@ export default function Login() {
           e.preventDefault();
           handleLogin();
         }}
-        className="w-[25%] h-auto py-10 px-12 rounded-xl logincard"
+        className="w-full max-w-md py-10 px-8 rounded-xl logincard"
       >
-        <div className="w-full h-auto">
-          <h1 className="text text-white font-semibold mb-1 text-2xl">
+        <div className="w-full mb-4">
+          <h1 className="text text-white font-semibold mb-1 text-2xl text-center">
             Sign In
           </h1>
-          <p className="text-sm text-white font-normal mb-4">
-            Welcome back, to Habit Tracker
+          <p className="text-sm text-white font-normal mb-4 text-center">
+            Welcome back to Habit Tracker
           </p>
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="username" className="block text-white mb-1">
             Username
           </label>
@@ -85,7 +83,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className="w-full h-auto mb-5">
+        <div className="w-full mb-5">
           <label htmlFor="password" className="block text-white mb-1">
             Password
           </label>
@@ -97,7 +95,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="w-full h-auto flex items-center justify-between mb-5">
+        <div className="w-full flex items-center justify-between mb-5">
           <div className="flex items-center gap-x-2">
             <input
               type="checkbox"
@@ -117,7 +115,7 @@ export default function Login() {
         >
           Sign In
         </button>
-        <div className="w-full h-auto flex items-center justify-center gap-x-1">
+        <div className="w-full flex items-center justify-center gap-x-1">
           <p className="text-black/80 text-sm font-medium">
             Don't have an account?
           </p>

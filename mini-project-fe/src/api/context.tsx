@@ -124,11 +124,7 @@ export const getUser = async () => {
 
 //getUserId
 export const getUserId = async () => {
-  const response = await callApi<userResponse | undefined>(
-    "get",
-    `/api/auth/me`,
-    {}
-  );
+  const response = await callApi<userResponse>("get", `/api/auth/me`, {});
   console.log("getUserId Response:", response);
   return response;
 };
