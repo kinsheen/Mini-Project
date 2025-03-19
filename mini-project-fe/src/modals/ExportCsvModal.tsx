@@ -26,7 +26,7 @@ const ExportCsvModal = ({
     const response = await getToDoByField(TaskField.STATUS, TaskStatus.DONE)
     const filteredResponse = response?.filter(
       (item: TaskProps) =>
-        formattedTaskDate(item.createdAt) === formattedSelectedDate()
+        formattedTaskDate(item.updatedAt) === formattedSelectedDate()
     )
 
     setAccomplishments(filteredResponse)
@@ -38,9 +38,7 @@ const ExportCsvModal = ({
       TaskStatus.IN_PROGRESS
     )
     const filteredResponse = response?.filter(
-      (item) =>
-        item.is_priority === true &&
-        formattedTaskDate(item.createdAt) === formattedSelectedDate()
+      (item) => item.is_priority === true
     )
     setPriorities(filteredResponse)
   }
@@ -50,10 +48,8 @@ const ExportCsvModal = ({
       TaskField.STATUS,
       TaskStatus.IN_PROGRESS
     )
-    const filteredResponse = response?.filter(
-      (item) => formattedTaskDate(item.createdAt) === formattedSelectedDate()
-    )
-    setTodos(filteredResponse)
+
+    setTodos(response)
   }
 
   const getStoredDate = () => {

@@ -20,11 +20,6 @@ export const LandingPage = () => {
 
   const navigate = useNavigate();
 
-  // const handleDateChange = (date: Date) => {
-  //   console.log("selectedDate", date)
-  //   setSelectedDate(date)
-  // }
-
   const fetchData = async () => {
     const response = await getUserId();
     sessionStorage.setItem("userRole", String(response?.role));
