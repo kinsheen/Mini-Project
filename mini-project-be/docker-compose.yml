@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: mini-project-be
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"              # Adjust if your app uses a different port
+    volumes:
+      - .:/app                  # Mount project files for live reload in development
+      - /app/node_modules       # Prevent overwriting node_modules from host
+    environment:
+      NODE_ENV: development     # Set to "production" if deploying
+    env_file:
+      - .env                    # Load environment variables from .env file
+    command: npm run dev        # Use "npm start" for production mode
