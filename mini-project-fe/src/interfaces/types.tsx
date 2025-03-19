@@ -65,12 +65,14 @@ export enum TaskStatus {
   IN_PROGRESS = "In Progress",
   DONE = "Done",
   PENDING = "Pending",
+  UNASSIGNED = "Unassigned",
 }
 
 export type UpdateTaskProps = {
-  id: number;
-  is_priority?: boolean;
-  status?: string;
-  task?: string;
-  note?: string;
-};
+  id: number
+  is_priority?: boolean
+  status?: string
+  task?: string
+  note?: string
+  updatedAt?: string
+}

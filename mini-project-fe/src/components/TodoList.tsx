@@ -7,7 +7,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { useState } from "react"
 import EditTaskModal from "../modals/ EditTaskModal"
-import { UpdateTaskProps } from "../interfaces/types"
+import { TaskStatus, UpdateTaskProps } from "../interfaces/types"
 
 type TodoListProps = {
   index: number
@@ -97,7 +97,7 @@ const TodoList = ({
       cancelButtonText: "Cancel",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await updateTask({ id, status: "Done", is_priority: false })
+        await updateTask({ id, status: "Done", is_priority: false, updatedAt: new Date().toISOString() })
         fetchTodos()
         window.location.reload()
 
@@ -169,7 +169,7 @@ const TodoList = ({
       <div className="flex relative group ">
         <button
           className="cursor-pointer transition-transform duration-200 hover:scale-140"
-          onClick={() => handleRemove({ id, status: "Unassigned" })}
+          onClick={() => handleRemove({ id, status: TaskStatus.UNASSIGNED })}
         >
           <MdOutlinePlaylistRemove className=" lg:h-7 lg:w-7" />
         </button>

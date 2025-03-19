@@ -13,10 +13,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { TaskField, TaskProps, TaskStatus } from "../interfaces/types"
-import {
-  formattedSelectedDate,
-  formattedTaskDate,
-} from "../helpers/dateToLocal"
 
 const Priority = () => {
   const [priorities, setPriorities] = useState<TaskProps[]>([])
@@ -27,9 +23,7 @@ const Priority = () => {
       TaskStatus.IN_PROGRESS
     )
     const filteredResponse = response?.filter(
-      (item) =>
-        item.is_priority === true &&
-        formattedTaskDate(item.createdAt) === formattedSelectedDate()
+      (item) => item.is_priority === true
     )
     setPriorities(filteredResponse)
   }
@@ -70,7 +64,7 @@ const Priority = () => {
                   {priorities?.map((item, index) => {
                     return (
                       <PriorityList
-                        index={ index}
+                        index={index}
                         task={item.task}
                         key={item.id}
                         id={item.id}

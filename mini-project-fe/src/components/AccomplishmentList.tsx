@@ -6,7 +6,7 @@ import { CSS } from "@dnd-kit/utilities"
 import { useSortable } from "@dnd-kit/sortable"
 import EditTaskModal from "../modals/ EditTaskModal"
 import { useState } from "react"
-import { UpdateTaskProps } from "../interfaces/types"
+import { TaskStatus, UpdateTaskProps } from "../interfaces/types"
 
 type AccomplishmentProps = {
   index: number
@@ -77,7 +77,7 @@ const AccomplishmentList = ({
       className="flex flex-row my-2 rounded border-2 text-white mx-1 text-sm md:text-md lg:text-xl p-1 gap-2"
     >
       <div {...attributes} {...listeners} className="flex-1  cursor-move">
-        { index + 1}. {task}
+        {index + 1}. {task}
       </div>
       <div className="flex relative group">
         <button
@@ -86,20 +86,20 @@ const AccomplishmentList = ({
         >
           <FaRegEdit />
         </button>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Edit
-        </span>
+        </span> */}
       </div>
       <div className="flex relative group">
         <button
           className="cursor-pointer transition-transform duration-200 hover:scale-140"
-          onClick={() => handleRemove({ id, status: "In Progress" })}
+          onClick={() => handleRemove({ id, status: TaskStatus.IN_PROGRESS })}
         >
           <MdOutlinePlaylistRemove className=" lg:h-7 lg:w-7" />
         </button>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Remove
-        </span>
+        </span> */}
       </div>
 
       <EditTaskModal

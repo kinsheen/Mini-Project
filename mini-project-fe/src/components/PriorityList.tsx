@@ -60,9 +60,9 @@ const PriorityList = ({ index, task, id, getPriorities }: PriorityProps) => {
         >
           <MdOutlinePlaylistRemove className=" lg:h-7 lg:w-7" />
         </button>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max bg-gray-800 text-white text-md rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Remove
-        </span>
+        </span> */}
       </div>
     </div>
   )

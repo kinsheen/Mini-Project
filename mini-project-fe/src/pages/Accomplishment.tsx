@@ -25,7 +25,7 @@ const Accomplishment = () => {
     const response = await getToDoByField(TaskField.STATUS, TaskStatus.DONE)
     const filteredResponse = response?.filter(
       (item: TaskProps) =>
-        formattedTaskDate(item.createdAt) === formattedSelectedDate()
+        formattedTaskDate(item.updatedAt) === formattedSelectedDate()
     )
 
     setAccomplishments(filteredResponse)

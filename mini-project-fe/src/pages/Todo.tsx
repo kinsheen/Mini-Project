@@ -13,10 +13,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { TaskField, TaskProps, TaskStatus } from "../interfaces/types"
-import {
-  formattedSelectedDate,
-  formattedTaskDate,
-} from "../helpers/dateToLocal"
 
 const Todo = () => {
   const [todos, setTodos] = useState<TaskProps[]>([])
@@ -26,10 +22,7 @@ const Todo = () => {
       TaskField.STATUS,
       TaskStatus.IN_PROGRESS
     )
-    const filteredResponse = response?.filter(
-      (item) => formattedTaskDate(item.createdAt) === formattedSelectedDate()
-    )
-    setTodos(filteredResponse)
+    setTodos(response)
   }
 
   useEffect(() => {
