@@ -10,8 +10,6 @@ require("./config/database")
 require("./config/association")
 require("dotenv").config();
 
-
-// middleware
 // CORS configuration
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
@@ -20,7 +18,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Apply CORS
+// middleware
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // handle preflight requests
 app.use(express.urlencoded({ extended: false }));
