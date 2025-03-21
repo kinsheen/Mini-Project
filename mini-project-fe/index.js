@@ -7,7 +7,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const port = API_BASE_URL || 3000;
+const port = API_BASE_URL || 3101;
 
 // Serve static files from the build directory
 app.use(express.static(path.join(__dirname, "build")));
