@@ -134,11 +134,14 @@ const TodoList = ({
     >
       <input
         type="checkbox"
-        className="w-4 h-4 accent-blue-500 cursor-pointer mt-[5px]"
+        className="w-4 h-4 accent-blue-500 cursor-pointer mt-[7px]"
         onChange={handleCheckboxClick}
       />
       <div {...attributes} {...listeners} className="flex-1 cursor-move">
-        {index + 1}. {task}
+        <div>
+          {index + 1}. {task}
+        </div>
+        <div className="text-sm">{note ? `- ${note}` : null}</div>
       </div>
       <div className="flex relative group ">
         <button
