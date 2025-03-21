@@ -6,14 +6,10 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 // Define a function to create an instance of axios with some defaults
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  // withCredentials: true,
+  withCredentials: true,
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST, GET, PUT",
-    "Access-Control-Allow-Credentials": true,
-  },
+    "Content-Type": "application/json"
+  }
 });
 
 // Define a function to make a global API call
