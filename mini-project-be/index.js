@@ -8,11 +8,19 @@ const userRoute = require("./routes/user.route");
 
 require("./config/database")
 require("./config/association")
+require("dotenv").config();
 
+// CORS configuration
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
 // middleware
-app.use(cors({ origin: "*" }));
-app.use(cors({ credentials: true }));
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // handle preflight requests
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

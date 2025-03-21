@@ -1,11 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const express = require("express");
 const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = API_BASE_URL || 3000;
 
 // Serve static files from the build directory
 app.use(express.static(path.join(__dirname, "build")));
